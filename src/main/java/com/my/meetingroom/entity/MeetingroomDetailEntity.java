@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -33,7 +35,6 @@ import lombok.Setter;
 public class MeetingroomDetailEntity {
 	
 	@Id
-	@Column(nullable=false)
 	@GeneratedValue(
 			strategy = GenerationType.SEQUENCE,
 			generator = "MEETINGROOM_SEQ_GENERATOR"
@@ -49,5 +50,9 @@ public class MeetingroomDetailEntity {
 	private Integer projector;
 	
 	private Integer marker;
+	
+//	@OneToOne //자식쪽
+//	@JoinColumn(name="meetingroomId")
+//	private MeetingReservationEntity meetingreservation;
 	
 }

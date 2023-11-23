@@ -7,6 +7,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -33,18 +37,19 @@ import lombok.Setter;
 public class MeetingReservationEntity {
 
 	@Id
-	@Column(nullable=false)
 	@GeneratedValue(
 			strategy = GenerationType.SEQUENCE,
 			generator = "MEETING_SEQ_GENERATOR"
 	)
 	private Integer meetingId;
 	
-	@Column(nullable=false)
-	private Integer meetingroomId;
+	@ManyToOne
+	@JoinColumn(name="meetingroomId", nullable=false)
+	private MeetingroomDetailEntity meetingroom;
 	
-	@Column(nullable=false)
-	private Integer memberId;
+	@ManyToOne
+	@JoinColumn(name="memberId", nullable=false)
+	private MemberEntity member;
 	
 	private String startTime;
 	
@@ -53,5 +58,6 @@ public class MeetingReservationEntity {
 	private Date meetingDate;
 	
 	private String purpose;
+
 	
 }
