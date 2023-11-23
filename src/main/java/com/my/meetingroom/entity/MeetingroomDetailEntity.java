@@ -27,8 +27,8 @@ import lombok.Setter;
 @SequenceGenerator(
 		name = "MEETINGROOM_SEQ_GENERATOR",
 		sequenceName = "meetingroom_seq",
-		initialValue=1,
-		allocationSize=1
+		initialValue = 1,
+		allocationSize = 1
 		)
 public class MeetingroomDetailEntity {
 	
