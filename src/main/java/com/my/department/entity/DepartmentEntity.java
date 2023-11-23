@@ -12,9 +12,9 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor
+@Table(name="department")
 public class DepartmentEntity {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long departmentId;
 
 	@Column(nullable = false)
