@@ -38,13 +38,4 @@ public class MemberEntity{
 	@JoinColumn(name = "departmentId")
 	private DepartmentEntity department;
 	
-//	@OneToMany(
-//			fetch = FetchType.EAGER
-//			,
-//			cascade = CascadeType.ALL
-//			,
-//			mappedBy="id.memberId"
-//			)
-//	@JoinColumn(name="memberId")
-//	private ParticipantsEntity participants;
 }
