@@ -44,7 +44,8 @@ public class AttendanceEntity {
 	private Integer attendanceId;
 
 	@ManyToOne
-	@JoinColumn(name = "memberId")
+	@JoinColumn(name = "memberId",
+				nullable = false)
 	private MemberEntity memberId;
 	
 	@Column(name="attendaceDate")

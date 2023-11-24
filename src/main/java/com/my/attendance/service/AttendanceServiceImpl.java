@@ -35,7 +35,7 @@ public class AttendanceServiceImpl implements AttendanceService {
 	} // findByMemberId
 	
 	
-	
+	// =================  VoToDTO  ======================
 	
 	private AttendanceDTO VoToDTO(Optional<AttendanceEntity> att) {
 		
@@ -58,4 +58,4 @@ public class AttendanceServiceImpl implements AttendanceService {
 
 	
 	
-}
+} // end class

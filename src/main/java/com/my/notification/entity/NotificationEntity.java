@@ -46,7 +46,8 @@ public class NotificationEntity {
 	private Integer notificationId;
 	
 	@ManyToOne
-	@JoinColumn(name = "receiverId")
+	@JoinColumn(name = "receiverId",
+				nullable = false)
 	private MemberEntity receiverId;
 	
 	@Enumerated(EnumType.STRING)
