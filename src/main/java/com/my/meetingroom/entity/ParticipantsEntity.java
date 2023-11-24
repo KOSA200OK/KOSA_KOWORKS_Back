@@ -17,6 +17,8 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.DynamicInsert;
 
+import com.my.member.entity.MemberEntity;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -36,13 +38,6 @@ import lombok.Setter;
 @Embeddable
 public class ParticipantsEntity implements Serializable{
 	
-//	@Id
-//	@GeneratedValue(
-//			strategy = GenerationType.SEQUENCE,
-//			generator = "PARTICIPANTS_SEQ_GENERATOR"
-//	)
-//	private Integer participantId;
-	
 	@EmbeddedId
 	private ParticipantEmbedded id = new ParticipantEmbedded();
 	
@@ -56,5 +51,4 @@ public class ParticipantsEntity implements Serializable{
 	@MapsId("memberId")
 	private MemberEntity member;
 	
-//	implements Serializable
 }

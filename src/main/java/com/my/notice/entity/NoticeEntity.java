@@ -14,7 +14,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.DynamicInsert;
 
-import com.my.meetingroom.entity.MemberEntity;
+import com.my.member.entity.MemberEntity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -41,7 +41,7 @@ public class NoticeEntity {
 			strategy = GenerationType.SEQUENCE,
 			generator = "NOTICE_SEQ_GENERATOR"
 	)
-	private Integer noticeId; //공지사항번호
+	private Long noticeId; //공지사항번호
 	
 	@ManyToOne
 	@JoinColumn(name="memberId", nullable=false)

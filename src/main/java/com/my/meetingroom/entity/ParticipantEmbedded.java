@@ -20,8 +20,8 @@ import lombok.Setter;
 @Embeddable
 public class ParticipantEmbedded implements Serializable{
 	@Column(name="meetingId", nullable=false)
-	private Integer meetingId;
+	private Long meetingId;
 	
 	@Column(name="memberId", nullable=false)
-	private Integer memberId;
+	private Long memberId;
 }

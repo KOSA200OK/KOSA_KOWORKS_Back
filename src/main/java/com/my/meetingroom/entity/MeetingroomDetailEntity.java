@@ -39,20 +39,16 @@ public class MeetingroomDetailEntity {
 			strategy = GenerationType.SEQUENCE,
 			generator = "MEETINGROOM_SEQ_GENERATOR"
 	)
-	private Integer meetingroomId;
+	private Long meetingroomId;
 	
-	private Integer maxNum;
+	private Long maxNum;
 	
-	private Integer monitor;
+	private Long monitor;
 	
-	private Integer socket;
+	private Long socket;
 	
-	private Integer projector;
+	private Long projector;
 	
-	private Integer marker;
-	
-//	@OneToOne //자식쪽
-//	@JoinColumn(name="meetingroomId")
-//	private MeetingReservationEntity meetingreservation;
+	private Long marker;
 	
 }
