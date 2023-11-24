@@ -2,24 +2,36 @@ package com.my.login.controller;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
-import com.my.login.dto.LoginRequest;
+import com.my.login.dto.LoginRequestDTO;
+import com.my.login.service.LoginService;
 
+@RestController
 public class LoginController {
+
+	@Autowired
+	private LoginService service;
+
 	@PostMapping("/login")
-	public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest, HttpSession session) {
-		// 로그인 성공 시 세션에 사용자 ID 저장
-		session.setAttribute("memberId", loginRequest.getMemberId());
-		return ResponseEntity.ok("Login successful");
+	// vue에서 요청을 data에 담아 보내면 loginRequestDTO로 받음
+	public ResponseEntity<String> login(@RequestBody LoginRequestDTO loginRequestDTO, HttpSession session) {
+		if (service.authenticateMember(loginRequestDTO)) {
+			session.setAttribute("memberId", loginRequestDTO.getMemberId());
+			return ResponseEntity.ok("로그인 성공");
+		} else {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인 실패");
+		}
 	}
 
 	@GetMapping("/logout")
 	public ResponseEntity<String> logout(HttpSession session) {
-		// 세션에서 사용자 ID 삭제
 		session.removeAttribute("memberId");
 		return ResponseEntity.ok("Logout successful");
 	}

@@ -1,9 +1,11 @@
-package com.my.attendance.entity;
+package com.my.notification.entity;
 
 import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,34 +32,45 @@ import lombok.Setter;
 @DynamicInsert
 
 @Entity
-@Table(name="attendance")
-@SequenceGenerator(name = "attendance_seq_generator",
-				   sequenceName = "attendance_seq",
+@Table(name="notification")
+@SequenceGenerator(name = "notification_seq_generator",
+				   sequenceName = "notification_seq",
 				   initialValue = 1,
 				   allocationSize = 1)
-public class AttendanceEntity {
-
+public class NotificationEntity {
+	
 	@Id
-	@Column(name="attendanceId")
+	@Column(name="notificationId")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE,
-					generator = "attendance_seq_generator")
-	private Integer attendanceId;
-
+					generator = "notification_seq_generator")
+	private Integer notificationId;
+	
 	@ManyToOne
-	@JoinColumn(name = "memberId",
+	@JoinColumn(name = "receiverId",
 				nullable = false)
-	private MemberEntity memberId;
+	private MemberEntity receiverId;
 	
-	@Column(name="attendaceDate")
-	private Date attendanceDate;
+	@Enumerated(EnumType.STRING)
+	@Column(name = "type",
+			nullable = false)
+	private NotificationType type;
 	
-	@Column(name="startTime")
-	private Date startTime;
+	@Column(name = "content")
+	private String content;
 	
-	@Column(name="endTime")
-	private Date endTime;
-	
-	@Column(name="status")
+	@Column(name = "createdAt")
+	private Date createdAt;
+
+	@Column(name = "status")
 	private Integer status;
 	
+	public enum NotificationType {
+		
+		NOTICE,
+		MEETING,
+		CAR,
+		STUFF
+		
+	}
+
 } // end class
