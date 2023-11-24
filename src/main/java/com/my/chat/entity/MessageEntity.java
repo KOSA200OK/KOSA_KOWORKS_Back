@@ -40,7 +40,6 @@ public class MessageEntity {
 	private MemberEntity member;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(nullable = false)
 	private Date sendTime;
 
 	private String content;
