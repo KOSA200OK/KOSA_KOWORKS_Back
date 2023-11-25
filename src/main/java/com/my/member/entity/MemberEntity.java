@@ -20,7 +20,7 @@ import lombok.Setter;
 @Table(name="member")
 public class MemberEntity {
 	@Id
-	private Long memberId;
+	private Long id;
 
 	@Column(nullable = false)
 	private String name;
