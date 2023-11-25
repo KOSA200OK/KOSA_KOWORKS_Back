@@ -13,15 +13,18 @@ import com.my.attendance.entity.AttendanceEntity;
 @Service
 public class AttendanceMapper {
 	
+	private ModelMapper mapper;
+	
+	public AttendanceMapper() {
+		this.mapper = new ModelMapper();
+		this.mapper.getConfiguration()
+				   .setMatchingStrategy(MatchingStrategies.STANDARD)
+				   .setFieldAccessLevel(AccessLevel.PRIVATE)
+				   .setFieldMatchingEnabled(true);
+	}
+	
 	public AttendanceDTO VoToDTO(Optional<AttendanceEntity> att) {
-		
-		ModelMapper mapper = new ModelMapper();
-		
-		mapper.getConfiguration()
-			  .setMatchingStrategy(MatchingStrategies.STANDARD)
-			  .setFieldAccessLevel(AccessLevel.PRIVATE)
-			  .setFieldMatchingEnabled(true);
-		
+
 		Object source = att;
 		Class<AttendanceDTO> destinationType = AttendanceDTO.class;
 		
@@ -33,14 +36,6 @@ public class AttendanceMapper {
 	} // VoToDTO
 
 	public AttendanceEntity DtoToVo(AttendanceDTO dto) {
-
-		ModelMapper mapper=new ModelMapper();
-
-		// 매퍼설정
-		mapper.getConfiguration()
-			  .setMatchingStrategy(MatchingStrategies.STANDARD)
-			  .setFieldAccessLevel(AccessLevel.PRIVATE)
-			  .setFieldMatchingEnabled(true);
 
 		Object source = dto;
 

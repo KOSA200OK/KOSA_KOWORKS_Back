@@ -41,15 +41,15 @@ public class AttendanceServiceImpl implements AttendanceService {
 	@Override
 	public void createAttendance(AttendanceDTO dto) throws AddException {
 		
+		// dto 객체로 들어온 것을 entiiy로 변환
 		AttendanceEntity entity = model.DtoToVo(dto);
 		
-		dto.getStartTime();
-		
+		// currentTime에 현재시간 대입
         LocalTime currentTime = LocalTime.now();
-        LocalTime onTimeStart = AttendanceTime.ON_TIME.getStartTime();
-        LocalTime onTimeEnd = AttendanceTime.OFF_TIME.getEndTime();
+        LocalTime onTimeStart = AttendanceTime.ON_TIME.getStartTime();		// enum타입의 ON_TIME값에 해당하는 startTime값 가져와서 대입
+        LocalTime onTimeEnd = AttendanceTime.ON_TIME.getEndTime();			// emnm타입의 OFF_TIME에 해당하는 endTime값 가져와서 대입
 
-        if (currentTime.isAfter(onTimeStart) && currentTime.isBefore(onTimeEnd)) {
+        if (currentTime.isAfter(onTimeStart) && currentTime.isBefore(onTimeEnd)) {	// 
             entity.setStartTime(currentTime);
             entity.setStatus(AttendanceStatus.ON.getStatus());
         } else {
