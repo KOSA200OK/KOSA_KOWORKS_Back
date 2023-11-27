@@ -56,14 +56,6 @@ public class NoticeMapper {
 		Class<NoticeDTO> destinationType = NoticeDTO.class;
 		NoticeDTO dto = mapper.map(source, destinationType);
 		
-//		log.error("dto memberId:{}, name:{}, title:{}, content:{}, regdate:{}"
-//				,
-//				dto.getMemberId(),
-//				dto.getName(),
-//				dto.getTitle(),
-//				dto.getContent(),
-//				dto.getRegdate()
-//				);
 		return dto;
 	}
 }
