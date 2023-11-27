@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor
-@Table(name="department")
+@Table(name = "department")
 public class DepartmentEntity {
 	@Id
 	private Long departmentId;
