@@ -25,6 +25,12 @@ public class CarEntity {
 	@Id
 	@Column(length=30)
 	private String id;
+<<<<<<< HEAD
+=======
+	
+	@Column(nullable=false)
+	private String carNo;
+>>>>>>> 0b20b505269e3940d1759f0c3c7c21e9bdb758ba
 	
 	@Column(nullable=false)
 	private String carType;

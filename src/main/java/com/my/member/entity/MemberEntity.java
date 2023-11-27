@@ -17,10 +17,13 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name="member")
+@Table(name = "member")
 public class MemberEntity {
 	@Id
-	private Long memberId;
+	private Long id;
+
+	@Column(nullable = false)
+	private String password;
 
 	@Column(nullable = false)
 	private String name;

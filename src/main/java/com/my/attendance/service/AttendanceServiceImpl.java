@@ -1,22 +1,26 @@
 package com.my.attendance.service;
 
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
-import org.modelmapper.ModelMapper;
-import org.modelmapper.config.Configuration.AccessLevel;
-import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.my.attendance.dao.AttendanceRepository;
 import com.my.attendance.dto.AttendanceDTO;
 import com.my.attendance.entity.AttendanceEntity;
+import com.my.exception.AddException;
 import com.my.exception.FindException;
 
+@Service
 public class AttendanceServiceImpl implements AttendanceService {
 	
 	@Autowired
 	private AttendanceRepository repository;
+	
+	@Autowired
+	private AttendanceMapper model;
 
 	@Override
 	public List<AttendanceEntity> findAll() throws FindException {
@@ -30,31 +34,34 @@ public class AttendanceServiceImpl implements AttendanceService {
 		
 		Optional<AttendanceEntity> att = repository.findById(memberId);
 		
-		return VoToDTO(att);
+		return model.VoToDTO(att);
 		
 	} // findByMemberId
-	
-	
-	// =================  VoToDTO  ======================
-	
-	private AttendanceDTO VoToDTO(Optional<AttendanceEntity> att) {
-		
-		ModelMapper mapper = new ModelMapper();
-		
-		mapper.getConfiguration()
-			  .setMatchingStrategy(MatchingStrategies.STANDARD)
-			  .setFieldAccessLevel(AccessLevel.PRIVATE)
-			  .setFieldMatchingEnabled(true);
-		
-		Object source = att;
-		Class<AttendanceDTO> destinationType = AttendanceDTO.class;
-		
-		AttendanceDTO dto = mapper.map(source, destinationType);
-		dto.setMemberId(dto.getMemberId());
-		
-		return dto;
 
-	} // VoToDTO
+	@Override
+	public void createAttendance(AttendanceDTO dto) throws AddException {
+		
+		// dto 객체로 들어온 것을 entiiy로 변환
+		AttendanceEntity entity = model.DtoToVo(dto);
+		
+		// currentTime에 현재시간 대입
+        LocalTime currentTime = LocalTime.now();
+        
+        System.out.println("현재시간: " + currentTime);
+        LocalTime onTimeStart = AttendanceTime.ON_TIME.getStartTime();		// enum타입의 ON_TIME값에 해당하는 startTime값 가져와서 대입
+        LocalTime onTimeEnd = AttendanceTime.ON_TIME.getEndTime();			// emnm타입의 OFF_TIME에 해당하는 endTime값 가져와서 대입
+
+        if (currentTime.isAfter(onTimeStart) && currentTime.isBefore(onTimeEnd)) {	// 
+            entity.setStartTime(currentTime);
+            entity.setStatus(AttendanceStatus.ON.getStatus());
+        } else {
+            entity.setStartTime(currentTime);
+            entity.setStatus(AttendanceStatus.LATE.getStatus());
+        }
+		
+		repository.save(entity);
+		
+	} // create
 
 	
 	

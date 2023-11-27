@@ -35,11 +35,18 @@ import lombok.Setter;
 		initialValue = 1,
 		allocationSize = 1
 		)
-@Embeddable
-public class ParticipantsEntity implements Serializable{
+//@Embeddable implements Serializable
+public class ParticipantsEntity {
 	
-	@EmbeddedId
-	private ParticipantEmbedded id = new ParticipantEmbedded();
+//	@EmbeddedId
+//	private ParticipantEmbedded id = new ParticipantEmbedded();
+	
+	@Id
+	@GeneratedValue(
+			strategy = GenerationType.SEQUENCE,
+			generator = "PARTICIPANTS_SEQ_GENERATOR"
+	)
+	private Long id;
 	
 	@ManyToOne
 	@JoinColumn(name="meetingId", nullable=false)
