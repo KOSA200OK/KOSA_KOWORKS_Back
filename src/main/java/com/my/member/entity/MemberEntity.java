@@ -23,6 +23,9 @@ public class MemberEntity {
 	private Long id;
 
 	@Column(nullable = false)
+	private String password;
+
+	@Column(nullable = false)
 	private String name;
 
 	@Column(nullable = false)

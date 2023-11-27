@@ -23,7 +23,7 @@ public class LoginController {
 	// vue에서 요청을 data에 담아 보내면 loginRequestDTO로 받음
 	public ResponseEntity<String> login(@RequestBody LoginRequestDTO loginRequestDTO, HttpSession session) {
 		if (service.authenticateMember(loginRequestDTO)) {
-			session.setAttribute("memberId", loginRequestDTO.getMemberId());
+			session.setAttribute("memberId", loginRequestDTO.getId());
 			return ResponseEntity.ok("로그인 성공");
 		} else {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인 실패");
@@ -33,6 +33,6 @@ public class LoginController {
 	@GetMapping("/logout")
 	public ResponseEntity<String> logout(HttpSession session) {
 		session.removeAttribute("memberId");
-		return ResponseEntity.ok("Logout successful");
+		return ResponseEntity.ok("로그아웃 성공");
 	}
 }
