@@ -108,6 +108,7 @@ public class AttendanceServiceImpl implements AttendanceService {
 	        existingEntity.setStatus(AttendanceStatus.OFF.getStatus());
 
 	        repository.save(existingEntity);
+	        
 	    } else {
 	        // 예외 처리 - 해당 memberId를 찾을 수 없는 경우
 	        throw new ModifyException("Attendance for memberId " + memberId + " not found.");
