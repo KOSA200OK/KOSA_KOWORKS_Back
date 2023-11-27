@@ -38,7 +38,6 @@ import lombok.Setter;
 public class AttendanceEntity {
 
 	@Id
-	@Column(name="attendanceId")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE,
 					generator = "attendance_seq_generator")
 	private Integer id;

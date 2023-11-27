@@ -40,7 +40,6 @@ import lombok.Setter;
 public class NotificationEntity {
 	
 	@Id
-	@Column(name="notificationId")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE,
 					generator = "notification_seq_generator")
 	private Integer id;
