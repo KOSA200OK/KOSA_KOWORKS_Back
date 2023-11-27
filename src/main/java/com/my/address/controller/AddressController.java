@@ -1,18 +1,27 @@
 package com.my.address.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.my.member.repository.MemberRepository;
+import com.my.address.dto.AddressMemberDTO;
+import com.my.address.service.AddressService;
 
 @RestController
 @RequestMapping("/address")
 public class AddressController {
-//	private final MemberRepository memberRepository;
-//
-//	@Autowired
-//	public AddressController(MemberRepository addressRepository) {
-//		this.memberRepository = addressRepository;
-//	}
+	private final AddressService addressService;
+
+	@Autowired
+	public AddressController(AddressService addressService) {
+		this.addressService = addressService;
+	}
+
+	@GetMapping("/members") // /address/members에 대한 매핑 추가
+	public List<AddressMemberDTO> getAllMembers() {
+		return addressService.getAllMembers();
+	}
 }
