@@ -24,7 +24,10 @@ import lombok.Setter;
 public class CarEntity {
 	@Id
 	@Column(length=30)
-	private String carId;
+	private String id;
+	
+	@Column(nullable=false)
+	private String carNo;
 	
 	@Column(nullable=false)
 	private String carType;

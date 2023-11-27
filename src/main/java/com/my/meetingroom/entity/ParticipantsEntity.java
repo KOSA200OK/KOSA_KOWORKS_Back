@@ -46,7 +46,7 @@ public class ParticipantsEntity {
 			strategy = GenerationType.SEQUENCE,
 			generator = "PARTICIPANTS_SEQ_GENERATOR"
 	)
-	private Long participantsId;
+	private Long id;
 	
 	@ManyToOne
 	@JoinColumn(name="meetingId", nullable=false)

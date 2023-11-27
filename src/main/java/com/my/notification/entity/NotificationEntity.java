@@ -40,20 +40,19 @@ import lombok.Setter;
 public class NotificationEntity {
 	
 	@Id
-	@Column(name="notificationId")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE,
 					generator = "notification_seq_generator")
-	private Integer notificationId;
+	private Integer id;
 	
 	@ManyToOne
 	@JoinColumn(name = "receiverId",
 				nullable = false)
-	private MemberEntity receiverId;
+	private MemberEntity memberEntity;
 	
 	@Enumerated(EnumType.STRING)
 	@Column(name = "type",
 			nullable = false)
-	private NotificationType type;
+	private NotificationType notificationType;
 	
 	@Column(name = "content")
 	private String content;

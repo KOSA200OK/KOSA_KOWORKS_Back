@@ -30,7 +30,7 @@ import lombok.NoArgsConstructor;
 public class CarRentEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "car_rent_seq_generator")
-	private Long rentId;
+	private Long id;
 	
 	@ManyToOne
 	@JoinColumn(name="memberId",nullable=false)
