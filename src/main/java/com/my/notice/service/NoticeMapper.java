@@ -5,6 +5,7 @@ import org.modelmapper.config.Configuration.AccessLevel;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.domain.Page;
 
 import com.my.notice.dto.NoticeDTO;
 import com.my.notice.entity.NoticeEntity;
@@ -31,13 +32,13 @@ public class NoticeMapper {
 		Object source = dto;
 		Class<NoticeEntity> destinationType = NoticeEntity.class;
 		NoticeEntity entity = mapper.map(source, destinationType);
-		log.error("entity boardTitle:{}, boardContent:{}, boardId:{}, boardDt:{}"
+//		log.error("entity memberId:{}, title:{}, content:{}, regdate:{}"
 //				,
-//				entity.getBoardTitle(),
-//				entity.getBoardContent(),
-//				entity.getBoardId(),
-//				entity.getBoardDt()
-				);
+//				entity.getId(),
+//				entity.getMember(),
+//				entity.getContent(),
+//				entity.getRegdate()
+//				);
 		return entity;
 	}
 	
@@ -55,13 +56,14 @@ public class NoticeMapper {
 		Class<NoticeDTO> destinationType = NoticeDTO.class;
 		NoticeDTO dto = mapper.map(source, destinationType);
 		
-		log.error("entity boardTitle:{}, boardContent:{}, boardId:{}, boardDt:{}"
+//		log.error("dto memberId:{}, name:{}, title:{}, content:{}, regdate:{}"
 //				,
-//				dto.getBoardTitle(),
-//				dto.getBoardContent(),
-//				dto.getBoardId(),
-//				dto.getBoardDt()
-				);
+//				dto.getMemberId(),
+//				dto.getName(),
+//				dto.getTitle(),
+//				dto.getContent(),
+//				dto.getRegdate()
+//				);
 		return dto;
 	}
 }
