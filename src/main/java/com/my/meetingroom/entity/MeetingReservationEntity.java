@@ -41,7 +41,7 @@ public class MeetingReservationEntity {
 			strategy = GenerationType.SEQUENCE,
 			generator = "MEETING_SEQ_GENERATOR"
 	)
-	private Integer meetingId;
+	private Long id;
 	
 	@ManyToOne
 	@JoinColumn(name="meetingroomId", nullable=false)
