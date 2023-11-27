@@ -7,5 +7,5 @@ import org.springframework.stereotype.Service;
 import com.my.car.dto.CarDTO;
 
 public interface CarService {
-	public List<CarDTO> findCarList(Long carId);
+	public List<CarDTO> findCarList();
 }

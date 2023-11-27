@@ -20,8 +20,8 @@ public class CarServiceImpl implements CarService {
 	}
 	
 	@Override
-	public List<CarDTO> findCarList(Long carId) {
-		List<CarEntity> entityList = cr.findAll();
+	public List<CarDTO> findCarList() {
+		List<CarEntity> entityList = cr.findAllByOrderByStatusAsc();
 		List<CarDTO> list = new ArrayList<>();
 		CarMapper cm = new CarMapper();
 		
@@ -33,4 +33,5 @@ public class CarServiceImpl implements CarService {
 		
 		return list;
 	}
+
 }
