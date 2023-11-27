@@ -1,6 +1,6 @@
 package com.my.attendance.entity;
 
-import java.sql.Date;
+import java.time.LocalTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -46,16 +46,16 @@ public class AttendanceEntity {
 	@ManyToOne
 	@JoinColumn(name = "memberId",
 				nullable = false)
-	private MemberEntity memberId;
+	private MemberEntity memberEntity;
 	
 	@Column(name="attendaceDate")
-	private Date attendanceDate;
+	private LocalTime  attendanceDate;
 	
 	@Column(name="startTime")
-	private Date startTime;
+	private LocalTime  startTime;
 	
 	@Column(name="endTime")
-	private Date endTime;
+	private LocalTime  endTime;
 	
 	@Column(name="status")
 	private Integer status;
