@@ -1,7 +1,5 @@
 package com.my.attendance.entity;
 
-import java.time.LocalTime;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -45,18 +43,26 @@ public class AttendanceEntity {
 	@ManyToOne
 	@JoinColumn(name = "memberId",
 				nullable = false)
-	private MemberEntity memberEntity;
+	private MemberEntity memberId;
 	
 	@Column(name="attendaceDate")
-	private LocalTime  attendanceDate;
+	private String  attendanceDate;
 	
 	@Column(name="startTime")
-	private LocalTime  startTime;
+	private String  startTime;
 	
 	@Column(name="endTime")
-	private LocalTime  endTime;
+	private String  endTime;
 	
 	@Column(name="status")
 	private Integer status;
+	
+	/**
+	* 내용수정
+	*/
+	public void modifyAttendance(String endTime, Integer status) {
+		this.endTime = endTime;
+		this.status = status;
+	} // modifycontent
 	
 } // end class
