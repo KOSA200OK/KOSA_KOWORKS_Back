@@ -39,7 +39,7 @@ public class MeetingroomDetailEntity {
 			strategy = GenerationType.SEQUENCE,
 			generator = "MEETINGROOM_SEQ_GENERATOR"
 	)
-	private Long meetingroomId;
+	private Long id;
 	
 	private Long maxNum;
 	

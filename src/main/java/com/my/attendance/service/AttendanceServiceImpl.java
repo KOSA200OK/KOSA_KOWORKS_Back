@@ -46,6 +46,8 @@ public class AttendanceServiceImpl implements AttendanceService {
 		
 		// currentTime에 현재시간 대입
         LocalTime currentTime = LocalTime.now();
+        
+        System.out.println("현재시간: " + currentTime);
         LocalTime onTimeStart = AttendanceTime.ON_TIME.getStartTime();		// enum타입의 ON_TIME값에 해당하는 startTime값 가져와서 대입
         LocalTime onTimeEnd = AttendanceTime.ON_TIME.getEndTime();			// emnm타입의 OFF_TIME에 해당하는 endTime값 가져와서 대입
 

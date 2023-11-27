@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
 public class MessageEntity {
 	@Id
 //	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long messageId;
+	private Long id;
 
 	@ManyToOne
 	@JoinColumn(name = "roomId")

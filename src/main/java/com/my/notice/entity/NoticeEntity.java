@@ -41,7 +41,7 @@ public class NoticeEntity {
 			strategy = GenerationType.SEQUENCE,
 			generator = "NOTICE_SEQ_GENERATOR"
 	)
-	private Long noticeId; //공지사항번호
+	private Long id; //공지사항번호
 	
 	@ManyToOne
 	@JoinColumn(name="memberId", nullable=false)

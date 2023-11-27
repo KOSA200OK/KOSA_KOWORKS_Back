@@ -41,7 +41,7 @@ public class AttendanceEntity {
 	@Column(name="attendanceId")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE,
 					generator = "attendance_seq_generator")
-	private Integer attendanceId;
+	private Integer id;
 
 	@ManyToOne
 	@JoinColumn(name = "memberId",

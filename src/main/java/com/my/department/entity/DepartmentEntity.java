@@ -13,8 +13,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Table(name="department")
 public class DepartmentEntity {
+	
 	@Id
-	private Long departmentId;
+	private Long id;
 
 	@Column(nullable = false)
 	private String name;

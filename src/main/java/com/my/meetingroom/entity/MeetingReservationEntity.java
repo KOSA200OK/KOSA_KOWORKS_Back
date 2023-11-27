@@ -2,7 +2,6 @@ package com.my.meetingroom.entity;
 
 import java.sql.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -41,7 +40,7 @@ public class MeetingReservationEntity {
 			strategy = GenerationType.SEQUENCE,
 			generator = "MEETING_SEQ_GENERATOR"
 	)
-	private Integer meetingId;
+	private Integer id;
 	
 	@ManyToOne
 	@JoinColumn(name="meetingroomId", nullable=false)
