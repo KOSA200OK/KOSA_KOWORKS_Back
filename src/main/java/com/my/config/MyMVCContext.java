@@ -34,6 +34,7 @@ public class MyMVCContext implements WebMvcConfigurer{
 		registry.addMapping("/**")
 				.allowCredentials(true)
 				.allowedMethods("GET","POST","PUT","DELETE") //PUT방식은 CORS문제를 반드시 해결해야 한다, 모든 메서드는 *로 대체해도 된다
+				.allowedOrigins("http://localhost:5173")
 				.allowedOrigins("http://192.168.1.12:5500")
 				.allowedOrigins("http://192.168.1.91:5500");
 	}

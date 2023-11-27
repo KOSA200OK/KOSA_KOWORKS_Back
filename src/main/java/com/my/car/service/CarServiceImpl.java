@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.my.car.dto.CarDTO;
@@ -20,18 +22,10 @@ public class CarServiceImpl implements CarService {
 	}
 	
 	@Override
-	public List<CarDTO> findCarList() {
-		List<CarEntity> entityList = cr.findAllByOrderByStatusAsc();
-		List<CarDTO> list = new ArrayList<>();
+	public Page<CarDTO> findCarList(Pageable pageable) {
+		Page<CarEntity> entityList = cr.findAllByOrderByStatusAscIdDesc(pageable);
 		CarMapper cm = new CarMapper();
-		
-		for(CarEntity entity : entityList) {
-			CarDTO dto = new CarDTO();
-			dto = cm.entityToDto(entity);
-			list.add(dto);
-		}
-		
-		return list;
+		return entityList.map(cm::entityToDto);
 	}
 
 }

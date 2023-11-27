@@ -16,6 +16,7 @@ import lombok.ToString;
 @ToString
 public class CarDTO {
 	private String carId;
+	private String carNo;
 	private String carType;
 	private Long status;
 }
