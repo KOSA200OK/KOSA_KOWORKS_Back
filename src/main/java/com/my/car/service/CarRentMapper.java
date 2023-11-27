@@ -11,7 +11,7 @@ public class CarRentMapper {
 	public CarRentEntity dtoToEntity(CarRentDTO dto) {
 		ModelMapper mapper = new ModelMapper();
 		mapper.getConfiguration()
-		    .setMatchingStrategy(MatchingStrategies.STANDARD)
+		    .setMatchingStrategy(MatchingStrategies.STRICT)
 			.setFieldAccessLevel(AccessLevel.PRIVATE)
 			.setFieldMatchingEnabled(true);
 		
@@ -25,7 +25,7 @@ public class CarRentMapper {
 	public CarRentDTO entityToDto(CarRentEntity entity) {
 		ModelMapper mapper = new ModelMapper();
 		mapper.getConfiguration()
-		    .setMatchingStrategy(MatchingStrategies.STANDARD)
+		    .setMatchingStrategy(MatchingStrategies.STRICT)
 			.setFieldAccessLevel(AccessLevel.PRIVATE)
 			.setFieldMatchingEnabled(true);
 		

@@ -14,11 +14,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.my.car.dto.CarDTO;
+import com.my.car.dto.CarRentDTO;
 import com.my.car.service.CarService;
+import com.my.exception.AddException;
 import com.my.exception.FindException;
 
 import lombok.extern.slf4j.Slf4j;
@@ -36,5 +39,10 @@ public class CarController {
 		currentPage -=1;
 		Pageable pageable = PageRequest.of(currentPage, 10);
 		return cs.findCarList(pageable);
+	}
+	
+	@PostMapping("/reserve")
+	public void reserve(CarRentDTO carRent) throws AddException{
+		cs.addCarRent(carRent);
 	}
 }

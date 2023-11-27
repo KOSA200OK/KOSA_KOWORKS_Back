@@ -35,4 +35,8 @@ public class CarEntity {
 	@Column(nullable=false, length=2)
 	@ColumnDefault("0") 
 	private Long status;
+	
+	public void modifyCarStatus(Long status) {
+		this.status = status;
+	}	
 }
