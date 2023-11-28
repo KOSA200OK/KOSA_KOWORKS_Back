@@ -1,5 +1,7 @@
 package com.my.car.service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -38,6 +40,7 @@ public class CarServiceImpl implements CarService {
 	public void addCarRent(CarRentDTO carRent) {
 		CarRentMapper crm = new CarRentMapper();
 		CarRentEntity entity = crm.dtoToEntity(carRent);
+		System.out.println("service "+entity.getCar().getId()+" "+entity.getEndDate());
 		crr.save(entity);
 		
 		Optional<CarEntity> optC = cr.findById(carRent.getCarId());

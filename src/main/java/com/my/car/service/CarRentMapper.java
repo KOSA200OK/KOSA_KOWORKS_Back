@@ -6,9 +6,11 @@ import org.modelmapper.convention.MatchingStrategies;
 
 import com.my.car.dto.CarRentDTO;
 import com.my.car.entity.CarRentEntity;
+import com.my.car.repository.CarRepository;
 
 public class CarRentMapper {
 	public CarRentEntity dtoToEntity(CarRentDTO dto) {
+		CarRepository cr;
 		ModelMapper mapper = new ModelMapper();
 		mapper.getConfiguration()
 		    .setMatchingStrategy(MatchingStrategies.STRICT)
@@ -17,8 +19,14 @@ public class CarRentMapper {
 		
 		Object source = dto;
 		Class<CarRentEntity> destinationType = CarRentEntity.class;
+		
+        
 		CarRentEntity entity = mapper.map(source, destinationType); //DTO->VO
 		
+		CarRentEntity carEntity = cr.findById(dto.getCarId())
+				.orElseThrow(() -> new EntityNotFoundException("Car not found with ID: " + dto.getCarId()));
+		entity.setCar(carEntity);
+
 		return entity;
 	}
 	
