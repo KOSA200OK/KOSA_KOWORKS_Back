@@ -41,6 +41,8 @@ public class MeetingroomDetailEntity {
 	)
 	private Long id;
 	
+	private String name;
+	
 	private Long maxNum;
 	
 	private Long monitor;
@@ -50,5 +52,7 @@ public class MeetingroomDetailEntity {
 	private Long projector;
 	
 	private Long marker;
+	
+	private String location;
 	
 }
