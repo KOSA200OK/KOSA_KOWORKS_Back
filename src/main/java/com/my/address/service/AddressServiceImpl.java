@@ -19,7 +19,7 @@ public class AddressServiceImpl implements AddressService {
 		this.memberRepository = memberRepository;
 	}
 
-	public List<AddressMemberDTO> getAllMembers() {
+	public List<AddressMemberDTO> findAll() {
 		List<MemberEntity> members = memberRepository.findAll();
 		return members.stream().map(this::convertToDTO).collect(Collectors.toList());
 	}

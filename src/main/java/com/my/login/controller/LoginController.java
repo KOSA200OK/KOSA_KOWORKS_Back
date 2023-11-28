@@ -23,7 +23,7 @@ public class LoginController {
 	@CrossOrigin(origins = "http://localhost:5173")
 	@PostMapping("/login")
 	public ResponseEntity<String> login(@RequestBody LoginRequestDTO loginRequestDTO, HttpSession session) {
-		if (service.authenticateMember(loginRequestDTO)) {
+		if (service.findByMemberId(loginRequestDTO)) {
 			session.setAttribute("memberId", loginRequestDTO.getId());
 			return ResponseEntity.ok("로그인 성공");
 
