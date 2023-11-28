@@ -12,7 +12,7 @@ public interface AttendanceService {
 
 	public List<AttendanceEntity> findAll() throws FindException;
 	
-	public List<AttendanceDTO> findAllByMemberId(Long memberId) throws FindException;
+	public List<AttendanceDTO> findAllByMemberId(String memberId) throws FindException;
 	
 	// 출석
 	public void createAttendance(AttendanceDTO dto) throws AddException;

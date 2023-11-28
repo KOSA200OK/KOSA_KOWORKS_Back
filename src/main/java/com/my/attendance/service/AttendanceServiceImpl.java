@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,14 +45,8 @@ public class AttendanceServiceImpl implements AttendanceService {
 	} // findAll
 
 	@Override
-	public List<AttendanceDTO> findAllByMemberId(Long memberId) throws FindException {
+	public List<AttendanceDTO> findAllByMemberId(String memberId) throws FindException {
 	    log.warn("1. findByMemberId의 memberid ===> {} ", memberId);
-//
-//	    Optional<MemberEntity> memberOptional = memberRepository.findById(memberId);
-//
-//	    MemberEntity member = memberOptional.get();
-//	    Long memberIdToFind = member.getId();
-	   
 	    
 	    List<AttendanceEntity> entityList= repository.findAllByMemberId(memberId);
 	    List<AttendanceDTO> list = new ArrayList<>();
@@ -59,18 +55,21 @@ public class AttendanceServiceImpl implements AttendanceService {
 	    	AttendanceDTO dto = model.VoToDTO(entity);
 	    	list.add(dto);
 	    }
-	    
+	 
 	    return list;
-	    
-//	    return repository.findAllByMemberId(memberId);
 
 	} // findAllByMemberId
 
 	@Override
 	public void createAttendance(AttendanceDTO dto) throws AddException {
 		
+		log.warn("Service dto ===> {}", dto.getMemberId());
+		
 		// dto 객체로 들어온 것을 entiiy로 변환
 		AttendanceEntity entity = model.DtoToVo(dto);
+//		entity.setMemberId(dto.getMemberId());
+		
+		log.warn("Service entity ===> {}", entity.getMemberId());
 		
 		// currentTime에 현재시간 대입
         LocalTime currentTime = LocalTime.now();
@@ -113,6 +112,8 @@ public class AttendanceServiceImpl implements AttendanceService {
 
 	@Override		// modify로 수정
 	public void updateAttendance(AttendanceDTO dto) throws ModifyException {
+		
+		log.warn("Service update dto ===> {}", dto.getMemberId());
 		
 	    // dto 객체로 들어온 것을 entity로 변환
 	    AttendanceEntity entity = model.DtoToVo(dto);

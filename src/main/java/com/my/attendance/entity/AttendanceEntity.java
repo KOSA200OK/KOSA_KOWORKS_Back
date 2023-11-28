@@ -63,6 +63,6 @@ public class AttendanceEntity {
 	public void modifyAttendance(String endTime, Integer status) {
 		this.endTime = endTime;
 		this.status = status;
-	} // modifyAttendance
+	}
 	
 } // end class

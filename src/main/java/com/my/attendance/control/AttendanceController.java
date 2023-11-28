@@ -41,7 +41,7 @@ public class AttendanceController {
 //	}
 	
 	@GetMapping()
-	public List<AttendanceDTO> findByMemberEntity(@RequestParam Long memberId) throws FindException {
+	public List<AttendanceDTO> findByMemberEntity(@RequestParam String memberId) throws FindException {
 		
 //		Long LongMemberId = (long)memberId;
 		
@@ -55,6 +55,8 @@ public class AttendanceController {
 	@PostMapping()
 	public ResponseEntity<?> createAttendance(@RequestBody AttendanceDTO dto) throws AddException {
 		
+		log.warn("Controller dto ===> {}", dto.getMemberId());
+		
 		try {
 			service.createAttendance(dto);
 			
@@ -67,6 +69,8 @@ public class AttendanceController {
 	
 	@PutMapping()
 	public ResponseEntity<?> updateAttendance(@RequestBody AttendanceDTO dto) throws ModifyException {
+		
+		log.warn("put dto ======> {}", dto.getMemberId());
 		
 		try {
 			service.updateAttendance(dto);
