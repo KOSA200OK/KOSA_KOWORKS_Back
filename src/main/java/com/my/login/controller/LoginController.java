@@ -27,7 +27,6 @@ public class LoginController {
 		if (service.findByMemberId(loginRequestDTO)) {
 			session.setAttribute("memberId", loginRequestDTO.getId());
 			return ResponseEntity.ok("로그인 성공");
-
 		} else {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인 실패");
 		}
