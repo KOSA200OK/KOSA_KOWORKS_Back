@@ -16,7 +16,6 @@ import lombok.Setter;
 
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor
 @Builder
-
 public class NoticeDTO {
 	private Long id;
 	private Long memberId;
@@ -30,8 +29,5 @@ public class NoticeDTO {
 	private String content;
 	@JsonFormat(pattern="yy/MM/dd", timezone="Asia/Seoul")
 	private Date regdate;
-	
-//	public NoticeDTO(String name) {
-//		this.name = name;
-//	}
+
 }

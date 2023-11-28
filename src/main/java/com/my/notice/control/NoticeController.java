@@ -29,12 +29,12 @@ public class NoticeController {
 	NoticeServiceImpl service;
 	
 	@GetMapping("/list") //공지사항 전체 리스트 조회
-	public Page<NoticeDTO> list(@PageableDefault(size=10) Pageable pageable) throws FindException {
+	public Page<NoticeDTO> findAll(@PageableDefault(size=10) Pageable pageable) throws FindException {
 		return service.findAll(pageable);
 	}
 	
 	@GetMapping("/{id}") //공지사항 상세 조회
-	public Optional<NoticeDTO> info(@PathVariable Long id) throws FindException{
+	public Optional<NoticeDTO> findById(@PathVariable Long id) throws FindException{
 		return service.findById(id);
 	}
 }
