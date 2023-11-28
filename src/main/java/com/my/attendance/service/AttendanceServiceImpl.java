@@ -3,10 +3,12 @@ package com.my.attendance.service;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.my.attendance.dao.AttendanceRepository;
@@ -16,6 +18,7 @@ import com.my.exception.AddException;
 import com.my.exception.FindException;
 import com.my.exception.ModifyException;
 import com.my.member.entity.MemberEntity;
+import com.my.member.repository.MemberRepository;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,23 +30,41 @@ public class AttendanceServiceImpl implements AttendanceService {
 	private AttendanceRepository repository;
 	
 	@Autowired
+	private MemberRepository memberRepository;
+	
+	@Autowired
 	private AttendanceMapper model;
 
 	@Override
 	public List<AttendanceEntity> findAll() throws FindException {
 		
-		return repository.findAll();
+		return repository.findAll(Sort.by(Sort.Direction.DESC, "id"));
 		
 	} // findAll
 
 	@Override
-	public AttendanceDTO findByMemberId(int memberId) throws FindException {
-		
-		Optional<AttendanceEntity> att = repository.findById(memberId);
-		
-		return model.VoToDTO(att);
-		
-	} // findByMemberId
+	public List<AttendanceDTO> findAllByMemberId(Long memberId) throws FindException {
+	    log.warn("1. findByMemberId의 memberid ===> {} ", memberId);
+//
+//	    Optional<MemberEntity> memberOptional = memberRepository.findById(memberId);
+//
+//	    MemberEntity member = memberOptional.get();
+//	    Long memberIdToFind = member.getId();
+	   
+	    
+	    List<AttendanceEntity> entityList= repository.findAllByMemberId(memberId);
+	    List<AttendanceDTO> list = new ArrayList<>();
+	    
+	    for(AttendanceEntity entity : entityList) {
+	    	AttendanceDTO dto = model.VoToDTO(entity);
+	    	list.add(dto);
+	    }
+	    
+	    return list;
+	    
+//	    return repository.findAllByMemberId(memberId);
+
+	} // findAllByMemberId
 
 	@Override
 	public void createAttendance(AttendanceDTO dto) throws AddException {
@@ -89,7 +110,8 @@ public class AttendanceServiceImpl implements AttendanceService {
 		
 	} // create
 
-	@Override
+
+	@Override		// modify로 수정
 	public void updateAttendance(AttendanceDTO dto) throws ModifyException {
 		
 	    // dto 객체로 들어온 것을 entity로 변환
@@ -109,7 +131,7 @@ public class AttendanceServiceImpl implements AttendanceService {
 
 	        repository.save(existingEntity);
 	        
-	    } else {
+	    } else {	
 	        // 예외 처리 - 해당 memberId를 찾을 수 없는 경우
 	        throw new ModifyException("Attendance for memberId " + memberId + " not found.");
 	    }

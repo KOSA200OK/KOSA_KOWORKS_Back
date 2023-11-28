@@ -11,4 +11,7 @@ import com.my.member.entity.MemberEntity;
 public interface MemberRepository extends JpaRepository<MemberEntity, Long> {
 
 	public Optional<MemberEntity> findById(Long id);
+
+	public MemberEntity findAllById(Long Id);
+	
 }

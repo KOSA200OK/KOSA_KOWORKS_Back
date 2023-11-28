@@ -1,5 +1,6 @@
 package com.my.attendance.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
@@ -10,7 +11,10 @@ import org.springframework.stereotype.Service;
 import com.my.attendance.dto.AttendanceDTO;
 import com.my.attendance.entity.AttendanceEntity;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class AttendanceMapper {
 	
 	private ModelMapper mapper;
@@ -23,12 +27,15 @@ public class AttendanceMapper {
 				   .setFieldMatchingEnabled(true);
 	}
 	
-	public AttendanceDTO VoToDTO(Optional<AttendanceEntity> att) {
+	public AttendanceDTO VoToDTO(AttendanceEntity att) {
 
-		Object source = att;
-		Class<AttendanceDTO> destinationType = AttendanceDTO.class;
+		log.warn("3. VoToDTO의 att =====> {}", att);
 		
-		AttendanceDTO dto = mapper.map(source, destinationType);
+		Object source = att;
+//		Class<AttendanceDTO> destinationType = AttendanceDTO.class;
+//		Class<AttendanceDTO destinationType = AttendanceDTO.class;
+		
+		AttendanceDTO dto = mapper.map(source, AttendanceDTO.class);
 		dto.setMemberId(dto.getMemberId());
 		
 		return dto;
