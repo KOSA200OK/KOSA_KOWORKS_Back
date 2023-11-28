@@ -5,7 +5,10 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+<<<<<<< HEAD
+=======
 import org.springframework.web.bind.annotation.CrossOrigin;
+>>>>>>> 9e84c68011c46842994615944c0ebfae3b7149e5
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,18 +23,30 @@ public class LoginController {
 	@Autowired
 	private LoginService service;
 
+<<<<<<< HEAD
+	@PostMapping("/login")
+	// vue에서 요청을 data에 담아 보내면 loginRequestDTO로 받음
+=======
 	@CrossOrigin(origins = "http://localhost:5173")
 	@PostMapping("/login")
+>>>>>>> 9e84c68011c46842994615944c0ebfae3b7149e5
 	public ResponseEntity<String> login(@RequestBody LoginRequestDTO loginRequestDTO, HttpSession session) {
 		if (service.authenticateMember(loginRequestDTO)) {
 			session.setAttribute("memberId", loginRequestDTO.getId());
 			return ResponseEntity.ok("로그인 성공");
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9e84c68011c46842994615944c0ebfae3b7149e5
 		} else {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인 실패");
 		}
 	}
 
+<<<<<<< HEAD
+=======
 	@CrossOrigin(origins = "http://localhost:5173")
+>>>>>>> 9e84c68011c46842994615944c0ebfae3b7149e5
 	@GetMapping("/logout")
 	public ResponseEntity<String> logout(HttpSession session) {
 		session.removeAttribute("memberId");

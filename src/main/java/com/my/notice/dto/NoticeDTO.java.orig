@@ -1,5 +1,8 @@
 package com.my.notice.dto;
 
+<<<<<<< HEAD
+public class NoticeDTO {
+=======
 import java.util.Date;
 
 import javax.validation.constraints.NotNull;
@@ -29,5 +32,6 @@ public class NoticeDTO {
 	private String content;
 	@JsonFormat(pattern="yy/MM/dd", timezone="Asia/Seoul")
 	private Date regdate;
+>>>>>>> 9e84c68011c46842994615944c0ebfae3b7149e5
 
 }

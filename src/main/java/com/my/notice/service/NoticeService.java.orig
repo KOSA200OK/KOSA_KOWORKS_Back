@@ -1,5 +1,9 @@
 package com.my.notice.service;
 
+<<<<<<< HEAD
+public interface NoticeService {
+
+=======
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -26,4 +30,5 @@ public interface NoticeService {
 	 */
 	public Optional<NoticeDTO> findById(Long id) throws FindException;
 	
+>>>>>>> 9e84c68011c46842994615944c0ebfae3b7149e5
 }

@@ -41,8 +41,11 @@ public class MeetingroomDetailEntity {
 	)
 	private Long id;
 	
+<<<<<<< HEAD
+=======
 	private String name;
 	
+>>>>>>> 9e84c68011c46842994615944c0ebfae3b7149e5
 	private Long maxNum;
 	
 	private Long monitor;
@@ -53,6 +56,9 @@ public class MeetingroomDetailEntity {
 	
 	private Long marker;
 	
+<<<<<<< HEAD
+=======
 	private String location;
 	
+>>>>>>> 9e84c68011c46842994615944c0ebfae3b7149e5
 }

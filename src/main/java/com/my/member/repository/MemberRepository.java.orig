@@ -1,14 +1,25 @@
 package com.my.member.repository;
 
+<<<<<<< HEAD
+=======
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+>>>>>>> 9e84c68011c46842994615944c0ebfae3b7149e5
 import org.springframework.stereotype.Repository;
 
 import com.my.member.entity.MemberEntity;
 
 @Repository
+<<<<<<< HEAD
+public class MemberRepository {
+
+	public MemberEntity findByMemberId(String memberId) {
+		return null;
+	}
+=======
 public interface MemberRepository extends JpaRepository<MemberEntity, Long> {
 
 	public Optional<MemberEntity> findById(Long id);
+>>>>>>> 9e84c68011c46842994615944c0ebfae3b7149e5
 }

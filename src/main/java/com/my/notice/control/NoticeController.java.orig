@@ -1,5 +1,9 @@
 package com.my.notice.control;
 
+<<<<<<< HEAD
+public class NoticeController {
+
+=======
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -37,4 +41,5 @@ public class NoticeController {
 	public Optional<NoticeDTO> findById(@PathVariable Long id) throws FindException{
 		return service.findById(id);
 	}
+>>>>>>> 9e84c68011c46842994615944c0ebfae3b7149e5
 }

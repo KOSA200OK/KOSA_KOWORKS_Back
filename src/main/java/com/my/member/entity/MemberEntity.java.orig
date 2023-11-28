@@ -23,6 +23,12 @@ public class MemberEntity {
 	private Long id;
 
 	@Column(nullable = false)
+<<<<<<< HEAD
+	private String password;
+
+	@Column(nullable = false)
+=======
+>>>>>>> 9e84c68011c46842994615944c0ebfae3b7149e5
 	private String name;
 
 	@Column(nullable = false)
@@ -31,9 +37,12 @@ public class MemberEntity {
 	@Column(nullable = false, unique = true)
 	private String tel;
 
+<<<<<<< HEAD
+=======
 	@Column(nullable = false)
 	private String password;
 
+>>>>>>> 9e84c68011c46842994615944c0ebfae3b7149e5
 	@ManyToOne
 	@JoinColumn(name = "departmentId")
 	private DepartmentEntity department;

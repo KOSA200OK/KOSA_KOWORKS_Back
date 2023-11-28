@@ -1,5 +1,9 @@
 package com.my.notice.service;
 
+<<<<<<< HEAD
+import org.springframework.stereotype.Service;
+
+=======
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +16,15 @@ import com.my.notice.dto.NoticeDTO;
 import com.my.notice.entity.NoticeEntity;
 import com.my.notice.repository.NoticeRepository;
 
+>>>>>>> 9e84c68011c46842994615944c0ebfae3b7149e5
 import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
+<<<<<<< HEAD
+public class NoticeServiceImpl {
+
+=======
 public class NoticeServiceImpl implements NoticeService{
 	
 	@Autowired
@@ -36,4 +45,5 @@ public class NoticeServiceImpl implements NoticeService{
 		return entity.map(nm::VoToDto_ModelMapper);
 	}
 	
+>>>>>>> 9e84c68011c46842994615944c0ebfae3b7149e5
 }

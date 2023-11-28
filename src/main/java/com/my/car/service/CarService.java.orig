@@ -1,5 +1,12 @@
 package com.my.car.service;
 
+<<<<<<< HEAD
+import org.springframework.stereotype.Service;
+
+@Service
+public interface CarService {
+	
+=======
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -10,4 +17,5 @@ import com.my.car.dto.CarDTO;
 
 public interface CarService {
 	public Page<CarDTO> findCarList(Pageable pageable);
+>>>>>>> 9e84c68011c46842994615944c0ebfae3b7149e5
 }

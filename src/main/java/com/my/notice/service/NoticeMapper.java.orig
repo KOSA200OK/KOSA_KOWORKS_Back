@@ -35,6 +35,15 @@ public class NoticeMapper {
 		Object source = dto;
 		Class<NoticeEntity> destinationType = NoticeEntity.class;
 		NoticeEntity entity = mapper.map(source, destinationType);
+<<<<<<< HEAD
+		log.error("entity boardTitle:{}, boardContent:{}, boardId:{}, boardDt:{}"
+//				,
+//				entity.getBoardTitle(),
+//				entity.getBoardContent(),
+//				entity.getBoardId(),
+//				entity.getBoardDt()
+				);
+=======
 //		log.error("entity memberId:{}, title:{}, content:{}, regdate:{}"
 //				,
 //				entity.getId(),
@@ -42,6 +51,7 @@ public class NoticeMapper {
 //				entity.getContent(),
 //				entity.getRegdate()
 //				);
+>>>>>>> 9e84c68011c46842994615944c0ebfae3b7149e5
 		return entity;
 	}
 	
@@ -59,6 +69,16 @@ public class NoticeMapper {
 		Class<NoticeDTO> destinationType = NoticeDTO.class;
 		NoticeDTO dto = mapper.map(source, destinationType);
 		
+<<<<<<< HEAD
+		log.error("entity boardTitle:{}, boardContent:{}, boardId:{}, boardDt:{}"
+//				,
+//				dto.getBoardTitle(),
+//				dto.getBoardContent(),
+//				dto.getBoardId(),
+//				dto.getBoardDt()
+				);
+=======
+>>>>>>> 9e84c68011c46842994615944c0ebfae3b7149e5
 		return dto;
 	}
 }

@@ -1,5 +1,10 @@
 package com.my.car.service;
 
+<<<<<<< HEAD
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+=======
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,10 +15,19 @@ import org.springframework.stereotype.Service;
 
 import com.my.car.dto.CarDTO;
 import com.my.car.entity.CarEntity;
+>>>>>>> 9e84c68011c46842994615944c0ebfae3b7149e5
 import com.my.car.repository.CarRepository;
 
 @Service
 public class CarServiceImpl implements CarService {
+<<<<<<< HEAD
+	private CarRepository carRepository;
+	
+	@Autowired
+	public CarServiceImpl(CarRepository carRepository) {
+		this.carRepository = carRepository;
+	}
+=======
 	private CarRepository cr;
 	
 	@Autowired
@@ -28,4 +42,5 @@ public class CarServiceImpl implements CarService {
 		return entityList.map(cm::entityToDto);
 	}
 
+>>>>>>> 9e84c68011c46842994615944c0ebfae3b7149e5
 }

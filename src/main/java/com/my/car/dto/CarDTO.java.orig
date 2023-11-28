@@ -16,7 +16,10 @@ import lombok.ToString;
 @ToString
 public class CarDTO {
 	private String carId;
+<<<<<<< HEAD
+=======
 	private String carNo;
+>>>>>>> 9e84c68011c46842994615944c0ebfae3b7149e5
 	private String carType;
 	private Long status;
 }

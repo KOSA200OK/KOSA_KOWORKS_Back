@@ -1,5 +1,12 @@
 package com.my.address.service;
 
+<<<<<<< HEAD
+import org.springframework.stereotype.Service;
+
+@Service
+public interface AddressService {
+
+=======
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -10,4 +17,5 @@ import com.my.address.dto.AddressMemberDTO;
 public interface AddressService {
 
 	List<AddressMemberDTO> getAllMembers();
+>>>>>>> 9e84c68011c46842994615944c0ebfae3b7149e5
 }

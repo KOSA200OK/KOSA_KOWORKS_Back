@@ -4,8 +4,14 @@ import lombok.Data;
 
 @Data
 public class AddressMemberDTO {
+<<<<<<< HEAD
+	private Long memberId;
+	private String name;
+	private String department;
+=======
 	private Long id;
 	private String name;
 	private String position;
 	private String tel;
+>>>>>>> 9e84c68011c46842994615944c0ebfae3b7149e5
 }
