@@ -40,7 +40,7 @@ public class MeetingReservationEntity {
 			strategy = GenerationType.SEQUENCE,
 			generator = "MEETING_SEQ_GENERATOR"
 	)
-	private Integer id;
+	private Long id;
 	
 	@ManyToOne
 	@JoinColumn(name="meetingroomId", nullable=false)
@@ -57,6 +57,5 @@ public class MeetingReservationEntity {
 	private Date meetingDate;
 	
 	private String purpose;
-
 	
 }
