@@ -1,17 +1,21 @@
 package com.my.stuff.entity;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
+
+import com.my.member.entity.MemberEntity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,35 +23,44 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
+@Getter
 @Builder
 @Entity
-@Table(name = "stuff_req")
-@SequenceGenerator(name = "req_seq_generator", sequenceName = "req_seq", initialValue = 1, allocationSize = 1)
+@DynamicInsert
+@Table(name = "stuff_req_test")
+@SequenceGenerator(name="stuff_req_seq_generator", sequenceName="car_rent_seq", initialValue=1, allocationSize=1)
 public class StuffReqEntity {
 	@Id
-	@Column(name = "reqId")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "req_seq_generator")
-	private int reqId;
+	@Column(length = 20)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "stuff_req_seq_generator")
+	private Long id;
+    
+	@ManyToOne
+	@JoinColumn(name = "stuffId")
+	private StuffEntity stuffEntity;
 	
-	@OneToOne(mappedBy = "departmentId")
-	private int departmentId;
+	@ManyToOne
+	@JoinColumn(name = "memberId")
+	private MemberEntity memberEntity;
 	
-	@Column(name = "reqStatus")
-	private int reqStatus;
-	
-    @Column(name = "reqDate")
+	@Column(nullable=false)
+	@ColumnDefault(value = "SYSDATE")
 	private Date reqDate;
-    
-    @Column(name = "purpose")
+	
+	@Column(nullable = false, length = 2)
+	@ColumnDefault("0")
+	private Long quantityReq;
+	
+	@Column(nullable = false)
+	@ColumnDefault("0")
+	private Long status;
+	
+	@Column(length=200)
 	private String purpose;
-    
-    @Column(name = "reject")
+	
+	@Column(length=200)
 	private String reject;
-    
-    
-    @OneToMany(mappedBy="reqId")
-    private List<StuffReqLineEntity> lines;
+
 }
