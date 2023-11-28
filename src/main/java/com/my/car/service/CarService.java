@@ -11,7 +11,7 @@ import com.my.car.dto.CarRentDTO;
 import com.my.car.entity.CarRentEntity;
 
 public interface CarService {
-	public Page<CarDTO> findCarList(Pageable pageable);
+	public Page<CarDTO> findAllCar(Pageable pageable);
 	
-	public void addCarRent(CarRentDTO carRent);
+	public void createCarRent(CarRentDTO carRent);
 }

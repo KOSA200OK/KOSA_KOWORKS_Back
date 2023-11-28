@@ -11,12 +11,14 @@ import javax.persistence.Table;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@NoArgsConstructor
-@Getter
+@NoArgsConstructor @AllArgsConstructor
+@Getter @Builder @Setter
 
 @Entity
 @DynamicInsert

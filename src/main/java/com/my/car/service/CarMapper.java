@@ -13,7 +13,7 @@ public class CarMapper {
 	public CarEntity dtoToEntity(CarDTO dto) {
 		ModelMapper mapper = new ModelMapper();
 		mapper.getConfiguration()
-		    .setMatchingStrategy(MatchingStrategies.STRICT)
+		    .setMatchingStrategy(MatchingStrategies.STANDARD)
 			.setFieldAccessLevel(AccessLevel.PRIVATE)
 			.setFieldMatchingEnabled(true);
 		
@@ -27,7 +27,7 @@ public class CarMapper {
 	public CarDTO entityToDto(CarEntity entity) {
 		ModelMapper mapper = new ModelMapper();
 		mapper.getConfiguration()
-		    .setMatchingStrategy(MatchingStrategies.STRICT)
+		    .setMatchingStrategy(MatchingStrategies.STANDARD)
 			.setFieldAccessLevel(AccessLevel.PRIVATE)
 			.setFieldMatchingEnabled(true);
 		

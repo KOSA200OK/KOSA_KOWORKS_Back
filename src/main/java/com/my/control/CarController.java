@@ -35,16 +35,19 @@ public class CarController {
 	private CarService cs;
 	
 	@GetMapping("/carlist")
-	public Page<CarDTO> carList(int currentPage) throws FindException{
+	public Page<CarDTO> findAllCar(int currentPage) throws FindException{
 		System.out.println("currentPage: "+currentPage);
 		currentPage -=1;
 		Pageable pageable = PageRequest.of(currentPage, 10);
-		return cs.findCarList(pageable);
+		System.out.println(cs.findAllCar(pageable).getContent().get(0).getCarId());
+		return cs.findAllCar(pageable);
 	}
 	
 	@PostMapping("/reserve")
-	public void reserve(@RequestBody CarRentDTO carRent) throws AddException{
+	public void createCarRent(@RequestBody CarRentDTO carRent) throws AddException{
 		System.out.println(carRent.getCarId()+" "+carRent.getStartDate()+" "+carRent.getEndDate());
-		cs.addCarRent(carRent);
+		cs.createCarRent(carRent);
 	}
+	
+	
 }
