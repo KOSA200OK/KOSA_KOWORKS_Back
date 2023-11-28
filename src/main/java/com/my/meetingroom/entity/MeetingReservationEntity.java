@@ -57,6 +57,5 @@ public class MeetingReservationEntity {
 	private Date meetingDate;
 	
 	private String purpose;
-
 	
 }
