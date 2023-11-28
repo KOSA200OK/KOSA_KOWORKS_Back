@@ -16,6 +16,8 @@ import javax.persistence.Table;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
+import com.my.member.entity.MemberEntity;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 @NoArgsConstructor
@@ -28,11 +30,11 @@ import lombok.NoArgsConstructor;
 public class CarRentEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "car_rent_seq_generator")
-	private Long rentId;
+	private Long id;
 	
-//	@ManyToOne
-//	@JoinColumn(name="memberId",nullable=false)
-//	private MemberEntity member;
+	@ManyToOne
+	@JoinColumn(name="memberId",nullable=false)
+	private MemberEntity member;
 	
 	@ManyToOne
 	@JoinColumn(name="carId", nullable =false)

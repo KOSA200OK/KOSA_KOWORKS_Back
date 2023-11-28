@@ -17,10 +17,10 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name="member")
+@Table(name = "member")
 public class MemberEntity {
 	@Id
-	private Long memberId;
+	private Long id;
 
 	@Column(nullable = false)
 	private String name;
@@ -30,6 +30,9 @@ public class MemberEntity {
 
 	@Column(nullable = false, unique = true)
 	private String tel;
+
+	@Column(nullable = false)
+	private String password;
 
 	@ManyToOne
 	@JoinColumn(name = "departmentId")
