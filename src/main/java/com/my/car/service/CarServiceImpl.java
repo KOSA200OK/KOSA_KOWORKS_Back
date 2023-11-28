@@ -42,7 +42,7 @@ public class CarServiceImpl implements CarService {
 		CarRentEntity entity = crm.dtoToEntity(carRent);
 		crr.save(entity);
 		
-		Optional<CarEntity> optC = cr.findById(carRent.getCarId());
+		Optional<CarEntity> optC = cr.findById(carRent.getCar().getId());
 		CarEntity carEntity = optC.get();
 		carEntity.modifyCarStatus((long)1);
 		cr.save(carEntity);

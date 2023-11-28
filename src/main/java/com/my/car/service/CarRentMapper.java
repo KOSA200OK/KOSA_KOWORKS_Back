@@ -25,13 +25,13 @@ public class CarRentMapper {
 		Object source = dto;
 		
 		// 필드명이 일치하지 않는 경우 명시적으로 매핑
-        mapper.addMappings(new PropertyMap<CarRentDTO, CarRentEntity>() {
-            @Override
-            protected void configure() {
-                map().getCar().setId(source.getCarId());
-                map().getMember().setId(source.getMemberId());
-            }
-        });
+//        mapper.addMappings(new PropertyMap<CarRentDTO, CarRentEntity>() {
+//            @Override
+//            protected void configure() {
+//                map().getCar().setId(source.getCar().getId());
+//                map().getMember().setId(source.getMember().getId());
+//            }
+//        });
 		
 		Class<CarRentEntity> destinationType = CarRentEntity.class;
 		CarRentEntity entity = mapper.map(source, destinationType); //DTO->VO

@@ -39,13 +39,12 @@ public class CarController {
 		System.out.println("currentPage: "+currentPage);
 		currentPage -=1;
 		Pageable pageable = PageRequest.of(currentPage, 10);
-		System.out.println(cs.findAllCar(pageable).getContent().get(0).getCarId());
 		return cs.findAllCar(pageable);
 	}
 	
 	@PostMapping("/reserve")
 	public void createCarRent(@RequestBody CarRentDTO carRent) throws AddException{
-		System.out.println(carRent.getCarId()+" "+carRent.getStartDate()+" "+carRent.getEndDate());
+		System.out.println(carRent.getCar().getId()+" "+carRent.getStartDate()+" "+carRent.getEndDate());
 		cs.createCarRent(carRent);
 	}
 	
