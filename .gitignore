@@ -7,7 +7,8 @@
 # Unignore all dirs
 !*/
 
-/bin/*
+bin/
+test/
 
 HELP.md
 target/
