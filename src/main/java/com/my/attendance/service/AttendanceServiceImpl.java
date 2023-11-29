@@ -8,12 +8,16 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.my.attendance.dao.AttendanceRepository;
 import com.my.attendance.dto.AttendanceDTO;
 import com.my.attendance.entity.AttendanceEntity;
+import com.my.car.repository.CarRepository;
+import com.my.car.service.CarMapper;
 import com.my.exception.AddException;
 import com.my.exception.FindException;
 import com.my.exception.ModifyException;
@@ -31,7 +35,7 @@ public class AttendanceServiceImpl implements AttendanceService {
 	
 	@Autowired
 	private MemberRepository memberRepository;
-	
+
 	@Autowired
 	private AttendanceMapper model;
 
@@ -43,17 +47,20 @@ public class AttendanceServiceImpl implements AttendanceService {
 	} // findAll
 
 	@Override
-	public List<AttendanceDTO> findAllByMemberId(String memberId) throws FindException {
+	public Page<AttendanceDTO> findAllByMemberId(String memberId, Pageable pageable) throws FindException {
 	    log.warn("1. findByMemberId의 memberid ===> {} ", memberId);
 	    
-	    List<AttendanceEntity> entityList= repository.findAllByMemberId(memberId);
-	    List<AttendanceDTO> list = new ArrayList<>();
+	    Page<AttendanceEntity> entityList= repository.findAllByMemberId(memberId, pageable);
+	    model = new AttendanceMapper();
+		return entityList.map(model::VoToDTO);
 	    
-	    for(AttendanceEntity entity : entityList) {
-	    	AttendanceDTO dto = model.VoToDTO(entity);
-	    	list.add(dto);
-	    }
-	    return list;
+//	    Page<AttendanceDTO> list = new ArrayList<>();
+//	    
+//	    for(AttendanceEntity entity : entityList) {
+//	    	AttendanceDTO dto = model.VoToDTO(entity);
+//	    	list.add(dto);
+//	    }
+//	    return list;
 
 	} // findAllByMemberId
 

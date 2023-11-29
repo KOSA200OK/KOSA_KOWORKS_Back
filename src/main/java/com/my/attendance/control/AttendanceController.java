@@ -1,9 +1,10 @@
 package com.my.attendance.control;
 
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.my.attendance.dto.AttendanceDTO;
-import com.my.attendance.entity.AttendanceEntity;
 import com.my.attendance.service.AttendanceService;
 import com.my.exception.AddException;
 import com.my.exception.FindException;
@@ -42,13 +42,16 @@ public class AttendanceController {
 //	}
 	
 	@GetMapping()
-	public List<AttendanceDTO> findByMemberEntity(@RequestParam String memberId) throws FindException {
+	public Page<AttendanceDTO> findByMemberEntity(@RequestParam String memberId, int currentPage) throws FindException {
 		
 //		Long LongMemberId = (long)memberId;
 		
 	    log.warn("Controller memberId ==> {}", memberId);
 	    
-	    return service.findAllByMemberId(memberId);
+		currentPage -=1;
+		Pageable pageable = PageRequest.of(currentPage, 10);
+	    
+	    return service.findAllByMemberId(memberId, pageable);
 		
 	} // findByMemberId
 
