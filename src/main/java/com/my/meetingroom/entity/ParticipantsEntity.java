@@ -49,7 +49,7 @@ public class ParticipantsEntity {
 	)
 	private Long id;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name="meetingId", nullable=false)
 	@MapsId("meetingId")
 	private MeetingReservationEntity meeting;
