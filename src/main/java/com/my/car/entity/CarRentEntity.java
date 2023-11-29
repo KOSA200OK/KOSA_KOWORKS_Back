@@ -18,10 +18,13 @@ import org.hibernate.annotations.DynamicInsert;
 
 import com.my.member.entity.MemberEntity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-@NoArgsConstructor
-@Getter
+import lombok.Setter;
+@NoArgsConstructor @AllArgsConstructor
+@Getter @Setter @Builder
 
 @Entity
 @Table(name="car_rent")
@@ -65,4 +68,9 @@ public class CarRentEntity {
 	
 	@Column(precision=12, scale=6)
 	private BigDecimal longitude;
+	
+	public void modifyCarRentStatus(Long status) {
+		this.status = status;
+	}
+
 }

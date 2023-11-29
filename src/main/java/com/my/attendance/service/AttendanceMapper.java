@@ -8,8 +8,6 @@ import org.springframework.stereotype.Service;
 import com.my.attendance.dao.AttendanceRepository;
 import com.my.attendance.dto.AttendanceDTO;
 import com.my.attendance.entity.AttendanceEntity;
-import com.my.car.entity.CarRentEntity;
-import com.my.car.repository.CarRepository;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -34,11 +32,10 @@ public class AttendanceMapper {
 		log.warn("3. VoToDTO의 att =====> {}", att);
 		
 		Object source = att;
-//		Class<AttendanceDTO> destinationType = AttendanceDTO.class;
-//		Class<AttendanceDTO destinationType = AttendanceDTO.class;
-		
+
 		AttendanceDTO dto = mapper.map(source, AttendanceDTO.class);
-		dto.setMemberId(dto.getMemberId());
+//		dto.setMemberId(dto.getMemberId());
+//		dto.setMember(dto.getMember());
 		
 		return dto;
 
@@ -55,11 +52,10 @@ public class AttendanceMapper {
 		log.warn("DtoToVO inner dto ======> {}", dto.getMemberId());
 
 		Object source = dto;
-
 		Class<AttendanceEntity> destinationType=AttendanceEntity.class;
 
 		AttendanceEntity entity = mapper.map(source, destinationType);
-	
+
 		log.warn("DtoToVO inner entity ======> {}", entity.getMemberId());
 		
 		return entity;

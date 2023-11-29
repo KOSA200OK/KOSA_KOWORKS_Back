@@ -11,12 +11,14 @@ import javax.persistence.Table;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@NoArgsConstructor
-@Getter
+@NoArgsConstructor @AllArgsConstructor
+@Getter @Builder @Setter
 
 @Entity
 @DynamicInsert
@@ -35,4 +37,8 @@ public class CarEntity {
 	@Column(nullable=false, length=2)
 	@ColumnDefault("0") 
 	private Long status;
+	
+	public void modifyCarStatus(Long status) {
+		this.status = status;
+	}	
 }

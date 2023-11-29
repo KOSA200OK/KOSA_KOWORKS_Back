@@ -1,7 +1,7 @@
 package com.my.car.dto;
 
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.JoinColumn;
@@ -13,6 +13,7 @@ import org.hibernate.annotations.ColumnDefault;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.my.car.entity.CarEntity;
+import com.my.member.dto.MemberDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,9 +26,9 @@ import lombok.ToString;
 @Builder
 @ToString
 public class CarRentDTO {
-	private Long rentId;
-	private Long memberId;
-	private String carId;
+	private Long id;
+	private MemberDTO member;
+	private CarDTO car;
 	
 	@JsonFormat(pattern = "yy/MM/dd", timezone = "Asia/Seoul")
 	private Date reqDate;
