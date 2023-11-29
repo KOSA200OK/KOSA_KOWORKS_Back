@@ -37,4 +37,6 @@ public class MemberEntity {
 	@ManyToOne
 	@JoinColumn(name = "departmentId")
 	private DepartmentEntity department;
+	
+	
 }
