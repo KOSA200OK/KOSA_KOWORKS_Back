@@ -27,12 +27,17 @@ import com.my.exception.FindException;
 
 import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 @RequestMapping("/carrent")
 @CrossOrigin(origins="http://localhost:5173")
 public class CarController {
 	@Autowired
 	private CarService cs;
+	
+
+	//****************** 챠량 목록 ******************
+
 	
 	@GetMapping("/carlist")
 	public Page<CarDTO> findAllCar(int currentPage) throws FindException{
@@ -48,5 +53,13 @@ public class CarController {
 		cs.createCarRent(carRent);
 	}
 	
-	
+
+	//****************** 나의 차량 대여 목록 ******************
+
+	@GetMapping("/myrentlist")
+	public Page<CarRentDTO> findAllMyCarRent(String memberId, int currentPage) throws AddException{
+		currentPage -=1;
+		Pageable pageable = PageRequest.of(currentPage, 10);
+		return cs.findAllMyCarRent(pageable, memberId);
+	}
 }
