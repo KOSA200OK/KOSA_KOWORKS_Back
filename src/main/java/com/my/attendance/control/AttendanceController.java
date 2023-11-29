@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.my.attendance.dto.AttendanceDTO;
+import com.my.attendance.entity.AttendanceEntity;
 import com.my.attendance.service.AttendanceService;
 import com.my.exception.AddException;
 import com.my.exception.FindException;
@@ -55,7 +56,7 @@ public class AttendanceController {
 	@PostMapping()
 	public ResponseEntity<?> createAttendance(@RequestBody AttendanceDTO dto) throws AddException {
 		
-		log.warn("Controller dto ===> {}", dto.getMemberId());
+//		log.warn("Controller dto ===> {}", dto.getMemberId());
 		
 		try {
 			service.createAttendance(dto);
@@ -68,12 +69,12 @@ public class AttendanceController {
 	} // createAttendance
 	
 	@PutMapping()
-	public ResponseEntity<?> updateAttendance(@RequestBody AttendanceDTO dto) throws ModifyException {
+	public ResponseEntity<?> modifyAttendance(@RequestBody AttendanceDTO dto) throws ModifyException {
 		
-		log.warn("put dto ======> {}", dto.getMemberId());
+//		log.warn("put dto ======> {}", dto.getMemberId());
 		
 		try {
-			service.updateAttendance(dto);
+			service.modifyAttendance(dto);
 			
 			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (ModifyException e) {

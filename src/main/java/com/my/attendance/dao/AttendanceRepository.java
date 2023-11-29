@@ -23,4 +23,6 @@ public interface AttendanceRepository extends JpaRepository<AttendanceEntity, In
 			+ "WHERE m.id = :memberId" , nativeQuery = true)
 	List<AttendanceEntity> findAllByMemberId(String memberId);
 
+//	Optional<AttendanceEntity> findById(String memberId);
+
 }

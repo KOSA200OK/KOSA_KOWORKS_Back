@@ -18,6 +18,6 @@ public interface AttendanceService {
 	public void createAttendance(AttendanceDTO dto) throws AddException;
 	
 	// 퇴근
-	public void updateAttendance(AttendanceDTO dto) throws ModifyException;
+	public void modifyAttendance(AttendanceDTO dto) throws ModifyException;
 	
 } // end class

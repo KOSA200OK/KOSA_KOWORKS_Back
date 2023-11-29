@@ -4,8 +4,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -55,7 +53,6 @@ public class AttendanceServiceImpl implements AttendanceService {
 	    	AttendanceDTO dto = model.VoToDTO(entity);
 	    	list.add(dto);
 	    }
-	 
 	    return list;
 
 	} // findAllByMemberId
@@ -64,6 +61,7 @@ public class AttendanceServiceImpl implements AttendanceService {
 	public void createAttendance(AttendanceDTO dto) throws AddException {
 		
 		log.warn("Service dto ===> {}", dto.getMemberId());
+//		log.warn("Service dto ===> {}", dto.getMemberId().getId());
 		
 		// dto 객체로 들어온 것을 entiiy로 변환
 		AttendanceEntity entity = model.DtoToVo(dto);
@@ -76,9 +74,9 @@ public class AttendanceServiceImpl implements AttendanceService {
         LocalDate currentDate = LocalDate.now();
         
         System.out.println("현재시간: " + currentTime);
-        System.out.println("아이디 : " + dto.getMemberId() );
-        
-        // DB에서 해당 memberId의 출석 정보 가져오기
+        System.out.println("아이디 1 : " + dto.getMemberId() );
+        System.out.println("아이디 2 : " + dto.getMember().getId() );
+
         Optional<AttendanceEntity> existingAttendance = repository.findById(dto.getMemberId());
         
         if (existingAttendance.isPresent()) {
@@ -111,9 +109,9 @@ public class AttendanceServiceImpl implements AttendanceService {
 
 
 	@Override		// modify로 수정
-	public void updateAttendance(AttendanceDTO dto) throws ModifyException {
+	public void modifyAttendance(AttendanceDTO dto) throws ModifyException {
 		
-		log.warn("Service update dto ===> {}", dto.getMemberId());
+//		log.warn("Service update dto ===> {}", dto.getMemberId());
 		
 	    // dto 객체로 들어온 것을 entity로 변환
 	    AttendanceEntity entity = model.DtoToVo(dto);
