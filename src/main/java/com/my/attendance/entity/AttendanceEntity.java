@@ -12,6 +12,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.DynamicInsert;
 
+import com.my.member.dto.MemberDTO;
 import com.my.member.entity.MemberEntity;
 
 import lombok.AllArgsConstructor;
@@ -56,13 +57,11 @@ public class AttendanceEntity {
 	
 	@Column(name="status")
 	private Integer status;
-	
-	/**
-	* 내용수정
-	*/
+
 	public void modifyAttendance(String endTime, Integer status) {
 		this.endTime = endTime;
 		this.status = status;
-	} // modifycontent
+	}
+
 	
 } // end class
