@@ -4,9 +4,6 @@ import java.time.LocalTime;
 
 public enum AttendanceTime {
 
-//	ON_TIME(LocalTime.of(9, 0, 0), LocalTime.of(10, 0, 0)), 
-//    OFF_TIME(LocalTime.of(17,0, 0), LocalTime.of(18,0, 0));
-	
 	ON_TIME(LocalTime.of(9, 0, 0)), 
 	OFF_TIME(LocalTime.of(17,0, 0)),
 	LATE_TIME(LocalTime.of(12, 0, 0)),
@@ -29,8 +26,4 @@ public enum AttendanceTime {
         return time;
     }
 
-//    public LocalTime getEndTime() {
-//        return endTime;
-//    }
-	
 }

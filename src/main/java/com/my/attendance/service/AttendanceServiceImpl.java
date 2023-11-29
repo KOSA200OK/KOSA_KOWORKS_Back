@@ -53,14 +53,6 @@ public class AttendanceServiceImpl implements AttendanceService {
 	    Page<AttendanceEntity> entityList= repository.findAllByMemberId(memberId, pageable);
 	    model = new AttendanceMapper();
 		return entityList.map(model::VoToDTO);
-	    
-//	    Page<AttendanceDTO> list = new ArrayList<>();
-//	    
-//	    for(AttendanceEntity entity : entityList) {
-//	    	AttendanceDTO dto = model.VoToDTO(entity);
-//	    	list.add(dto);
-//	    }
-//	    return list;
 
 	} // findAllByMemberId
 
@@ -68,12 +60,10 @@ public class AttendanceServiceImpl implements AttendanceService {
 	public void createAttendance(AttendanceDTO dto) throws AddException {
 		
 		log.warn("Service dto ===> {}", dto.getMemberId());
-//		log.warn("Service dto ===> {}", dto.getMemberId().getId());
-		
+
 		// dto 객체로 들어온 것을 entiiy로 변환
 		AttendanceEntity entity = model.DtoToVo(dto);
-//		entity.setMemberId(dto.getMemberId());
-		
+
 		log.warn("Service entity ===> {}", entity.getMemberId());
 		
 		// currentTime에 현재시간 대입
@@ -117,9 +107,7 @@ public class AttendanceServiceImpl implements AttendanceService {
 
 	@Override		// modify로 수정
 	public void modifyAttendance(AttendanceDTO dto) throws ModifyException {
-		
-//		log.warn("Service update dto ===> {}", dto.getMemberId());
-		
+
 	    // dto 객체로 들어온 것을 entity로 변환
 	    AttendanceEntity entity = model.DtoToVo(dto);
 

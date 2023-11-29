@@ -25,9 +25,9 @@ import com.my.exception.ModifyException;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
+@Slf4j
 @RequestMapping("/attendance")
 @CrossOrigin(origins="http://localhost:5173")
-@Slf4j
 public class AttendanceController {
 
 	@Autowired
