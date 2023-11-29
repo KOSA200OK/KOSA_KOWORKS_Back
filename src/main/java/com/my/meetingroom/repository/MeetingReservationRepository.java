@@ -1,7 +1,7 @@
 package com.my.meetingroom.repository;
 
-import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -15,4 +15,10 @@ public interface MeetingReservationRepository extends JpaRepository<MeetingReser
 			+ "ORDER BY md.id",
 			nativeQuery=true)
 	public List<MeetingReservationEntity> findAllMeetingRoom(String meetingDate);
+	
+	@Query(value="SELECT * \r\n"
+			+ "FROM meeting_reservation mr JOIN member m ON mr.member_id = m.id\r\n"
+			+ "WHERE mr.id = :id",
+			nativeQuery=true)
+	public Optional<MeetingReservationEntity> findById(Long id);
 }
