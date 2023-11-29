@@ -1,9 +1,12 @@
 package com.my.meetingroom.dto;
 
 
+import java.util.Date;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.my.member.dto.MemberDTO;
 
 import lombok.AllArgsConstructor;
@@ -22,6 +25,7 @@ public class MeetingReservationDTO {
 	private String startTime;
 	@NotNull(message="종료 시간을 입력해주세요")
 	private String endTime;
+//	@JsonFormat(pattern="yy/MM/dd", timezone="Asia/Seoul")
 	private String meetingDate;
 	@NotNull(message="사용 목적을 입력해주세요")
 	@Size(max=100, message="내용은 최대 100자 이내로 작성해주세요")
@@ -30,6 +34,4 @@ public class MeetingReservationDTO {
 	private MemberDTO member;
 	private MeetingRoomDTO meetingroom;
 	private ParticipantsDTO participants;
-	
-	
 }

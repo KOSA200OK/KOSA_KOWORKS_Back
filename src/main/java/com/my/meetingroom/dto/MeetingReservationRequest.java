@@ -1,6 +1,6 @@
 package com.my.meetingroom.dto;
 
-import com.my.member.dto.MemberDTO;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,11 +10,7 @@ import lombok.Setter;
 
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor
 @Builder
-public class ParticipantsDTO {
-	private Long id;
-	private Long meetingId;
-	private String[] memberId;
-	
-//	private MeetingReservationDTO meeting;
-//	private MemberDTO member;
+public class MeetingReservationRequest {
+	private MeetingReservationDTO meetingReservationDTO;
+	private List<String> participantsMemberId;
 }

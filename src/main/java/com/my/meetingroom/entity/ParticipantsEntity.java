@@ -2,6 +2,7 @@ package com.my.meetingroom.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Embeddable;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -48,7 +49,7 @@ public class ParticipantsEntity {
 	)
 	private Long id;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="meetingId", nullable=false)
 	@MapsId("meetingId")
 	private MeetingReservationEntity meeting;
