@@ -36,7 +36,6 @@ public class LoginController {
 				System.out.println("사용자가 로그인하지 않은 상태입니다.");
 			}
 			return ResponseEntity.ok("로그인 성공");
-
 		} else {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인 실패");
 		}
