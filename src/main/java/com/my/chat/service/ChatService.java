@@ -26,8 +26,8 @@ public class ChatService {
 	// DB에 ChatRoom만 남아있으면 밑의 enterChatRoom()을 통해
 	// 해당 ChatRoom에 다시 접속할 수 있기때문에 굳이 ChannelTopic은 DB에 저장안함
 	/*
-	 * TODO : ChannelTopic은 Serialize 안되어있어서 redisDB저장 x DB에 억지로 저장하는것보단 Map으로 사용하는게
-	 * 맞는듯.
+	 * TODO : ChannelTopic은 Serialize 안되어있어서 redisDB저장 x DB에 억지로 저장하는것보단 Map으로 사용
+	 *
 	 */
 	private final RedisTemplate<String, Object> redisTemplate;
 
