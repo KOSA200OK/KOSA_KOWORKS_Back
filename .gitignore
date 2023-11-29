@@ -1,5 +1,5 @@
-### Eclipse ###
-.metadata
+# Eclipse
+.metadata/
 bin/
 tmp/
 *.tmp
@@ -11,13 +11,13 @@ local.properties
 .loadpath
 .recommenders
 
-### Directories ###
+# Directories
 /build/
 /bin/
 target/
-.idea
+.idea/
 classes/
-src/main/webapp
+src/main/webapp/
 
 # Ignore all
 *
@@ -28,10 +28,10 @@ src/main/webapp
 # Unignore all dirs
 !*/
 
-/bin/
-/test/
+# Ignore .class files
 *.class
 
+# Maven
 HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
@@ -39,22 +39,22 @@ target/
 !**/src/test/**/target/
 HELP.md
 
-### STS ###
+# STS
 .apt_generated
 .classpath
 .factorypath
 .project
-.settings
+.settings/
 .springBeans
 .sts4-cache
 
-### IntelliJ IDEA ###
-.idea
+# IntelliJ IDEA
+.idea/
 *.iws
 *.iml
 *.ipr
 
-### NetBeans ###
+# NetBeans
 /nbproject/private/
 /nbbuild/
 /dist/
@@ -64,5 +64,5 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
-### VS Code ###
+# Visual Studio Code
 .vscode/
