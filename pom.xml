@@ -112,11 +112,18 @@
 		    <artifactId>osdt_cert</artifactId>
 		    <version>21.11.0.0</version>
 		</dependency>
+		<!--chat 설정-->
 		<!--redis 설정-->
 		<dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-data-redis</artifactId>
-    </dependency>
+        	<groupId>org.springframework.boot</groupId>
+        	<artifactId>spring-boot-starter-data-redis</artifactId>
+    	</dependency>
+    	<!--websocket 설정-->
+    	<dependency>
+        	<groupId>org.springframework.boot</groupId>
+        	<artifactId>spring-boot-starter-websocket</artifactId>
+    	</dependency>
+    	<!--chat 설정-->
 	</dependencies>
 
 	<build>

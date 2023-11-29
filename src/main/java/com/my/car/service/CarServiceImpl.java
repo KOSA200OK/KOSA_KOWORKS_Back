@@ -40,11 +40,27 @@ public class CarServiceImpl implements CarService {
 	public void createCarRent(CarRentDTO carRent) {
 		CarRentMapper crm = new CarRentMapper();
 		CarRentEntity entity = crm.dtoToEntity(carRent);
+		System.out.println("entity carId   "+entity.getCar().getId());
 		crr.save(entity);
 		
 		Optional<CarEntity> optC = cr.findById(carRent.getCar().getId());
 		CarEntity carEntity = optC.get();
 		carEntity.modifyCarStatus((long)1);
 		cr.save(carEntity);
+	}
+	
+
+	@Override
+	public Page<CarRentDTO> findAllMyCarRent(Pageable pageable, String memberId) {
+		System.out.println("memberId : "+memberId);
+//		MemberMapper mm = new MemberMapper();
+//		MemberEntity mEntity = mm.dtoToEntity(member);
+//		MemberEntity mEntity = new MemberEntity();
+//		mEntity.builder()
+//				.id(memberId)
+//				.build();
+		Page<CarRentEntity> entityList = crr.findByMember(pageable, memberId);
+		CarRentMapper crm = new CarRentMapper();
+		return entityList.map(crm::entityToDto);
 	}
 }
