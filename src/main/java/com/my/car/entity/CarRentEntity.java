@@ -3,7 +3,6 @@ package com.my.car.entity;
 import java.math.BigDecimal;
 import java.sql.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -36,11 +35,11 @@ public class CarRentEntity {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "car_rent_seq_generator")
 	private Long id;
 	
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne
 	@JoinColumn(name="memberId",nullable=false)
 	private MemberEntity member;
 	
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne
 	@JoinColumn(name="carId", nullable =false)
 	private CarEntity car;
 	

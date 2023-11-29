@@ -9,12 +9,9 @@ import org.springframework.stereotype.Service;
 import com.my.car.dto.CarDTO;
 import com.my.car.dto.CarRentDTO;
 import com.my.car.entity.CarRentEntity;
-import com.my.member.dto.MemberDTO;
 
 public interface CarService {
 	public Page<CarDTO> findAllCar(Pageable pageable);
 	
 	public void createCarRent(CarRentDTO carRent);
-	
-	public Page<CarRentDTO> findAllMyCarRent(Pageable pageable, String memberId);
 }

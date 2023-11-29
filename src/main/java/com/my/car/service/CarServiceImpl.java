@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import javax.persistence.EntityManager;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,9 +17,6 @@ import com.my.car.entity.CarEntity;
 import com.my.car.entity.CarRentEntity;
 import com.my.car.repository.CarRentRepository;
 import com.my.car.repository.CarRepository;
-import com.my.member.dto.MemberDTO;
-import com.my.member.entity.MemberEntity;
-import com.my.member.service.MemberMapper;
 
 @Service
 public class CarServiceImpl implements CarService {
@@ -51,19 +46,5 @@ public class CarServiceImpl implements CarService {
 		CarEntity carEntity = optC.get();
 		carEntity.modifyCarStatus((long)1);
 		cr.save(carEntity);
-	}
-	
-	@Override
-	public Page<CarRentDTO> findAllMyCarRent(Pageable pageable, String memberId) {
-		System.out.println("memberId : "+memberId);
-//		MemberMapper mm = new MemberMapper();
-//		MemberEntity mEntity = mm.dtoToEntity(member);
-//		MemberEntity mEntity = new MemberEntity();
-//		mEntity.builder()
-//				.id(memberId)
-//				.build();
-		Page<CarRentEntity> entityList = crr.findByMember(pageable, memberId);
-		CarRentMapper crm = new CarRentMapper();
-		return entityList.map(crm::entityToDto);
 	}
 }
