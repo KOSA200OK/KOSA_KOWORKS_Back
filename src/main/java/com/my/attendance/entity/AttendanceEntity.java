@@ -12,6 +12,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.DynamicInsert;
 
+import com.my.member.dto.MemberDTO;
 import com.my.member.entity.MemberEntity;
 
 import lombok.AllArgsConstructor;
@@ -61,5 +62,6 @@ public class AttendanceEntity {
 		this.endTime = endTime;
 		this.status = status;
 	}
+
 	
 } // end class
