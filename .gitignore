@@ -10,6 +10,19 @@ local.properties
 .settings/
 .loadpath
 .recommenders
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
+resources/
+/build/classes/*
+/webapp/
 
 # Directories
 /build/
