@@ -1,4 +1,4 @@
-package com.my.control;
+package com.my.car.control;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,11 +14,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.my.car.dto.CarDTO;
+import com.my.car.dto.CarRentDTO;
 import com.my.car.service.CarService;
+import com.my.exception.AddException;
 import com.my.exception.FindException;
 
 import lombok.extern.slf4j.Slf4j;
@@ -31,10 +35,18 @@ public class CarController {
 	private CarService cs;
 	
 	@GetMapping("/carlist")
-	public Page<CarDTO> carList(int currentPage) throws FindException{
+	public Page<CarDTO> findAllCar(int currentPage) throws FindException{
 		System.out.println("currentPage: "+currentPage);
 		currentPage -=1;
 		Pageable pageable = PageRequest.of(currentPage, 10);
-		return cs.findCarList(pageable);
+		return cs.findAllCar(pageable);
 	}
+	
+	@PostMapping("/reserve")
+	public void createCarRent(@RequestBody CarRentDTO carRent) throws AddException{
+		System.out.println(carRent.getCar().getId()+" "+carRent.getStartDate()+" "+carRent.getEndDate());
+		cs.createCarRent(carRent);
+	}
+	
+	
 }
