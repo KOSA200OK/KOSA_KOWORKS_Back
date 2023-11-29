@@ -4,18 +4,20 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.my.attendance.dao.AttendanceRepository;
 import com.my.attendance.dto.AttendanceDTO;
 import com.my.attendance.entity.AttendanceEntity;
+import com.my.car.repository.CarRepository;
+import com.my.car.service.CarMapper;
 import com.my.exception.AddException;
 import com.my.exception.FindException;
 import com.my.exception.ModifyException;
@@ -33,7 +35,7 @@ public class AttendanceServiceImpl implements AttendanceService {
 	
 	@Autowired
 	private MemberRepository memberRepository;
-	
+
 	@Autowired
 	private AttendanceMapper model;
 
@@ -45,18 +47,12 @@ public class AttendanceServiceImpl implements AttendanceService {
 	} // findAll
 
 	@Override
-	public List<AttendanceDTO> findAllByMemberId(String memberId) throws FindException {
+	public Page<AttendanceDTO> findAllByMemberId(String memberId, Pageable pageable) throws FindException {
 	    log.warn("1. findByMemberId의 memberid ===> {} ", memberId);
 	    
-	    List<AttendanceEntity> entityList= repository.findAllByMemberId(memberId);
-	    List<AttendanceDTO> list = new ArrayList<>();
-	    
-	    for(AttendanceEntity entity : entityList) {
-	    	AttendanceDTO dto = model.VoToDTO(entity);
-	    	list.add(dto);
-	    }
-	 
-	    return list;
+	    Page<AttendanceEntity> entityList= repository.findAllByMemberId(memberId, pageable);
+	    model = new AttendanceMapper();
+		return entityList.map(model::VoToDTO);
 
 	} // findAllByMemberId
 
@@ -64,11 +60,10 @@ public class AttendanceServiceImpl implements AttendanceService {
 	public void createAttendance(AttendanceDTO dto) throws AddException {
 		
 		log.warn("Service dto ===> {}", dto.getMemberId());
-		
+
 		// dto 객체로 들어온 것을 entiiy로 변환
 		AttendanceEntity entity = model.DtoToVo(dto);
-//		entity.setMemberId(dto.getMemberId());
-		
+
 		log.warn("Service entity ===> {}", entity.getMemberId());
 		
 		// currentTime에 현재시간 대입
@@ -76,9 +71,9 @@ public class AttendanceServiceImpl implements AttendanceService {
         LocalDate currentDate = LocalDate.now();
         
         System.out.println("현재시간: " + currentTime);
-        System.out.println("아이디 : " + dto.getMemberId() );
-        
-        // DB에서 해당 memberId의 출석 정보 가져오기
+        System.out.println("아이디 1 : " + dto.getMemberId() );
+        System.out.println("아이디 2 : " + dto.getMember().getId() );
+
         Optional<AttendanceEntity> existingAttendance = repository.findById(dto.getMemberId());
         
         if (existingAttendance.isPresent()) {
@@ -111,10 +106,8 @@ public class AttendanceServiceImpl implements AttendanceService {
 
 
 	@Override		// modify로 수정
-	public void updateAttendance(AttendanceDTO dto) throws ModifyException {
-		
-		log.warn("Service update dto ===> {}", dto.getMemberId());
-		
+	public void modifyAttendance(AttendanceDTO dto) throws ModifyException {
+
 	    // dto 객체로 들어온 것을 entity로 변환
 	    AttendanceEntity entity = model.DtoToVo(dto);
 

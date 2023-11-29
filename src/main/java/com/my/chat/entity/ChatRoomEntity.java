@@ -25,6 +25,7 @@ public class ChatRoomEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CHATROOM_SEQ_GENERATOR")
 	private Long id;
+	
 
 	@ManyToOne
 	@JoinColumn(name = "memberId")
