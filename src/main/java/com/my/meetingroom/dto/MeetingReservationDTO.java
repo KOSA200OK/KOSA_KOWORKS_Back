@@ -30,4 +30,5 @@ public class MeetingReservationDTO {
 	private MemberDTO member;
 	private MeetingRoomDTO meetingroom;
 	private ParticipantsDTO participants;
+	
 }
