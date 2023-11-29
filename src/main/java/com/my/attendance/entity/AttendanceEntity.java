@@ -56,13 +56,10 @@ public class AttendanceEntity {
 	
 	@Column(name="status")
 	private Integer status;
-	
-	/**
-	* 내용수정
-	*/
+
 	public void modifyAttendance(String endTime, Integer status) {
 		this.endTime = endTime;
 		this.status = status;
-	} // modifycontent
+	}
 	
 } // end class

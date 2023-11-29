@@ -24,7 +24,7 @@ import lombok.Setter;
 @Table(name = "member")
 public class MemberEntity {
 	@Id
-	private Long id;
+	private String id;
 
 	@Column(nullable = false)
 	private String name;
@@ -41,4 +41,6 @@ public class MemberEntity {
 	@ManyToOne
 	@JoinColumn(name = "departmentId")
 	private DepartmentEntity department;
+	
+	
 }

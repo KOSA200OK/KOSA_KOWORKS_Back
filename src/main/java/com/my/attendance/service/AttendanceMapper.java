@@ -1,17 +1,23 @@
 package com.my.attendance.service;
 
-import java.util.Optional;
-
 import org.modelmapper.ModelMapper;
 import org.modelmapper.config.Configuration.AccessLevel;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.stereotype.Service;
 
+import com.my.attendance.dao.AttendanceRepository;
 import com.my.attendance.dto.AttendanceDTO;
 import com.my.attendance.entity.AttendanceEntity;
+import com.my.car.entity.CarRentEntity;
+import com.my.car.repository.CarRepository;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Service
+@Slf4j
 public class AttendanceMapper {
+	
+	private AttendanceRepository repository;
 	
 	private ModelMapper mapper;
 	
@@ -23,12 +29,15 @@ public class AttendanceMapper {
 				   .setFieldMatchingEnabled(true);
 	}
 	
-	public AttendanceDTO VoToDTO(Optional<AttendanceEntity> att) {
+	public AttendanceDTO VoToDTO(AttendanceEntity att) {
 
-		Object source = att;
-		Class<AttendanceDTO> destinationType = AttendanceDTO.class;
+		log.warn("3. VoToDTO의 att =====> {}", att);
 		
-		AttendanceDTO dto = mapper.map(source, destinationType);
+		Object source = att;
+//		Class<AttendanceDTO> destinationType = AttendanceDTO.class;
+//		Class<AttendanceDTO destinationType = AttendanceDTO.class;
+		
+		AttendanceDTO dto = mapper.map(source, AttendanceDTO.class);
 		dto.setMemberId(dto.getMemberId());
 		
 		return dto;
@@ -36,6 +45,14 @@ public class AttendanceMapper {
 	} // VoToDTO
 
 	public AttendanceEntity DtoToVo(AttendanceDTO dto) {
+		
+		ModelMapper mapper = new ModelMapper();
+		mapper.getConfiguration()
+				   .setMatchingStrategy(MatchingStrategies.STANDARD)
+				   .setFieldAccessLevel(AccessLevel.PRIVATE)
+				   .setFieldMatchingEnabled(true);
+
+		log.warn("DtoToVO inner dto ======> {}", dto.getMemberId());
 
 		Object source = dto;
 
@@ -43,7 +60,10 @@ public class AttendanceMapper {
 
 		AttendanceEntity entity = mapper.map(source, destinationType);
 	
+		log.warn("DtoToVO inner entity ======> {}", entity.getMemberId());
+		
 		return entity;
 	} // DtoToVo
+
 
 } // end class
