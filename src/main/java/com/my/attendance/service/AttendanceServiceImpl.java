@@ -59,7 +59,7 @@ public class AttendanceServiceImpl implements AttendanceService {
 	@Override
 	public void createAttendance(AttendanceDTO dto) throws AddException {
 		
-		log.warn("Service dto ===> {}", dto.getMemberId());
+//		log.warn("Service dto ===> {}", dto.getMemberId());
 
 		// dto 객체로 들어온 것을 entiiy로 변환
 		AttendanceEntity entity = model.DtoToVo(dto);
@@ -70,38 +70,75 @@ public class AttendanceServiceImpl implements AttendanceService {
         LocalTime currentTime = LocalTime.now();
         LocalDate currentDate = LocalDate.now();
         
-        System.out.println("현재시간: " + currentTime);
-        System.out.println("아이디 1 : " + dto.getMemberId() );
-        System.out.println("아이디 2 : " + dto.getMember().getId() );
-
-        Optional<AttendanceEntity> existingAttendance = repository.findById(dto.getMemberId());
+        log.warn("현재시간: " + currentTime);
+//        log.warn("아이디 1 : " + dto.getMemberId() );
+        log.warn("아이디 2 : " + entity.getMemberId().getId() );
         
-        if (existingAttendance.isPresent()) {
-            System.out.println("이미 출석했습니다");
-            return; // 이미 출석한 경우 메서드 종료
-        }
-        
-        LocalTime onTimeStart = AttendanceTime.ON_TIME.getTime();
-        LocalTime lateTimeEnd = AttendanceTime.LATE_TIME.getTime();
-        LocalTime absenceTimeEnd = AttendanceTime.ABSENCE_TIME.getTime(); // 12시 이후
+//        String mId = entity.getMemberId().getId();
+//        
+//        Optional<AttendanceEntity> existingAttendance = repository.findByMemberId(mId);
+//        
+//	      if (!existingAttendance.isPresent()) {
+//	  	  
+//	  	  log.warn("existingAttendance date : {}", existingAttendance.get());
+//	  	  
+//	  	  entity = existingAttendance.get();
+//	  	  String existingDate = entity.getAttendanceDate();
+//	  	 
+//	  	  
+//	    	if (currentDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) == existingDate) {
+//	    		log.warn("이미 출석했습니다");
+//	    		return;
+//			
+//		  	} else {
+//		  		
+//		        LocalTime onTimeStart = AttendanceTime.ON_TIME.getTime();
+//		        LocalTime lateTimeEnd = AttendanceTime.LATE_TIME.getTime();
+//		        LocalTime absenceTimeEnd = AttendanceTime.ABSENCE_TIME.getTime(); // 12시 이후
+//		        
+//		        if (currentTime.isBefore(onTimeStart)) {	// 9시까지 출근
+//		      	  entity.setAttendanceDate(currentDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+//		      	  entity.setStartTime(currentTime.format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+//		      	  entity.setStatus(AttendanceStatus.ON.getStatus());
+//		      	  log.error("time ${}", entity.getStartTime());
+//		        } else if (currentTime.isBefore(lateTimeEnd)) { // 9시부터 12시까지
+//		      	  entity.setAttendanceDate(currentDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+//		      	  entity.setStartTime(currentTime.format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+//		      	  entity.setStatus(AttendanceStatus.LATE.getStatus());
+//		        } else if (currentTime.isAfter(absenceTimeEnd)) { // 12시 이후
+//		      	  entity.setAttendanceDate(currentDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+//		      	  entity.setStartTime(currentTime.format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+//		      	  entity.setStatus(AttendanceStatus.ABSENCE.getStatus());
+//		        } // if-else
+//		        
+//		        repository.save(entity);
+//		  		
+//		  	} // inner if-else
+//	  	  
+//	    }
 
-        if (currentTime.isBefore(onTimeStart)) {	// 9시까지 출근
-        	entity.setAttendanceDate(currentDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-        	entity.setStartTime(currentTime.format(DateTimeFormatter.ofPattern("HH:mm:ss")));
-        	entity.setStatus(AttendanceStatus.ON.getStatus());
-        	log.error("time ${}", entity.getStartTime());
-        } else if (currentTime.isBefore(lateTimeEnd)) { // 9시부터 12시까지
-        	entity.setAttendanceDate(currentDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-        	entity.setStartTime(currentTime.format(DateTimeFormatter.ofPattern("HH:mm:ss")));
-        	entity.setStatus(AttendanceStatus.LATE.getStatus());
-        } else if (currentTime.isAfter(absenceTimeEnd)) { // 12시 이후
-        	entity.setAttendanceDate(currentDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-        	entity.setStartTime(currentTime.format(DateTimeFormatter.ofPattern("HH:mm:ss")));
-        	entity.setStatus(AttendanceStatus.ABSENCE.getStatus());
-        }
+	      // ==
+	      LocalTime onTimeStart = AttendanceTime.ON_TIME.getTime();
+	      LocalTime lateTimeEnd = AttendanceTime.LATE_TIME.getTime();
+	      LocalTime absenceTimeEnd = AttendanceTime.ABSENCE_TIME.getTime(); // 12시 이후
+	      
+	      if (currentTime.isBefore(onTimeStart)) {	// 9시까지 출근
+	    	  entity.setAttendanceDate(currentDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+	    	  entity.setStartTime(currentTime.format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+	    	  entity.setStatus(AttendanceStatus.ON.getStatus());
+	    	  log.error("time ${}", entity.getStartTime());
+	      } else if (currentTime.isBefore(lateTimeEnd)) { // 9시부터 12시까지
+	    	  entity.setAttendanceDate(currentDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+	    	  entity.setStartTime(currentTime.format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+	    	  entity.setStatus(AttendanceStatus.LATE.getStatus());
+	      } else if (currentTime.isAfter(absenceTimeEnd)) { // 12시 이후
+	    	  entity.setAttendanceDate(currentDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+	    	  entity.setStartTime(currentTime.format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+	    	  entity.setStatus(AttendanceStatus.ABSENCE.getStatus());
+	      } // if-else
+	      
+	      repository.save(entity);
 
-	    repository.save(entity);
-		
 	} // create
 
 
