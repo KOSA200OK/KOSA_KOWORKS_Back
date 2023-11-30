@@ -106,4 +106,5 @@ public class MeetingroomMapper {
 		ParticipantsEntity pentity = mapper.map(source, destinationType);
 		return pentity;
 	}
+	
 }
