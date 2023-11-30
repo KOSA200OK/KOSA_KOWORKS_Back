@@ -13,13 +13,15 @@ import com.my.member.entity.MemberEntity;
 public interface AttendanceRepository extends JpaRepository<AttendanceEntity, Integer> {
 	
 	AttendanceEntity findByMemberId(MemberEntity memberId);
-
+	
+	// 조회
 	@Query(value="SELECT *\r\n"
 			+ "FROM attendance a\r\n"
 			+ "JOIN member m ON a.member_id = m.id\r\n"
 			+ "WHERE m.id = :memberId" , nativeQuery = true)
 	Page<AttendanceEntity> findAllByMemberId(String memberId, Pageable pageable);
 
-	Optional<AttendanceEntity> findByMemberId(String memberId);
+	// 출석
+	Optional<AttendanceEntity> findByMemberIdAndAttendanceDate(MemberEntity memberId, String attendanceDate);
 
 }
