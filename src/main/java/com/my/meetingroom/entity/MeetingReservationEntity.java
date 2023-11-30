@@ -1,14 +1,15 @@
 package com.my.meetingroom.entity;
 
-import java.sql.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -59,5 +60,19 @@ public class MeetingReservationEntity {
 	private String meetingDate;
 	
 	private String purpose;
+
+	//양방향 설정
+	@OneToMany
+	(
+			fetch = FetchType.LAZY
+			,
+			cascade = CascadeType.ALL
+//			cascade = CascadeType.REMOVE //단방향일 때는 remove만
+//			cascade = {CascadeType.REMOVE, CascadeType.PERSIST}
+			,
+			mappedBy="meeting" //양방향
+	)
+//	@JoinColumn(name="meetingId") //단방향
+	private List<ParticipantsEntity> participants; //회의 참여자 목록
 	
 }
