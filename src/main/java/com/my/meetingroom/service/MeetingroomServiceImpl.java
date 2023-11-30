@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import com.my.exception.AddException;
 import com.my.exception.FindException;
 import com.my.meetingroom.dto.MeetingReservationDTO;
-import com.my.meetingroom.dto.ParticipantsDTO;
 import com.my.meetingroom.entity.MeetingReservationEntity;
 import com.my.meetingroom.entity.ParticipantsEntity;
 import com.my.meetingroom.repository.MeetingReservationRepository;
@@ -21,7 +20,6 @@ import com.my.meetingroom.repository.MeetingRoomRepository;
 import com.my.meetingroom.repository.ParticipantsRepository;
 
 import lombok.extern.slf4j.Slf4j;
-import oracle.jdbc.driver.parser.util.Array;
 
 @Service
 @Slf4j
@@ -41,8 +39,6 @@ public class MeetingroomServiceImpl implements MeetingroomService {
 		
 	@Override
 	public List<MeetingReservationDTO> findAllMeetingRoom(String meetingDate) throws FindException {
-//		meetingDate = "2023-11-30";
-//		System.out.println(meetingDate);
 		
 		List<MeetingReservationEntity> entity = reservation.findAllMeetingRoom(meetingDate);
 		List<MeetingReservationDTO> list = new ArrayList();
@@ -62,55 +58,29 @@ public class MeetingroomServiceImpl implements MeetingroomService {
 		MeetingroomMapper mapper = new MeetingroomMapper();
 		return entity.map(mapper::Reservation_VoToDto);
 	}
-
+	
+	@Transactional
 	@Override
 	public void createMeetingReservation(MeetingReservationDTO msdto) throws AddException {
 		
 		//DTO->Vo
 		MeetingroomMapper mapper = new MeetingroomMapper();
 		MeetingReservationEntity entity = mapper.Reservation_DtoToVo(msdto);
-		reservation.save(entity);
-
-		//participants 넣기!!
-		ParticipantsDTO pdto = new ParticipantsDTO();
-		ParticipantsEntity pentity = mapper.Participants_DtoToVo(pdto);		
-		String[] arr = msdto.getParticipants().getMemberId();
-		for (String stringid : arr) {
-//			pentity.setMeeting(entity);
-//			pentity.setMember(entity.getMember());
-			System.out.println("memberid 배열!!!!!" + stringid);
-//			System.out.println("member entity!!!!" + pentity.getMember().getId());
-//			System.out.println("meeting entity!!!!" + pentity.getMeeting().getId());
-			participants.save(pentity);
-		}
+		
+		//최종
+		MeetingReservationEntity savedEntity = reservation.save(entity);
+		System.out.println("끝 : savedEntity" + savedEntity.getId());
+		
+//		//2차시도(단방향)
+//		Long meetingId = savedEntity.getId();
+//		for(ParticipantsEntity p : entity.getParticipants()) {
+//			p.setMeeting(savedEntity);
+////			p.setMeetingId(meetingId);
+//			participants.save(p);
+//		}
+		
+//		reservation.deleteById(159L);
 		
 	}
-	
-//	@Override
-////	@Transactional
-//	public void createMeetingReservation(MeetingReservationDTO meetingReservationDTO, List<String> participantsMemberId) throws AddException {
-//		//DTO->Vo
-//		MeetingroomMapper mapper = new MeetingroomMapper();
-//		MeetingReservationEntity entity = mapper.Reservation_DtoToVo(meetingReservationDTO);
-//		reservation.save(entity);
-//        System.out.println("---------------resmeetingId" + entity.getMeetingroom().getId());
-//        System.out.println("---------------resmemberId" + entity.getMember().getId());
-//
-//		
-//		for (String memberId : participantsMemberId) {
-//            ParticipantsDTO pdto = new ParticipantsDTO();
-//            pdto.setMeetingId((long)1);
-//            pdto.setMemberId(memberId);
-//            ParticipantsEntity pentity = mapper.Participants_DtoToVo(pdto);
-//
-////            pentity = entityManager.merge(pentity);
-//            System.out.println("---------------parmeetingId" + pentity.getMeeting().getId());
-//            System.out.println("---------------parmemberId" + pentity.getMember().getId());
-////            pentity = entityManager.merge(pentity);
-////            entityManager.flush();
-//            participants.save(pentity);
-//        }
-//	
-//	}
 
 }

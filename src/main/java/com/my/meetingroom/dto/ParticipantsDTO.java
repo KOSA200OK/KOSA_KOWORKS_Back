@@ -13,8 +13,7 @@ import lombok.Setter;
 public class ParticipantsDTO {
 	private Long id;
 	private Long meetingId;
-	private String[] memberId;
+	private MemberDTO member;
 	
 //	private MeetingReservationDTO meeting;
-//	private MemberDTO member;
 }

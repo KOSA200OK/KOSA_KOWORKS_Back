@@ -74,7 +74,7 @@ public class AttendanceServiceImpl implements AttendanceService {
         System.out.println("아이디 1 : " + dto.getMemberId() );
         System.out.println("아이디 2 : " + dto.getMember().getId() );
 
-        Optional<AttendanceEntity> existingAttendance = repository.findById(dto.getMemberId());
+        Optional<AttendanceEntity> existingAttendance = repository.findById(dto.getId());
         
         if (existingAttendance.isPresent()) {
             System.out.println("이미 출석했습니다");

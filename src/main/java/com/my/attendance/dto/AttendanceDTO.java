@@ -17,11 +17,11 @@ public class AttendanceDTO {
 
 	private Integer id; 		// 근태번호
 	
-	private Integer memberId;			// 회원아이디
+	private String memberId;			// 회원아이디
 	
 	private String attendanceDate;		// 일자
 	
-	private String startTime;				// 출근시간
+	private String startTime;			// 출근시간
 	
 	private String endTime;				// 퇴근시간
 	
