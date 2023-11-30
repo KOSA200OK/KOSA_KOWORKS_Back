@@ -161,27 +161,31 @@ public class AttendanceServiceImpl implements AttendanceService {
 	@Override		// modify로 수정
 	public void modifyAttendance(AttendanceDTO dto) throws ModifyException {
 
-//	    // dto 객체로 들어온 것을 entity로 변환
-//	    AttendanceEntity entity = model.DtoToVo(dto);
-//
-//	    MemberEntity memberId = entity.getMemberId();
-//
-//	    // repository에서 memberId를 사용하여 해당 엔터티를 찾음
+	    // dto 객체로 들어온 것을 entity로 변환
+	    AttendanceEntity entity = model.DtoToVo(dto);
+
+	    MemberEntity memberId = entity.getMemberId();
+	    LocalDate currentDate = LocalDate.now();
+
+	    // repository에서 memberId를 사용하여 해당 엔터티를 찾음
 //	    AttendanceEntity existingEntity = repository.findByMemberId(memberId);
-//
-//	    if (existingEntity != null) {
-//	    	
-//	        LocalTime currentTime = LocalTime.now();
-//
-//	        existingEntity.setEndTime(currentTime.format(DateTimeFormatter.ofPattern("HH:mm:ss")));
-//	        existingEntity.setStatus(AttendanceStatus.OFF.getStatus());
-//
-//	        repository.save(existingEntity);
-//	        
-//	    } else {	
-//	        // 예외 처리 - 해당 memberId를 찾을 수 없는 경우
-//	        throw new ModifyException("Attendance for memberId " + memberId + " not found.");
-//	    }
+	    Optional<AttendanceEntity> existingEntity = repository.findByMemberIdAndAttendanceDate(memberId, currentDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+	    
+	    if (existingEntity.isPresent()) {
+	    	AttendanceEntity att = existingEntity.get();
+	    	
+	        LocalTime currentTime = LocalTime.now();
+
+	        att.setEndTime(currentTime.format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+	        att.setStatus(AttendanceStatus.OFF.getStatus());
+
+	        repository.save(att);
+	        
+	    } else {
+	    	
+	        throw new ModifyException("Attendance for memberId " + memberId + " not found.");
+	        
+	    }
 	    
 	} // end class
 
