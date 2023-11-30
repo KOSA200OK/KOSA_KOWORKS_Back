@@ -7,8 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
 import com.my.meetingroom.dto.MeetingReservationDTO;
-import com.my.meetingroom.dto.MeetingRoomDTO;
+import com.my.meetingroom.dto.ParticipantsDTO;
 import com.my.meetingroom.entity.MeetingReservationEntity;
+import com.my.meetingroom.entity.ParticipantsEntity;
 import com.my.meetingroom.repository.MeetingRoomRepository;
 
 import lombok.extern.slf4j.Slf4j;
@@ -49,5 +50,20 @@ public class MeetingroomMapper {
 		Class<MeetingReservationDTO> destinationType = MeetingReservationDTO.class;
 		MeetingReservationDTO dto = mapper.map(source, destinationType);
 		return dto;
+	}
+	
+	
+	//DTO->VO 변환 (Participants)
+	public ParticipantsEntity Participants_DtoToVo(ParticipantsDTO pdto) {
+		ModelMapper mapper = new ModelMapper();
+		mapper.getConfiguration()
+				.setMatchingStrategy(MatchingStrategies.STANDARD)
+				.setFieldAccessLevel(AccessLevel.PRIVATE)
+				.setFieldMatchingEnabled(true);
+		
+		Object source = pdto;
+		Class<ParticipantsEntity> destinationType = ParticipantsEntity.class;
+		ParticipantsEntity pentity = mapper.map(source, destinationType);
+		return pentity;
 	}
 }
