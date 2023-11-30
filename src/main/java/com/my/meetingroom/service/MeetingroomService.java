@@ -6,6 +6,7 @@ import java.util.Optional;
 import com.my.exception.AddException;
 import com.my.exception.FindException;
 import com.my.meetingroom.dto.MeetingReservationDTO;
+import com.my.meetingroom.dto.ParticipantsDTO;
 import com.my.meetingroom.entity.MeetingReservationEntity;
 
 public interface MeetingroomService {
@@ -32,4 +33,5 @@ public interface MeetingroomService {
 	 * @throws AddException DB에 저장하지 못한 경우 AddException이 발생한다
 	 */
 	public void createMeetingReservation(MeetingReservationDTO msdto) throws AddException;
+//	public void createMeetingReservation(MeetingReservationDTO meetingReservationDTO, List<String> participantsMemberId) throws AddException;
 }
