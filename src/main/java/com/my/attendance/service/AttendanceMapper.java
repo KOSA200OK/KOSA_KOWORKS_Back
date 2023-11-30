@@ -49,7 +49,7 @@ public class AttendanceMapper {
 				   .setFieldAccessLevel(AccessLevel.PRIVATE)
 				   .setFieldMatchingEnabled(true);
 
-		log.warn("DtoToVO inner dto ======> {}", dto.getMemberId());
+//		log.warn("DtoToVO inner dto ======> {}", dto.getMemberId());
 
 		Object source = dto;
 		Class<AttendanceEntity> destinationType=AttendanceEntity.class;
