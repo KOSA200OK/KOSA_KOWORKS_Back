@@ -16,4 +16,6 @@ public interface CarService {
 	public void createCarRent(CarRentDTO carRent);
 
 	public Page<CarRentDTO> findAllMyCarRent(Pageable pageable, String memberId);
+	
+	public void removeByIdCarRent(Long id);
 }

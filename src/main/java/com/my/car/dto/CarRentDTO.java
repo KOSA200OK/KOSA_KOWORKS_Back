@@ -51,4 +51,5 @@ public class CarRentDTO {
 	
 	private BigDecimal latitude;
 	private BigDecimal longitude;
+	
 }
