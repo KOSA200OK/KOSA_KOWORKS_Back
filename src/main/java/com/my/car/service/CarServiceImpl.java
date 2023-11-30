@@ -56,4 +56,9 @@ public class CarServiceImpl implements CarService {
 		CarRentMapper crm = new CarRentMapper();
 		return entityList.map(crm::entityToDto);
 	}
+	
+	@Override
+	public void removeByIdCarRent(Long id) {
+		crr.deleteById(id);
+	}
 }
