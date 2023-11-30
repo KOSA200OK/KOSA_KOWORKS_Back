@@ -58,8 +58,6 @@ public class AttendanceServiceImpl implements AttendanceService {
 
 	@Override
 	public void createAttendance(AttendanceDTO dto) throws AddException {
-		
-//		log.warn("Service dto ===> {}", dto.getMemberId());
 
 		// dto 객체로 들어온 것을 entiiy로 변환
 		AttendanceEntity entity = model.DtoToVo(dto);
