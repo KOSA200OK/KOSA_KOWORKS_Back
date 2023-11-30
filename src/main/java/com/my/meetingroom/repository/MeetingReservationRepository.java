@@ -21,4 +21,5 @@ public interface MeetingReservationRepository extends JpaRepository<MeetingReser
 			+ "WHERE mr.id = :id",
 			nativeQuery=true)
 	public Optional<MeetingReservationEntity> findById(Long id);
+	
 }

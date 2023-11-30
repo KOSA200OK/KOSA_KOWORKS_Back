@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.my.exception.AddException;
 import com.my.exception.FindException;
 import com.my.meetingroom.dto.MeetingReservationDTO;
+import com.my.meetingroom.dto.MeetingReservationRequest;
+import com.my.meetingroom.dto.ParticipantsDTO;
 import com.my.meetingroom.service.MeetingroomServiceImpl;
 
 import lombok.extern.slf4j.Slf4j;
@@ -54,5 +56,21 @@ public class MeetingroomController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}
+	
+//	@PostMapping(value="", produces="application/json;charset=UTF-8") //회의실 예약하기(저장)
+//	public ResponseEntity<?> createMeetingReservation(@RequestBody MeetingReservationRequest request) throws AddException {
+//		MeetingReservationDTO meetingReservationDTO = request.getMeetingReservationDTO();
+//		List<String> participantsMemberId = request.getParticipantsMemberId();
+//		
+//		try {
+//			service.createMeetingReservation(meetingReservationDTO, participantsMemberId);
+//			HttpHeaders headers = new HttpHeaders();
+//			headers.add("Content-Type", "text/html; charset=UTF-8");
+//			return new ResponseEntity<>("저장되었습니다", headers, HttpStatus.OK);			
+//		} catch (AddException e) {
+//			e.printStackTrace();
+//			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//		}
+//	}
 	
 }

@@ -1,5 +1,7 @@
 package com.my.member.dto;
 
+import com.my.department.dto.DepartmentDTO;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,7 +13,7 @@ import lombok.Setter;
 @Builder
 public class MemberDTO {
 	private String id;
-	private Long departmentId;
+	private DepartmentDTO department;
 	private String name;
 	private String password;
 	private String position;
