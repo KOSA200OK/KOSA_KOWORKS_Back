@@ -24,6 +24,11 @@ public class StuffReqService {
 	
 	private StuffReqMapper srm;
 	
+	/**
+	 * StuffReqDTO타입의 비품 요청 데이터를 DB에 추가한다
+	 * @param StuffReqDTO dto
+	 * @throws AddException
+	 */
 	public void createStuffReq(StuffReqDTO dto) throws AddException{
 		StuffReqEntity stuffReqEntity = srm.dtoToEntity(dto);
 //		System.out.println("service: "+stuffReqEntity.getStuff().getId());
@@ -69,11 +74,15 @@ public class StuffReqService {
 		MemberEntity me = new MemberEntity();
 		me.setId(memberId);
     	
-		stuffId += "%";
+//		stuffId += "%";
+		String stuffIdM = new String();
+		stuffIdM = "%" + stuffId + "%";
+		log.error("stuffIdM={}", stuffIdM);
 		StuffEntity se = new StuffEntity();
-		se.setId(stuffId);
+		se.setId(stuffIdM);
 		
 		List<StuffReqEntity> srEntityList = sr.findByMemberAndStuffLike(me, se);
+//		List<StuffReqEntity> srEntityList = sr.findByMemberAndStuffContaining(me, se);
 		List<StuffReqDTO> srDTOList = new ArrayList<>();
 		for (StuffReqEntity stuffReqEntity : srEntityList) {
 			StuffReqDTO srDTO = StuffReqMapper.entityToDto(stuffReqEntity);

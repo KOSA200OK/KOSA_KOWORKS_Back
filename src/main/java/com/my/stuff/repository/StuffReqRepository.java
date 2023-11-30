@@ -11,16 +11,21 @@ import com.my.stuff.entity.StuffReqEntity;
 
 @Repository
 public interface StuffReqRepository extends JpaRepository<StuffReqEntity, Long> {
-
+	
 	/**
-	 * 멤버 id를 기준으로 해당 멤버가 작성한 비품요청 전체 목록을 반환한다
-	 * 
+	 * stuff_req 테이블에서 사용자가 작성한 비품요청 행을 조회하여 반환한다
 	 * @param member
 	 * @return List<StuffReqEntity>
 	 */
 	List<StuffReqEntity> findByMember(MemberEntity member);
 	
+	/**
+	 * stuff_req 테이블에서 사용자가 작성한 비품 요청 행 중 stuffId에 인자로 넘겨진 문자열이 포함된 행들을 조회하여 반환한다 
+	 * @param MemberEntity, StuffEntity
+	 * @return <StuffReqEntity>
+	 */
 	List<StuffReqEntity> findByMemberAndStuffLike(MemberEntity member, StuffEntity stuff);
+//	List<StuffReqEntity> findByMemberAndStuffContaining(MemberEntity member, StuffEntity stuff);
 	
 	
 

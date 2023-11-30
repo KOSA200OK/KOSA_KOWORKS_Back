@@ -36,6 +36,8 @@ public class StuffReqController {
     @GetMapping("/requestlist/filterstuff")
     public List<StuffReqDTO> findByMemberIdAndStuffIdLike(@RequestParam String memberId,
     		                                              @RequestParam String stuffId) throws FindException{
+//    	public List<StuffReqDTO> findByMemberIdAndStuffContaining(@RequestParam String memberId,
+//                @RequestParam String stuffId) throws FindException{
 		return service.findByMemberIdLikeStuffId(memberId, stuffId);
     	
     }

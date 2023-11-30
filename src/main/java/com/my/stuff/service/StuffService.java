@@ -19,6 +19,11 @@ public class StuffService {
 	@Autowired
 	private StuffRepository stuffRepository;
 	
+	/**
+	 * 비품 테이블의 행 전체를 조회하여 반환한다
+	 * @return List<StuffDTO>
+	 * @throws FindException
+	 */
 	public List<StuffDTO> findAll() throws FindException{
 		List<StuffEntity> stuffEntityList = stuffRepository.findAll();
 		List<StuffDTO> stuffDTOList = new ArrayList<>();
