@@ -69,7 +69,6 @@ public class AttendanceServiceImpl implements AttendanceService {
         LocalDate currentDate = LocalDate.now();
         
         log.warn("현재시간: " + currentTime);
-//        log.warn("아이디 1 : " + dto.getMemberId() );
         log.warn("아이디 2 : " + entity.getMemberId().getId() );
         
 //        String mId = entity.getMemberId().getId();
