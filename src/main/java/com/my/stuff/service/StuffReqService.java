@@ -1,6 +1,6 @@
 package com.my.stuff.service;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
@@ -47,8 +47,6 @@ public class StuffReqService {
 	 */
 	public List<StuffReqDTO> findByMemberId(String memberId) throws FindException {
 		MemberEntity me = MemberEntity.builder().id(memberId).build();
-
-//		List<StuffReqEntity> srEntityList = sr.findByMember(memberId);
 		List<StuffReqEntity> srEntityList = sr.findByMember(me);
 		List<StuffReqDTO> srDTOList = new ArrayList<>();
 		for (StuffReqEntity stuffReqEntity : srEntityList) {
@@ -140,28 +138,56 @@ public class StuffReqService {
 	 * @return List<StuffReqDTO>
 	 * @throws FindException
 	 */
-//	public List<StuffReqDTO> findByMemberIdStatusLikeStuffIdBetweenDate(String memberId, Long status, String stuffId, Date startDate, Date endDate)
-//			throws FindException {
-//
-//		MemberEntity me = new MemberEntity();
-//		me.setId(memberId);
-//
-////		stuffId += "%";
-//		String stuffIdM = new String();
-//		stuffIdM = "%" + stuffId + "%";
-//		log.error("stuffNameM={}", stuffIdM);
-//		StuffEntity se = new StuffEntity();
-//		se.setId(stuffIdM);
-//
-//		List<StuffReqEntity> srEntityList = sr.findByMemberAndStatusAndStuffLikeAndDateBetween(me, status, se, startDate, endDate);
-////		List<StuffReqEntity> srEntityList = sr.findByMemberAndStuffContaining(me, se);
-//		List<StuffReqDTO> srDTOList = new ArrayList<>();
-//		for (StuffReqEntity stuffReqEntity : srEntityList) {
-//			StuffReqDTO srDTO = StuffReqMapper.entityToDto(stuffReqEntity);
-//			srDTOList.add(srDTO);
-//		}
-//		log.error("findByMemberIdLikeStuffId size=" + srDTOList.size());
-//		return srDTOList;
-//	}
+	public List<StuffReqDTO> findByMemberIdStatusLikeStuffIdBetweenDate(String memberId, Long status, String stuffId, Date startDate, Date endDate)
+			throws FindException {
+
+		MemberEntity me = new MemberEntity();
+		me.setId(memberId);
+
+		String stuffIdM = new String();
+		stuffIdM = "%" + stuffId + "%";
+		log.error("stuffNameM={}", stuffIdM);
+		StuffEntity se = new StuffEntity();
+		se.setId(stuffIdM);
+		List<StuffReqDTO> srDTOList = new ArrayList<>();
+		if (status == 3) {
+			Long startS = 0L;
+			Long endS = 2L;
+			List<StuffReqEntity> srEntityList = sr.findByMemberAndStatusBetweenAndStuffLikeAndReqDateBetween(me, startS, endS,  se, startDate, endDate);
+			for (StuffReqEntity stuffReqEntity : srEntityList) {
+				StuffReqDTO srDTO = StuffReqMapper.entityToDto(stuffReqEntity);
+				srDTOList.add(srDTO);
+			}
+		}else {
+			List<StuffReqEntity> srEntityList = sr.findByMemberAndStatusAndStuffLikeAndReqDateBetween(me, status, se, startDate, endDate);		
+			for (StuffReqEntity stuffReqEntity : srEntityList) {
+				StuffReqDTO srDTO = StuffReqMapper.entityToDto(stuffReqEntity);
+				srDTOList.add(srDTO);
+			}
+		}
+		log.error("findByMemberIdLikeStuffId size=" + srDTOList.size());
+		return srDTOList;
+	}
+	
+	public List<StuffReqDTO> findByDate(String memberId, Date startDate, Date endDate )throws FindException{
+		MemberEntity me = MemberEntity.builder().id(memberId).build();
+		
+		List<StuffReqEntity> srEntityList = sr.findByMemberAndReqDateBetween(me, startDate, endDate);
+		List<StuffReqDTO> srDTOList = new ArrayList<>();
+		for (StuffReqEntity stuffReqEntity : srEntityList) {
+			StuffReqDTO srDTO = StuffReqMapper.entityToDto(stuffReqEntity);
+			srDTOList.add(srDTO);
+		}
+
+		return srDTOList;
+	}
+	
+	/**
+	 * 인계된 id에 해당하는 행을 삭제한다
+	 * @param id
+	 */
+	public void removeById(Long id) {
+		sr.deleteById(id);
+	}
 
 }
