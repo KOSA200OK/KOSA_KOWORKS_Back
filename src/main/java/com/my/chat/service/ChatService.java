@@ -39,14 +39,16 @@ public class ChatService {
 		ChannelTopic channelTopic = channelTopicMap.get(roomId); //
 		if (channelTopic == null) { // 처음 들어오는 사람의 경우
 			channelTopic = new ChannelTopic(roomId);
-			redisMessageListener.addMessageListener(redisSubscriber, channelTopic); // listener에 channelTopic 설정.
+			// listener에 channelTopic 설정.
+			redisMessageListener.addMessageListener(redisSubscriber, channelTopic);
 			channelTopicMap.put(roomId, channelTopic);
 		}
 	}
 
 	public void publish(ChatMessage chatMessage) {
-		ChannelTopic channelTopic = channelTopicMap.get(chatMessage.getRoomId()); // 내가 접속한 방 얻기
-		redisTemplate.convertAndSend(channelTopic.getTopic(), chatMessage);
+		// 내가 접속한 방 얻기
+		ChannelTopic channelTopic = channelTopicMap.get(chatMessage.getRoomId());
 		// 방에다가 publish 하는 메소드 이 후sucscriber의 onMessage가 실행됨 자동으로.
+		redisTemplate.convertAndSend(channelTopic.getTopic(), chatMessage);
 	}
 }
