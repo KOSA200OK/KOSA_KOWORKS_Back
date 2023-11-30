@@ -15,7 +15,7 @@ import com.my.stuff.dto.StuffDTO;
 import com.my.stuff.entity.StuffEntity;
 import com.my.stuff.repository.StuffRepository;
 import com.my.stuff.repository.StuffReqRepository;
-import com.my.stuff.service.StuffMapper;
+import com.my.stuff.util.StuffMapper;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -32,10 +32,10 @@ class StuffTest {
 	@Transactional
 	@Commit
 	void testInsertStuff() throws AddException {
-		StuffDTO dto = StuffDTO.builder().Id("S0005").name("보드마카").quantity(10L).build();
+		StuffDTO dto = StuffDTO.builder().id("S0005").name("보드마카").stock(10L).build();
 		StuffEntity entity = StuffMapper.dtoToEntity(dto);
 		log.error("entity Id:{}, name:{}, quantity:{}", entity.getId(), entity.getName(),
-				entity.getQuantity());
+				entity.getStock());
 		s.save(entity);
 		
 		Optional<StuffEntity>optEntity1= s.findById(dto.getId());

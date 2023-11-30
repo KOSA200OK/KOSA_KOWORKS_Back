@@ -5,10 +5,8 @@ import org.modelmapper.config.Configuration.AccessLevel;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-<<<<<<< HEAD
-=======
 import org.springframework.data.domain.Page;
->>>>>>> 9e84c68011c46842994615944c0ebfae3b7149e5
+
 
 import com.my.notice.dto.NoticeDTO;
 import com.my.notice.entity.NoticeEntity;

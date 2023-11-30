@@ -11,6 +11,7 @@ import com.my.exception.FindException;
 import com.my.stuff.dto.StuffDTO;
 import com.my.stuff.entity.StuffEntity;
 import com.my.stuff.repository.StuffRepository;
+import com.my.stuff.util.StuffMapper;
 
 
 @Service

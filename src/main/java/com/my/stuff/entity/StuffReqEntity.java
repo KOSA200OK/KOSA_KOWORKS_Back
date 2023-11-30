@@ -1,7 +1,9 @@
 package com.my.stuff.entity;
 
-import java.util.Date;
 
+import java.sql.Date;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,37 +23,37 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
+
 @Getter
 @Builder
 @Entity
 @DynamicInsert
-@Table(name = "stuff_req_test")
-@SequenceGenerator(name="stuff_req_seq_generator", sequenceName="car_rent_seq", initialValue=1, allocationSize=1)
+@Table(name = "stuff_req")
+@SequenceGenerator(name="stuff_req_seq_generator", sequenceName="stuff_req_seq", initialValue=1, allocationSize=1)
 public class StuffReqEntity {
 	@Id
 	@Column(length = 20)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "stuff_req_seq_generator")
 	private Long id;
     
-	@ManyToOne
+	@ManyToOne	
 	@JoinColumn(name = "stuffId")
-	private StuffEntity stuffEntity;
+	private StuffEntity stuff;
 	
 	@ManyToOne
 	@JoinColumn(name = "memberId")
-	private MemberEntity memberEntity;
+	private MemberEntity member;
 	
 	@Column(nullable=false)
-	@ColumnDefault(value = "SYSDATE")
+	@ColumnDefault(value = " SYSDATE")
 	private Date reqDate;
 	
 	@Column(nullable = false, length = 2)
 	@ColumnDefault("0")
-	private Long quantityReq;
+	private Long quantity;
 	
 	@Column(nullable = false)
 	@ColumnDefault("0")
@@ -62,5 +64,11 @@ public class StuffReqEntity {
 	
 	@Column(length=200)
 	private String reject;
+	
+//	public void modifyReject(String reject) {
+//		this.reject = reject;
+//	}
+	
+	
 
 }

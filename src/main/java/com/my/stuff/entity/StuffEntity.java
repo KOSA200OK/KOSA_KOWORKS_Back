@@ -23,10 +23,11 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@Setter
 @Builder
 @Entity
 @DynamicInsert
-@Table(name = "stuff_test")
+@Table(name = "stuff")
 public class StuffEntity {
 	@Id
 	@Column(length = 20)
@@ -37,6 +38,9 @@ public class StuffEntity {
 
 	@Column(nullable = false, length = 2)
 	@ColumnDefault("0")
-	private Long quantity;
+	private Long stock;
+	
+	
+	
 
 }

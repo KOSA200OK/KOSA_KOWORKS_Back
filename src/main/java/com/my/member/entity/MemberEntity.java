@@ -24,6 +24,7 @@ import lombok.Setter;
 @Table(name = "member")
 public class MemberEntity {
 	@Id
+	@Column
 	private String id;
 
 	@Column(nullable = false)

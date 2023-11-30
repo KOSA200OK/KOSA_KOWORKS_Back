@@ -1,17 +1,17 @@
-package com.my.stuff.dto;
+package com.my.department.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
 @Setter
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
-public class StuffDTO {
-	private String id;
-    private String name;
-    private Long stock;
+public class DepartmentDTO {
+	private Long id;
+	private String name;
 }

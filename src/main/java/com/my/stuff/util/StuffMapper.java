@@ -1,4 +1,4 @@
-package com.my.stuff.service;
+package com.my.stuff.util;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.config.Configuration.AccessLevel;
@@ -18,11 +18,6 @@ public class StuffMapper {
 		Object source = dto;
 		Class<StuffEntity> destinationType = StuffEntity.class;
 		StuffEntity entity = mapper.map(source, destinationType); //DTO->VO
-//		StuffEntity entity = StuffEntity.builder()
-//							.id(dto.getId())
-//							.name(dto.getName())
-//							.quantity(dto.getQuantity())
-//							.build();
 		return entity;
 	}
 	
