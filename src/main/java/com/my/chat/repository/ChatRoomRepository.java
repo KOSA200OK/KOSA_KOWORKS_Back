@@ -38,7 +38,8 @@ public class ChatRoomRepository {
 	 */
 	public ChatRoom createChatRoom(String name) {
 		ChatRoom chatRoom = ChatRoom.create(name);
-		opsHashChatRoom.put(CHAT_ROOMS_KEY, chatRoom.getRoomId(), chatRoom); // redis에 저장 .
+		// redis에 저장
+		opsHashChatRoom.put(CHAT_ROOMS_KEY, chatRoom.getRoomId(), chatRoom); 
 		return chatRoom;
 	}
 }
