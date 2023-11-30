@@ -12,7 +12,8 @@ import com.my.member.entity.MemberEntity;
 
 public interface AttendanceRepository extends JpaRepository<AttendanceEntity, Integer> {
 	
-	AttendanceEntity findByMemberId(MemberEntity memberId);
+//	AttendanceEntity findByMemberId(MemberEntity memberId);
+	Optional<AttendanceEntity> findByMemberId(MemberEntity memberId);
 
 	@Query(value="SELECT *\r\n"
 			+ "FROM attendance a\r\n"
@@ -20,6 +21,8 @@ public interface AttendanceRepository extends JpaRepository<AttendanceEntity, In
 			+ "WHERE m.id = :memberId" , nativeQuery = true)
 	Page<AttendanceEntity> findAllByMemberId(String memberId, Pageable pageable);
 
-	Optional<AttendanceEntity> findByMemberId(String memberId);
+	Optional<AttendanceEntity> findByMemberIdAndAttendanceDate(MemberEntity memberId, String format);
+
+//	Optional<AttendanceEntity> findByMemberId(String memberId);
 
 }
