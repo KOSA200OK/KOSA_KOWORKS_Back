@@ -52,15 +52,13 @@ public class CarServiceImpl implements CarService {
 
 	@Override
 	public Page<CarRentDTO> findAllMyCarRent(Pageable pageable, String memberId) {
-		System.out.println("memberId : "+memberId);
-//		MemberMapper mm = new MemberMapper();
-//		MemberEntity mEntity = mm.dtoToEntity(member);
-//		MemberEntity mEntity = new MemberEntity();
-//		mEntity.builder()
-//				.id(memberId)
-//				.build();
-		Page<CarRentEntity> entityList = crr.findByMember(pageable, memberId);
+		Page<CarRentEntity> entityList = crr.findAllByMemberIdOrderByReqDateDesc(pageable, memberId);
 		CarRentMapper crm = new CarRentMapper();
 		return entityList.map(crm::entityToDto);
+	}
+	
+	@Override
+	public void removeByIdCarRent(Long id) {
+		crr.deleteById(id);
 	}
 }

@@ -68,8 +68,16 @@ public class AttendanceServiceImpl implements AttendanceService {
         LocalTime currentTime = LocalTime.now();
         LocalDate currentDate = LocalDate.now();
         
+<<<<<<< HEAD
+        System.out.println("현재시간: " + currentTime);
+        System.out.println("아이디 1 : " + dto.getMemberId() );
+        System.out.println("아이디 2 : " + dto.getMember().getId() );
+
+        Optional<AttendanceEntity> existingAttendance = repository.findById(dto.getId());
+=======
         log.warn("현재시간: " + currentTime);
         log.warn("아이디 2 : " + entity.getMemberId().getId() );
+>>>>>>> f943d64828d1c6ca5ecd1534e4b0c18989888375
         
 //        String mId = entity.getMemberId().getId();
 //        MemberEntity memberEntity = new MemberEntity();
