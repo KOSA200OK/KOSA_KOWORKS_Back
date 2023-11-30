@@ -21,7 +21,7 @@ public class AttendanceDTO {
 	
 	private String attendanceDate;		// 일자
 	
-	private String startTime;				// 출근시간
+	private String startTime;			// 출근시간
 	
 	private String endTime;				// 퇴근시간
 	
