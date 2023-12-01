@@ -8,11 +8,15 @@ import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.my.exception.AddException;
 import com.my.exception.FindException;
+import com.my.exception.RemoveException;
 import com.my.meetingroom.dto.MeetingReservationDTO;
+import com.my.meetingroom.dto.ParticipantsDTO;
 import com.my.meetingroom.entity.MeetingReservationEntity;
 import com.my.meetingroom.entity.ParticipantsEntity;
 import com.my.meetingroom.repository.MeetingReservationRepository;
@@ -33,10 +37,8 @@ public class MeetingroomServiceImpl implements MeetingroomService {
 	
 	@Autowired
 	ParticipantsRepository participants;
-	
-	@Autowired
-	private EntityManager entityManager;
 		
+	
 	@Override
 	public List<MeetingReservationDTO> findAllMeetingRoom(String meetingDate) throws FindException {
 		
@@ -81,6 +83,39 @@ public class MeetingroomServiceImpl implements MeetingroomService {
 		
 //		reservation.deleteById(159L);
 		
+	}
+
+	@Override
+	public Page<MeetingReservationDTO> findAllByMemberId(Pageable pageable, String memberId) throws FindException {
+		Page<MeetingReservationEntity> entity = reservation.findAllByMemberId(pageable, memberId);
+		MeetingroomMapper mapper = new MeetingroomMapper();
+		return entity.map(mapper::Reservation_VoToDto);
+	}
+
+	@Override
+	public void createParticipants(ParticipantsDTO pdto) throws AddException {		
+		//DTO->Vo
+		MeetingroomMapper mapper = new MeetingroomMapper();
+		ParticipantsEntity pentity = mapper.Participants_DtoToVo(pdto);
+		participants.save(pentity);
+	}
+
+	@Override
+	public void removeParticipants(Long id) throws RemoveException {
+		try {
+			participants.deleteById(id);
+		} catch (Exception e) {
+			throw new RemoveException();
+		}
+	}
+
+	@Override
+	public void removeMeeting(Long id) throws RemoveException {
+		try {
+			reservation.deleteById(id);
+		} catch (Exception e) {
+			throw new RemoveException();
+		}
 	}
 
 }

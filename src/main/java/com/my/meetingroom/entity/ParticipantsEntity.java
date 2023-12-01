@@ -22,6 +22,7 @@ import lombok.Setter;
 
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor
 @Builder
+
 @Entity
 @DynamicInsert
 @Table(name="participants")

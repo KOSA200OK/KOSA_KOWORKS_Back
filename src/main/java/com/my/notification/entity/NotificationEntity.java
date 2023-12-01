@@ -62,7 +62,14 @@ public class NotificationEntity {
 
 	@Column(name = "status")
 	private Integer status;
-	
+
+	public NotificationEntity(MemberEntity memberEntity, NotificationType notificationType, String content) {
+	      this.memberEntity = memberEntity;
+	      this.notificationType = notificationType;
+	      this.content = content;
+
+	}
+
 	public enum NotificationType {
 		
 		NOTICE,
