@@ -16,12 +16,14 @@ import com.my.car.entity.CarEntity;
 @Repository
 public interface CarRepository extends JpaRepository<CarEntity, String> {
 	Page<CarEntity> findAllByOrderByStatusAscIdDesc(Pageable pageble);
+	
 	@Transactional
 	@Modifying
 	@Query(value="UPDATE CAR"+ " SET status = 0" + 
 					" WHERE id IN "+"(SELECT r.car_id "+
 					" FROM CAR_RENT r "+
 					"WHERE r.end_date < :today)", nativeQuery=true)
-//	void saveCarStatus(LocalDate today);
 	void saveCarStatus(LocalDate today);
+	
+	Page<CarEntity> findAllByOrderByStatusDescIdDesc(Pageable pageble);
 }
