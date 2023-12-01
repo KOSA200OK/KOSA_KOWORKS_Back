@@ -12,7 +12,7 @@ import com.my.member.entity.MemberEntity;
 
 public interface AttendanceRepository extends JpaRepository<AttendanceEntity, Integer> {
 	
-	AttendanceEntity findByMemberId(MemberEntity memberId);
+//	AttendanceEntity findByMemberId(MemberEntity memberId);
 	
 	// 조회
 	@Query(value="SELECT *\r\n"
