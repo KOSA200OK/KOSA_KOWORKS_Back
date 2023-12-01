@@ -72,4 +72,9 @@ public class CarController {
 		cs.removeByIdCarRent(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
+	
+	@GetMapping("/test")
+	public void test() {
+		cs.modifyCarStatus();
+	}
 }

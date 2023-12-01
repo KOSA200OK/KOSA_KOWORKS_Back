@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,6 +31,20 @@ public class CarServiceImpl implements CarService {
 		this.crr = crr;
 	}
 	
+	@Transactional
+	public void modifyCarStatus() {
+		LocalDate today = LocalDate.now();
+		
+//		String todaystring = "2023-12-01";
+//		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+//		LocalDate today = LocalDate.parse(todaystring, formatter);
+//		System.out.println("*************service: "+today);
+		
+		cr.saveCarStatus(today);
+	}
+	
+	//*************** 차량 목록 **************************
+	
 	@Override
 	public Page<CarDTO> findAllCar(Pageable pageable) {
 		Page<CarEntity> entityList = cr.findAllByOrderByStatusAscIdDesc(pageable);
@@ -49,7 +65,9 @@ public class CarServiceImpl implements CarService {
 		cr.save(carEntity);
 	}
 	
-
+	//****************** 차량 대여 목록 **************************
+	
+	
 	@Override
 	public Page<CarRentDTO> findAllMyCarRent(Pageable pageable, String memberId) {
 		Page<CarRentEntity> entityList = crr.findAllByMemberIdOrderByReqDateDesc(pageable, memberId);
@@ -61,4 +79,6 @@ public class CarServiceImpl implements CarService {
 	public void removeByIdCarRent(Long id) {
 		crr.deleteById(id);
 	}
+	
+	
 }
