@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,6 +31,20 @@ public class CarServiceImpl implements CarService {
 		this.crr = crr;
 	}
 	
+	@Transactional
+	public void modifyCarStatus() {
+		LocalDate today = LocalDate.now();
+		
+//		String todaystring = "2023-12-01";
+//		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+//		LocalDate today = LocalDate.parse(todaystring, formatter);
+//		System.out.println("*************service: "+today);
+		
+		cr.saveCarStatus(today);
+	}
+	
+	//*************** 차량 목록 **************************
+	
 	@Override
 	public Page<CarDTO> findAllCar(Pageable pageable) {
 		Page<CarEntity> entityList = cr.findAllByOrderByStatusAscIdDesc(pageable);
@@ -49,18 +65,28 @@ public class CarServiceImpl implements CarService {
 		cr.save(carEntity);
 	}
 	
-
+	//****************** 차량 대여 목록 **************************
+	
+	
 	@Override
 	public Page<CarRentDTO> findAllMyCarRent(Pageable pageable, String memberId) {
-		System.out.println("memberId : "+memberId);
-//		MemberMapper mm = new MemberMapper();
-//		MemberEntity mEntity = mm.dtoToEntity(member);
-//		MemberEntity mEntity = new MemberEntity();
-//		mEntity.builder()
-//				.id(memberId)
-//				.build();
-		Page<CarRentEntity> entityList = crr.findByMember(pageable, memberId);
+		Page<CarRentEntity> entityList = crr.findAllByMemberIdOrderByReqDateDesc(pageable, memberId);
 		CarRentMapper crm = new CarRentMapper();
 		return entityList.map(crm::entityToDto);
+	}
+	
+	@Override
+	public void removeByIdCarRent(Long id) {
+		crr.deleteById(id);
+	}
+	
+	
+	//***************** 차량 관리 메인 ************************
+	
+	@Override
+	public Page<CarDTO> findAllCarManage(Pageable pageable){
+		Page<CarEntity> entityList = cr.findAllByOrderByStatusDescIdDesc(pageable);
+		CarMapper cm = new CarMapper();
+		return entityList.map(cm::entityToDto);
 	}
 }

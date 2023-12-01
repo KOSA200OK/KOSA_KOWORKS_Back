@@ -1,12 +1,11 @@
 package com.my.meetingroom.dto;
 
 
-import java.util.Date;
+import java.util.List;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.my.member.dto.MemberDTO;
 
 import lombok.AllArgsConstructor;
@@ -31,7 +30,7 @@ public class MeetingReservationDTO {
 	@Size(max=100, message="내용은 최대 100자 이내로 작성해주세요")
 	private String purpose;
 	
-	private MemberDTO member;
-	private MeetingRoomDTO meetingroom;
-	private ParticipantsDTO participants;
+	private MemberDTO member; //직원 정보
+	private MeetingRoomDTO meetingroom; //미팅룸 정보
+	private List<ParticipantsDTO> participants; //회의 참여자 목록
 }
