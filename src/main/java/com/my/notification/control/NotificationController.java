@@ -12,13 +12,8 @@ import com.my.notification.service.NotificationServiceImpl;
 @RestController
 @RequestMapping()
 public class NotificationController {
+	
 	   private NotificationServiceImpl notifyService;
-	   
-//	   @GetMapping(value = "/subscribe", produces = "text/event-stream")
-//	   public SseEmitter subscribe(@AuthenticationPrincipal User principal,
-//	                               @RequestHeader(value = "Last-Event-ID", required = false, defaultValue = "") String lastEventId) {
-//		   return notifyService.subscribe(principal.getUsername(), lastEventId);
-//	   }
 	   
 	   /**
 	     * @title 로그인 한 유저 sse 연결
