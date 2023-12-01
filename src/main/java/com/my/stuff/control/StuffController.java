@@ -16,6 +16,13 @@ import com.my.stuff.service.StuffService;
 public class StuffController {
     @Autowired
     private StuffService service;
+    
+    
+    /**
+     * 비품테이블의 전체 행을 조회하여 반환한다
+     * @return List<StuffDTO>
+     * @throws FindException
+     */
     @GetMapping("/list")
     public List<StuffDTO> findAll() throws FindException{
     	return service.findAll();
