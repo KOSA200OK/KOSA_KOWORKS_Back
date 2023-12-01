@@ -22,5 +22,5 @@ public class NotificationController {
 	    public SseEmitter subscribe(@PathVariable String id,
 	                                @RequestHeader(value = "Last-Event-ID", required = false, defaultValue = "") String lastEventId) {
 	        return notifyService.subscribe(id, lastEventId);
-	    }
+	    } // subscribe
 }
