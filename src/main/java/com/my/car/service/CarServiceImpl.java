@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,13 +31,15 @@ public class CarServiceImpl implements CarService {
 		this.crr = crr;
 	}
 	
+	@Transactional
 	public void modifyCarStatus() {
-//		LocalDate today = LocalDate.now();
-
-		String todaystring = "2023-12-01";
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		LocalDate today = LocalDate.parse(todaystring, formatter);
-		System.out.println("*************service: "+today);
+		LocalDate today = LocalDate.now();
+		
+//		String todaystring = "2023-12-01";
+//		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+//		LocalDate today = LocalDate.parse(todaystring, formatter);
+//		System.out.println("*************service: "+today);
+		
 		cr.saveCarStatus(today);
 	}
 	

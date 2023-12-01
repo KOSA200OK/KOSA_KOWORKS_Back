@@ -16,12 +16,8 @@ public class CarScheduler {
 	@Autowired
 	private CarService cs;
 	
-	@Scheduled(cron = "0 14 19 * * ?")
-	@Transactional
+	@Scheduled(cron = "0 0 0 * * ?")
 	public void carStatusScheduler(){
-//		LocalDate today = LocalDate.now();
-//		System.out.println("*****today : "+today);
 		cs.modifyCarStatus();
-		System.out.println("실행됨");
 	}
 }
