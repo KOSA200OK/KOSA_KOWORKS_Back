@@ -68,16 +68,19 @@ public class StuffReqController {
 //		return service.findByMemberIdStatusLikeStuffId(memberId, status, stuffId);
 //    	
 //    }
-    @GetMapping("/requestlist/filter")
-    public List<StuffReqDTO> findByMemberIdAndStatusAndStuffIdLike(@RequestParam String memberId,
-    		                                                       @RequestParam Long status,
-    		                                                       @RequestParam String stuffId,
-    		                                                       @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
-    		                                                       @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate
-    		                                                       ) throws FindException{
-		return service.findByMemberIdStatusLikeStuffIdBetweenDate(memberId, status, stuffId, startDate, endDate);
+    
+    // memberId = 필수, Date = 필수, status = 0, 1, 2, 선택 안할경우 3 , stuffId = %s%, 선택 안할경우 default
+    @GetMapping("/requestlist/case")
+    public List<StuffReqDTO> findByCase(@RequestParam String memberId,
+    		                            @RequestParam Long status,
+    		                            @RequestParam String stuffId,
+    		                            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+    		                            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate
+    		                            ) throws FindException{
+		return service.findByCase(memberId, status, stuffId, startDate, endDate);
     	
     }
+    //*****************************************비품 요청목록 조회 끝************************************************************
     
     /**
      * PathVariable로 주어진 id에 해당하는 비품요청을 삭제한다
