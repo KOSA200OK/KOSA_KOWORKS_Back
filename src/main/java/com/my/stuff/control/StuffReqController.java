@@ -29,7 +29,6 @@ public class StuffReqController {
     @Autowired
     private StuffReqService service;
     
-    //***************************************비품 목록 조회**************************************************************
     /**
      * Json 문자열로 인계된 비품요청을 stuff_req 테이블 행으로 생성한다.
      * @param StuffReqDTO
@@ -40,7 +39,6 @@ public class StuffReqController {
     	service.createStuffReq(dto);
     }
     
-  //*****************************************비품 요청목록 조회************************************************************
     
     /**
      * 파람으로 인계된 멤버Id를 인자로 해당 멤버의 비품요청데이터를 리스트 형식으로 반환한다.
@@ -71,7 +69,7 @@ public class StuffReqController {
     
     // memberId = 필수, Date = 필수, status = 0, 1, 2, 선택 안할경우 3 , stuffId = %s%, 선택 안할경우 default
     @GetMapping("/requestlist/case")
-    public List<StuffReqDTO> findByCase(@RequestParam String memberId,
+    public List<StuffReqDTO> findByUserCase(@RequestParam String memberId,
     		                            @RequestParam Long status,
     		                            @RequestParam String stuffId,
     		                            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
@@ -80,7 +78,6 @@ public class StuffReqController {
 		return service.findByCase(memberId, status, stuffId, startDate, endDate);
     	
     }
-    //*****************************************비품 요청목록 조회 끝************************************************************
     
     /**
      * PathVariable로 주어진 id에 해당하는 비품요청을 삭제한다
@@ -91,4 +88,36 @@ public class StuffReqController {
 		service.removeById(id);
 
 	}
+    
+    // 관리자 ===============================================================================
+    
+    @GetMapping("/requestmanage")
+    public List<StuffReqDTO> findByApprove() {
+    	return service.findByApprove();
+    }
+
+//    @GetMapping("/requestmanage/case")
+//    public List<StuffReqDTO> findByMangeCase(@RequestParam String memberId,
+//    		                                 @RequestParam Long departmentId,
+//                                             @RequestParam Long status,
+//                                             @RequestParam String stuffId,
+//                                             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+//                                             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate
+//                                             ) throws FindException{
+//    	return service.findByManageCase(memberId, departmentId, status, stuffId, startDate, endDate);
+//    }
+    
+//    @GetMapping("/requestmanage/case")
+//    public List<StuffReqDTO> findByMangeCase(@RequestParam Long departmentId
+//                                             ) throws FindException{
+//    	return service.findByDepartment(departmentId);
+//    }
+    
+    
+    
+    
+    
+    
+    
+    
 }
