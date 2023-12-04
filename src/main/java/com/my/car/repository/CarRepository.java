@@ -32,4 +32,5 @@ public interface CarRepository extends JpaRepository<CarEntity, String> {
 //	@Query("SELECT c FROM CarEntity c LEFT JOIN c.CarEntity cr " +
 //	           "ORDER BY cr.status DESC, cr.startDate DESC")
 //	Page<CarEntity> findAllCarManage(Pageable pageble);
+	
 }
