@@ -52,4 +52,6 @@ public class NotificationDTO {
 		}
 	}
 	
+	// createdAt을 어떻게 하지..?
+	
 } // end class
