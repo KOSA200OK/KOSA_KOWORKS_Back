@@ -75,13 +75,13 @@ public class CarController {
 	
 	//******************* 차량 관리 메인 ***********************
 	
-	@GetMapping("/carmanagelist/{currentPage}")
-	public Page<CarDTO> findAllCarManage(@PathVariable int currentPage) throws FindException{
-		System.out.println("currentPage: "+currentPage);
-		currentPage -=1;
-		Pageable pageable = PageRequest.of(currentPage, 10);
-		return cs.findAllCarManage(pageable);
-	}
+//	@GetMapping("/carmanagelist/{currentPage}")
+//	public Page<CarDTO> findAllCarManage(@PathVariable int currentPage) throws FindException{
+//		System.out.println("currentPage: "+currentPage);
+//		currentPage -=1;
+//		Pageable pageable = PageRequest.of(currentPage, 10);
+//		return cs.findAllCarManage(pageable);
+//	}
 	
 //	@GetMapping("/test")
 //	public void test() {
