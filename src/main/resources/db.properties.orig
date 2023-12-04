@@ -2,6 +2,16 @@
 #spring.datasource.hikari.driver-class-name=net.sf.log4jdbc.sql.jdbcapi.DriverSpy
 spring.datasource.hikari.driver-class-name=oracle.jdbc.OracleDriver
 
+<<<<<<< HEAD
+#--local
+spring.datasource.hikari.driver-class-name=net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+spring.datasource.hikari.jdbc-url=jdbc:log4jdbc:oracle:thin:@localhost:1521:xe
+#spring.datasource.hikari.driver-class-name=oracle.jdbc.OracleDriver
+#spring.datasource.hikari.jdbc-url=jdbc:oracle:thin:@localhost:1521:xe
+spring.datasource.hikari.username=hr
+spring.datasource.hikari.password=hr
+spring.datasource.hikari.minimum-idle=3
+=======
 #spring.datasource.hikari.jdbc-url=jdbc:oracle:thin:@//adb.ap-sydney-1.oraclecloud.com:1522/gce08a7dc5c81c4_koworks_medium.adb.oraclecloud.com
 #spring.datasource.hikari.jdbc-url=jdbc:oracle:thin:@koworks_medium?TNS_ADMIN=C:/etcFiles/Wallet_KOWORKS
 
@@ -24,3 +34,4 @@ spring.datasource.hikari.minimum-idle=3
 # spring.datasource.hikari.username=test
 # spring.datasource.hikari.password=test
 # spring.datasource.hikari.minimum-idle=3
+>>>>>>> dd62974cc7ded4b9e43489ba29208539a72bfeac
