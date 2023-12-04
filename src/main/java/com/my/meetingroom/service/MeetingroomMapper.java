@@ -9,6 +9,9 @@ import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.my.meetingroom.dto.MeetingReservationDTO;
 import com.my.meetingroom.dto.ParticipantsDTO;
 import com.my.meetingroom.entity.MeetingReservationEntity;
@@ -97,10 +100,14 @@ public class MeetingroomMapper {
 				.setMatchingStrategy(MatchingStrategies.STANDARD)
 				.setFieldAccessLevel(AccessLevel.PRIVATE)
 				.setFieldMatchingEnabled(true);
+		ObjectMapper omapper = new ObjectMapper();
+		omapper.enable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+		omapper.enable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
 		
 		Object source = entity;
 		Class<MeetingReservationDTO> destinationType = MeetingReservationDTO.class;
 		MeetingReservationDTO dto = mapper.map(source, destinationType);
+		
 		return dto;
 	}
 	
@@ -116,11 +123,11 @@ public class MeetingroomMapper {
 		ParticipantsEntity pe = new ParticipantsEntity();
 		MeetingReservationEntity pmre = new MeetingReservationEntity();
 		pe.setId(pdto.getId());
-		pmre.setId(pdto.getMeeting().getId());
+		pmre.setId(pdto.getMeetingId().getId());
 		pe.setMeeting(pmre);
 		
 		MeetingReservationEntity mrde = new MeetingReservationEntity();
-		mrde.setId(pdto.getMeeting().getId());
+		mrde.setId(pdto.getMeetingId().getId());
 		pe.setMeeting(mrde);
 		
 		MemberEntity me = new MemberEntity();
