@@ -12,5 +12,5 @@ public interface CarRentRepository extends JpaRepository<CarRentEntity, Long>{
 //	@Query(value = "SELECT * FROM car_rent WHERE member_id = :memberId", nativeQuery=true)
 	Page<CarRentEntity> findAllByMemberIdOrderByReqDateDesc(Pageable pageable, String memberId);
 	
-	Page<CarRentEntity> findAllByStatus(Pageable pageable, Long status);
+	Page<CarRentEntity> findAllByStatusOrderByReqDate(Pageable pageable, Long status);
 }
