@@ -21,5 +21,5 @@ public interface CarService {
 	
 	public void removeByIdCarRent(Long id);
 	
-//	public Page<CarDTO> findAllCarManage(Pageable pageable);
+	public Page<CarDTO> findAllCarManage(Pageable pageable);
 }
