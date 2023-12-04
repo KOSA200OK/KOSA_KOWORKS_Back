@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.my.exception.AddException;
 import com.my.exception.FindException;
+import com.my.exception.ModifyException;
 import com.my.stuff.dto.StuffDTO;
 import com.my.stuff.dto.StuffReqDTO;
 import com.my.stuff.service.StuffReqService;
@@ -91,21 +93,32 @@ public class StuffReqController {
     
     // 관리자 ===============================================================================
     
-    @GetMapping("/requestmanage")
-    public List<StuffReqDTO> findByApprove() {
-    	return service.findByApprove();
-    }
-
-//    @GetMapping("/requestmanage/case")
-//    public List<StuffReqDTO> findByMangeCase(@RequestParam String memberId,
-//    		                                 @RequestParam Long departmentId,
-//                                             @RequestParam Long status,
-//                                             @RequestParam String stuffId,
-//                                             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
-//                                             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate
-//                                             ) throws FindException{
-//    	return service.findByManageCase(memberId, departmentId, status, stuffId, startDate, endDate);
+//    @GetMapping("/requestmanage")
+//    public List<StuffReqDTO> findByApprove() {
+//    	return service.findByApprove();
 //    }
+
+    @GetMapping("/requestmanage")
+    public List<StuffReqDTO> findByMangeCase(@RequestParam Long departmentId,
+                                             @RequestParam Long status,
+                                             @RequestParam String stuffId,
+                                             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+                                             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate
+                                             ) throws FindException{
+    	return service.findByManageCase(departmentId, status, stuffId, startDate, endDate);
+    }
+    
+    @GetMapping("/requestmanage/{id}")
+    public StuffReqDTO findById(@PathVariable Long id) throws FindException{
+		return service.findById(id);
+    	
+    }
+    
+    @PutMapping("/requestmanage/{id}")
+    public void modifyReq(@PathVariable Long id, @RequestBody StuffReqDTO dto) throws ModifyException{
+    	service.modifyReq(id, dto);
+    }
+      
     
 //    @GetMapping("/requestmanage/case")
 //    public List<StuffReqDTO> findByMangeCase(@RequestParam Long departmentId
