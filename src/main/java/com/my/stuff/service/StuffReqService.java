@@ -3,12 +3,11 @@ package com.my.stuff.service;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.socket.server.standard.AbstractStandardUpgradeStrategy;
 
+import com.my.department.entity.DepartmentEntity;
 import com.my.exception.AddException;
 import com.my.exception.FindException;
 import com.my.member.entity.MemberEntity;
@@ -26,8 +25,6 @@ public class StuffReqService {
 	@Autowired
 	private StuffReqRepository sr;
 
-	private StuffReqMapper srm;
-
 	/**
 	 * StuffReqDTO타입의 비품 요청 데이터를 DB에 추가한다
 	 * 
@@ -35,7 +32,7 @@ public class StuffReqService {
 	 * @throws AddException
 	 */
 	public void createStuffReq(StuffReqDTO dto) throws AddException {
-		StuffReqEntity stuffReqEntity = srm.dtoToEntity(dto);
+		StuffReqEntity stuffReqEntity = StuffReqMapper.dtoToEntity(dto);
 //		System.out.println("service: "+stuffReqEntity.getStuff().getId());
 		sr.save(stuffReqEntity);
 	}
@@ -77,7 +74,7 @@ public class StuffReqService {
 		// memberId 세팅
 		MemberEntity me = new MemberEntity();
 		me.setId(memberId);
-
+ 
 		// stuffId 가공
 		String stuffIdM = new String();
 		stuffIdM = "%" + stuffId + "%";
@@ -135,8 +132,7 @@ public class StuffReqService {
 				
 				return srDTOList;
 			}			
-		}
-		
+		}	
 	}
 	
 	/**
@@ -147,6 +143,51 @@ public class StuffReqService {
 	public void removeById(Long id) {
 		sr.deleteById(id);
 	}
+	
+//	public List<StuffReqDTO> findByManageCase(String memberId, Long departmentId, Long status, String stuffId, Date startDate, Date endDate) throws FindException {
+//        
+//		switch (key) {
+//		case value:
+//			
+//			break;
+//
+//		default:
+//			break;
+//		}
+//	    return null;
+//	}
+	
+	public List<StuffReqDTO> findByApprove(){
+		// 전달할 리스트 세팅
+		List<StuffReqDTO> srDTOList = new ArrayList<>();
+		//승인 상태인 status값 세팅
+		Long approvedStatus = Long.valueOf(0L);
+		List<StuffReqEntity> srEntityList = sr.findByStatusOrderByReqDateDesc(approvedStatus);
+		for (StuffReqEntity stuffReqEntity : srEntityList) {
+			StuffReqDTO srDTO = StuffReqMapper.entityToDto(stuffReqEntity);
+			srDTOList.add(srDTO);
+		}
+		return srDTOList;
+		
+	}
+//	
+//	public List<StuffReqDTO> findByDepartment(Long departmentId){
+//		// 전달할 리스트 세팅
+//		List<StuffReqDTO> srDTOList = new ArrayList<>();
+//		//승인 상태인 status값 세팅
+//		DepartmentEntity de = DepartmentEntity.builder()
+//				                              .id(departmentId)
+//				                              .build();
+//		List<StuffReqEntity> srEntityList = sr.findByMember_Department(de);
+//		for (StuffReqEntity stuffReqEntity : srEntityList) {
+//			StuffReqDTO srDTO = StuffReqMapper.entityToDto(stuffReqEntity);
+//			srDTOList.add(srDTO);
+//		}
+//		return srDTOList;
+//		
+//	}
+	
+	
 
 //	public List<StuffReqDTO> findByDate(String memberId, Date startDate, Date endDate) throws FindException {
 //		MemberEntity me = MemberEntity.builder().id(memberId).build();
