@@ -10,12 +10,12 @@ import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
-//https://github.com/gks930620/chatting3_redis_pubsub
+//redis 동작 관련 설정
 @Configuration
 public class RedisConfig {
-	@Value("${spring.redis.host}")
+	@Value("localhost")
 	private String host;
-	@Value("${spring.redis.port}")
+	@Value("6379")
 	private int port;
 
 	@Bean

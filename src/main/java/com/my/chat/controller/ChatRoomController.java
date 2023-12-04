@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,16 +25,16 @@ public class ChatRoomController {
 	private final ChatRoomRepository chatRoomRepository;
 
 	// 채팅 리스트 화면
-	@GetMapping("/roomList")
+	@GetMapping("/roomlist")
 	public String rooms(Model model) {
-		return "/chat/roomList";
+		return "forward:/";
 	}
 
 	// 채팅방 입장 화면 단순히 화면으로 이동
 	@GetMapping("/room/enter/{roomId}")
 	public String roomDetail(Model model, @PathVariable String roomId) {
 		model.addAttribute("roomId", roomId);
-		return "/chat/roomDetail";
+		return "forward:/";
 	}
 
 	// 모든 채팅방 목록 반환
