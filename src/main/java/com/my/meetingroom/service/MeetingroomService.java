@@ -10,8 +10,8 @@ import com.my.exception.AddException;
 import com.my.exception.FindException;
 import com.my.exception.RemoveException;
 import com.my.meetingroom.dto.MeetingReservationDTO;
+import com.my.meetingroom.dto.MeetingRoomDTO;
 import com.my.meetingroom.dto.ParticipantsDTO;
-import com.my.meetingroom.entity.MeetingReservationEntity;
 
 public interface MeetingroomService {
 	
@@ -21,7 +21,9 @@ public interface MeetingroomService {
 	 * @return Meeting객체 리스트
 	 * @throws FindException DB 연결을 실패하거나 조회되는 공지사항이 없는 경우 FindException이 발생한다
 	 */
-	public List<MeetingReservationDTO> findAllMeetingRoom(String meetingDate) throws FindException;
+//	public List<MeetingReservationDTO> findAllMeetingRoom(String meetingDate) throws FindException;
+	public List<MeetingRoomDTO> findByMeetingRoom(String meetingDate) throws FindException;
+
 	
 	/**
 	 * 회의실 예약 번호로 예약 현황을 조회한다.

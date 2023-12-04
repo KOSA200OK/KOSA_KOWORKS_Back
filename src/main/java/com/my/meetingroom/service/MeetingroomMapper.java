@@ -13,11 +13,13 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.my.meetingroom.dto.MeetingReservationDTO;
+import com.my.meetingroom.dto.MeetingRoomDTO;
 import com.my.meetingroom.dto.ParticipantsDTO;
 import com.my.meetingroom.entity.MeetingReservationEntity;
 import com.my.meetingroom.entity.MeetingroomDetailEntity;
 import com.my.meetingroom.entity.ParticipantsEntity;
 import com.my.meetingroom.repository.MeetingRoomRepository;
+import com.my.member.dto.MemberDTO;
 import com.my.member.entity.MemberEntity;
 
 import lombok.extern.slf4j.Slf4j;
@@ -70,6 +72,13 @@ public class MeetingroomMapper {
 		
 		MeetingroomDetailEntity mrde = new MeetingroomDetailEntity();
 		mrde.setId(dto.getMeetingroom().getId());
+		mrde.setName(dto.getMeetingroom().getName());
+		mrde.setLocation(dto.getMeetingroom().getLocation());
+		mrde.setMaxNum(dto.getMeetingroom().getMaxNum());
+		mrde.setProjector(dto.getMeetingroom().getProjector());
+		mrde.setSocket(dto.getMeetingroom().getSocket());
+		mrde.setMonitor(dto.getMeetingroom().getMonitor());
+		mrde.setMarker(dto.getMeetingroom().getMarker());
 		e.setMeetingroom(mrde);
 		
 		MemberEntity me = new MemberEntity();
@@ -109,6 +118,47 @@ public class MeetingroomMapper {
 		MeetingReservationDTO dto = mapper.map(source, destinationType);
 		
 		return dto;
+	}
+	
+	//VO->DTO 변환 (MeetingRoom)
+	public MeetingRoomDTO Meetingroom_VoToDto(MeetingroomDetailEntity entity) {
+		
+		ModelMapper mapper = new ModelMapper();
+		mapper.getConfiguration()
+				.setMatchingStrategy(MatchingStrategies.STANDARD)
+				.setFieldAccessLevel(AccessLevel.PRIVATE)
+				.setFieldMatchingEnabled(true);
+		ObjectMapper omapper = new ObjectMapper();
+		omapper.enable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+		omapper.enable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
+		
+//		Object source = entity;
+//		Class<MeetingRoomDTO> destinationType = MeetingRoomDTO.class;
+//		MeetingRoomDTO dto = mapper.map(source, destinationType);
+		
+		//vo->dto
+		MeetingRoomDTO mrdto = new MeetingRoomDTO();
+		mrdto.setId(entity.getId());
+		mrdto.setLocation(entity.getLocation());
+		mrdto.setMaxNum(entity.getMaxNum());
+		mrdto.setMonitor(entity.getMonitor());
+		mrdto.setProjector(entity.getProjector());
+		mrdto.setSocket(entity.getSocket());
+		mrdto.setMarker(entity.getSocket());
+		
+		List<MeetingReservationDTO> listmr = new ArrayList<>();
+		for(MeetingReservationEntity mre : entity.getReservation()) {
+			MeetingReservationDTO mrd = new MeetingReservationDTO();
+			mrd.setId(mre.getId());
+			mrd.setStartTime(mre.getStartTime());
+			mrd.setEndTime(mre.getEndTime());
+			mrd.setMeetingDate(mre.getMeetingDate());
+			mrd.setPurpose(mre.getPurpose());
+			listmr.add(mrd);
+		}
+		
+		mrdto.setReservation(listmr);
+		return mrdto;
 	}
 	
 	

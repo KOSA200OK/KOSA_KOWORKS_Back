@@ -1,14 +1,14 @@
 package com.my.meetingroom.entity;
 
-import java.sql.Date;
+import java.util.List;
 
-import javax.persistence.Column;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -43,16 +43,27 @@ public class MeetingroomDetailEntity {
 	
 	private String name;
 	
-	private Long maxNum;
+	private Integer maxNum;
 	
-	private Long monitor;
+	private Integer monitor;
 	
-	private Long socket;
+	private Integer socket;
 	
-	private Long projector;
+	private Integer projector;
 	
-	private Long marker;
+	private Integer marker;
 	
 	private String location;
+	
+	//양방향 설정
+	@OneToMany
+	(		
+			fetch = FetchType.EAGER
+			,
+			cascade = CascadeType.ALL
+			,
+			mappedBy="meetingroom" //양방향
+	)
+	private List<MeetingReservationEntity> reservation; //회의실별 예약내역
 	
 }

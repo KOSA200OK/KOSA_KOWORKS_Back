@@ -24,6 +24,7 @@ import com.my.exception.AddException;
 import com.my.exception.FindException;
 import com.my.exception.RemoveException;
 import com.my.meetingroom.dto.MeetingReservationDTO;
+import com.my.meetingroom.dto.MeetingRoomDTO;
 import com.my.meetingroom.dto.ParticipantsDTO;
 import com.my.meetingroom.service.MeetingroomServiceImpl;
 
@@ -41,8 +42,8 @@ public class MeetingroomController {
 	//--------회의실 예약에서 할일-----------
 
 	@GetMapping("") //전체 리스트
-	public List<MeetingReservationDTO> findAllMeetingRoom(@RequestParam String meetingDate) throws FindException {
-		return service.findAllMeetingRoom(meetingDate);
+	public List<MeetingRoomDTO> findByMeetingRoom(@RequestParam String meetingDate) throws FindException {
+		return service.findByMeetingRoom(meetingDate);
 	}
 	
 	@GetMapping("/{id}") //상세보기
