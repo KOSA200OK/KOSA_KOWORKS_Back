@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import com.my.department.entity.DepartmentEntity;
 import com.my.member.entity.MemberEntity;
 import com.my.stuff.entity.StuffEntity;
 import com.my.stuff.entity.StuffReqEntity;
@@ -22,6 +23,15 @@ public interface StuffReqRepository extends JpaRepository<StuffReqEntity, Long> 
 	 * @return List<StuffReqEntity>
 	 */
 	List<StuffReqEntity> findByMember(MemberEntity member);
+	
+	List<StuffReqEntity> findByMember_Department(DepartmentEntity department);
+	
+	/**
+	 * stuff_req 테이블에서 status 값에 따라 조회한다
+	 * @param status
+	 * @return
+	 */
+	List<StuffReqEntity> findByStatusOrderByReqDateDesc(Long status);
 	
 	/**
 	 * 멤버, 날짜구간

@@ -47,7 +47,7 @@ public class NotificationEntity {
 	@ManyToOne
 	@JoinColumn(name = "receiverId",
 				nullable = false)
-	private MemberEntity memberEntity;
+	private MemberEntity receiverId;
 	
 	@Enumerated(EnumType.STRING)
 	@Column(name = "type",
@@ -62,7 +62,14 @@ public class NotificationEntity {
 
 	@Column(name = "status")
 	private Integer status;
-	
+
+	public NotificationEntity(MemberEntity receiverId, NotificationType notificationType, String content) {
+	      this.receiverId = receiverId;
+	      this.notificationType = notificationType;
+	      this.content = content;
+
+	}
+
 	public enum NotificationType {
 		
 		NOTICE,

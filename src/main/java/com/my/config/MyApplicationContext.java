@@ -34,7 +34,7 @@ public class MyApplicationContext {
 		HikariConfig config = new HikariConfig();
 		//config.setUsername();
 		//config.setPassword();
-		log.error("IN hikariConfig()-2");
+//		log.error("IN hikariConfig()-2");
 		
 		return config;
 	}

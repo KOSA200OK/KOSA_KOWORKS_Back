@@ -14,11 +14,11 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class AttendanceDTO {
+public class AttendanceDTO {	
 
 	private Integer id; 		// 근태번호
 	
-	private String memberId;			// 회원아이디
+//	private String memberId;			// 회원아이디
 	
 	private String attendanceDate;		// 일자
 	

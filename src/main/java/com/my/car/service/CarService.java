@@ -20,4 +20,6 @@ public interface CarService {
 	public Page<CarRentDTO> findAllMyCarRent(Pageable pageable, String memberId);
 	
 	public void removeByIdCarRent(Long id);
+	
+//	public Page<CarDTO> findAllCarManage(Pageable pageable);
 }
