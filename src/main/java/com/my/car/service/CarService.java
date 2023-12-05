@@ -24,4 +24,6 @@ public interface CarService {
 	public Page<CarDTO> findAllCarManage(Pageable pageable);
 	
 	public Page<CarRentDTO> findAllApprove(Pageable pageable);
+	
+	public void modifyCarRentStatus(Long id, Long status);
 }
