@@ -15,7 +15,8 @@ public interface MeetingRoomRepository extends JpaRepository<MeetingroomDetailEn
 	@Query(value="SELECT md.*, mr.id, mr.end_time, mr.meeting_date, mr.purpose, mr.start_time, mr.meetingroom_id, mr.member_id\r\n"
 			+ "FROM meetingroom_detail md\r\n"
 			+ "LEFT JOIN meeting_reservation mr ON md.id = mr.meetingroom_id AND mr.meeting_date = :meetingDate\r\n"
-			+ "WHERE mr.meeting_date IS NULL OR mr.meeting_date = :meetingDate", nativeQuery=true)
+			+ "WHERE mr.meeting_date IS NULL OR mr.meeting_date = :meetingDate\r\n"
+			+ "ORDER BY md.name", nativeQuery=true)
 	public List<MeetingroomDetailEntity> findAllByMeetingRoom(@Param("meetingDate") String meetingDate);
 
 }
