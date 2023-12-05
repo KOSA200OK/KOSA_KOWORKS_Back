@@ -11,4 +11,10 @@ import com.my.car.entity.CarRentEntity;
 public interface CarRentRepository extends JpaRepository<CarRentEntity, Long>{
 //	@Query(value = "SELECT * FROM car_rent WHERE member_id = :memberId", nativeQuery=true)
 	Page<CarRentEntity> findAllByMemberIdOrderByReqDateDesc(Pageable pageable, String memberId);
+	
+	Page<CarRentEntity> findAllByStatusOrderByReqDate(Pageable pageable, Long status);
+	
+	@Query("SELECT cr FROM CarRentEntity cr LEFT JOIN cr.car c " +
+	           " WHERE cr.status = 2 AND SYSDATE BETWEEN cr.startDate AND cr.endDate")
+	Page<CarRentEntity> findAllByReqDateDesc(Pageable pageable);
 }
