@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +21,19 @@ import com.my.meetingroom.entity.ParticipantsEntity;
 import com.my.meetingroom.repository.MeetingReservationRepository;
 import com.my.meetingroom.repository.MeetingRoomRepository;
 import com.my.meetingroom.repository.ParticipantsRepository;
+import com.my.member.entity.MemberEntity;
+import com.my.notification.entity.NotificationEntity;
+import com.my.notification.service.NotificationServiceImpl;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
 public class MeetingroomServiceImpl implements MeetingroomService {
+	
+	// 찬석
+	@Autowired
+	NotificationServiceImpl notify;
 	
 	@Autowired
 	MeetingRoomRepository meetingroom;
@@ -69,6 +75,10 @@ public class MeetingroomServiceImpl implements MeetingroomService {
 		MeetingroomMapper mapper = new MeetingroomMapper();
 		MeetingReservationEntity entity = mapper.Reservation_DtoToVo(msdto);
 		
+		// 찬석
+		MemberEntity memberEntity = entity.getMember();
+		log.warn("회의실예약 id : {}", memberEntity.getId());
+		
 		//최종
 		MeetingReservationEntity savedEntity = reservation.save(entity);
 		System.out.println("끝 : savedEntity" + savedEntity.getId());
@@ -82,6 +92,9 @@ public class MeetingroomServiceImpl implements MeetingroomService {
 //		}
 		
 //		reservation.deleteById(159L);
+		
+		// 찬석
+	    notify.send(memberEntity, NotificationEntity.NotificationType.MEETING, "회의실예약이 되었습니다.");
 		
 	}
 
