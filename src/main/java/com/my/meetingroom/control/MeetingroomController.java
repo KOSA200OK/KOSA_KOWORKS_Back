@@ -24,6 +24,7 @@ import com.my.exception.AddException;
 import com.my.exception.FindException;
 import com.my.exception.RemoveException;
 import com.my.meetingroom.dto.MeetingReservationDTO;
+import com.my.meetingroom.dto.MeetingRoomDTO;
 import com.my.meetingroom.dto.ParticipantsDTO;
 import com.my.meetingroom.service.MeetingroomServiceImpl;
 
@@ -40,12 +41,12 @@ public class MeetingroomController {
 	
 	//--------회의실 예약에서 할일-----------
 
-	@GetMapping("")
-	public List<MeetingReservationDTO> findAllMeetingRoom(@RequestParam String meetingDate) throws FindException {
-		return service.findAllMeetingRoom(meetingDate);
+	@GetMapping("") //전체 리스트
+	public List<MeetingRoomDTO> findByMeetingRoom(@RequestParam String meetingDate) throws FindException {
+		return service.findByMeetingRoom(meetingDate);
 	}
 	
-	@GetMapping("/{id}")
+	@GetMapping("/{id}") //상세보기
 	public Optional<MeetingReservationDTO> findById(@PathVariable Long id) throws FindException {
 		return service.findById(id);
 	}
@@ -82,7 +83,7 @@ public class MeetingroomController {
 	//--------내 예약보기에서 할일-----------
 	
 	@GetMapping("/myreservation")
-	public Page<MeetingReservationDTO> findAllByMemberId(String memberId, int currentPage) throws FindException {
+	public Page<MeetingReservationDTO> findAllByMemberId(@RequestParam int currentPage, String memberId) throws FindException {
 		currentPage -= 1;
 		Pageable pageable = PageRequest.of(currentPage, 10);
 		return service.findAllByMemberId(pageable, memberId);
@@ -126,6 +127,5 @@ public class MeetingroomController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}
-	
 	
 }

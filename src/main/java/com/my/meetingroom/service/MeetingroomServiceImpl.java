@@ -15,8 +15,10 @@ import com.my.exception.AddException;
 import com.my.exception.FindException;
 import com.my.exception.RemoveException;
 import com.my.meetingroom.dto.MeetingReservationDTO;
+import com.my.meetingroom.dto.MeetingRoomDTO;
 import com.my.meetingroom.dto.ParticipantsDTO;
 import com.my.meetingroom.entity.MeetingReservationEntity;
+import com.my.meetingroom.entity.MeetingroomDetailEntity;
 import com.my.meetingroom.entity.ParticipantsEntity;
 import com.my.meetingroom.repository.MeetingReservationRepository;
 import com.my.meetingroom.repository.MeetingRoomRepository;
@@ -46,15 +48,15 @@ public class MeetingroomServiceImpl implements MeetingroomService {
 		
 	
 	@Override
-	public List<MeetingReservationDTO> findAllMeetingRoom(String meetingDate) throws FindException {
-		
-		List<MeetingReservationEntity> entity = reservation.findAllMeetingRoom(meetingDate);
-		List<MeetingReservationDTO> list = new ArrayList();
+	public List<MeetingRoomDTO> findByMeetingRoom(String meetingDate) throws FindException {
+		List<MeetingroomDetailEntity> entity = meetingroom.findAllByMeetingRoom(meetingDate);
+		List<MeetingRoomDTO> list = new ArrayList();
 		MeetingroomMapper mapper = new MeetingroomMapper();
 		
 		//Vo->DTO
-		for (MeetingReservationEntity mre : entity) {
-			MeetingReservationDTO dto = mapper.Reservation_VoToDto(mre);
+		for (MeetingroomDetailEntity mre : entity) {
+			MeetingRoomDTO dto = mapper.Meetingroom_VoToDto(mre);
+			System.out.println("++++" + dto.getReservation().get(0).getMeetingDate());
 			list.add(dto);
 		}
 		return list;
