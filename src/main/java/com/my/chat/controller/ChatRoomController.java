@@ -1,8 +1,11 @@
 package com.my.chat.controller;
 
+//import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -27,7 +30,7 @@ import lombok.RequiredArgsConstructor;
 public class ChatRoomController {
 
 	private final ChatRoomRepository chatRoomRepository;
-	
+
 	@Autowired
 	private ChatRoomService chatRoomService;
 
@@ -38,16 +41,18 @@ public class ChatRoomController {
 		return chatRoomService.findAll();
 	}
 
-//	public String rooms(Model model) {
-//	return "chat/roomList";
-//}
+//	@CrossOrigin(origins = "http://localhost:5173")
+//	@GetMapping("/room/enter/{roomId}")
+//	public ResponseEntity<ChatRoom> roomDetail(@PathVariable String roomId) {
+//		System.out.println("roomDetail");
+//		ChatRoom chatRoom = chatRoomRepository.findRoomById(roomId);
+//		return ResponseEntity.ok(chatRoom);
+//	}
 
-	// 채팅방 입장 화면 단순히 화면으로 이동
-	@CrossOrigin(origins = "http://localhost:5173")
 	@GetMapping("/room/enter/{roomId}")
-	public String roomDetail(Model model, @PathVariable String roomId) {
-		model.addAttribute("roomId", roomId);
-		return "chat/roomDetail";
+	public String enterRoom(@PathVariable String roomId) {
+		System.out.println("enterRoom");
+		return "forward:/chat/room/" + roomId; // Vue.js로 리다이렉트
 	}
 
 	// 모든 채팅방 목록 반환
