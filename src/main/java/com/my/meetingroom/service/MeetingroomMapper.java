@@ -113,49 +113,49 @@ public class MeetingroomMapper {
 		omapper.enable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 		omapper.enable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
 		
-		Object source = entity;
-		Class<MeetingReservationDTO> destinationType = MeetingReservationDTO.class;
-		MeetingReservationDTO dto = mapper.map(source, destinationType);
+//		Object source = entity;
+//		Class<MeetingReservationDTO> destinationType = MeetingReservationDTO.class;
+//		MeetingReservationDTO dto = mapper.map(source, destinationType);
 		
-//		MeetingReservationDTO mrd = new MeetingReservationDTO();
-//		mrd.setId(entity.getId());
-//		mrd.setStartTime(entity.getStartTime());
-//		mrd.setEndTime(entity.getEndTime());
-//		mrd.setMeetingDate(entity.getMeetingDate());
-//		mrd.setPurpose(entity.getPurpose());
-//		
-//		MeetingRoomDTO mr = new MeetingRoomDTO();
-//		mr.setId(entity.getMeetingroom().getId());
-//		mr.setName(entity.getMeetingroom().getName());
-//		mr.setLocation(entity.getMeetingroom().getLocation());
-//		mr.setMaxNum(entity.getMeetingroom().getMaxNum());
-//		mr.setProjector(entity.getMeetingroom().getProjector());
-//		mr.setSocket(entity.getMeetingroom().getSocket());
-//		mr.setMonitor(entity.getMeetingroom().getMonitor());
-//		mr.setMarker(entity.getMeetingroom().getMarker());
-//		mrd.setMeetingroom(mr);
-//		
-//		MemberDTO md = new MemberDTO();
-//		md.setId(entity.getMember().getId());
-//		mrd.setMember(md);
-//		
-//		List<ParticipantsDTO> listpd = new ArrayList<>();
-//		for(ParticipantsEntity pe : entity.getParticipants()) {
-//			ParticipantsDTO pd = new ParticipantsDTO();
-//			pd.setId(pe.getId());
-//			
-//			MeetingReservationDTO mrdd = new MeetingReservationDTO();
-//			mrdd.setId(pe.getMeeting().getId());;
-//			pd.setMeetingId(mrdd);
-//			
-//			MemberDTO memd = new MemberDTO();
-//			memd.setId(pe.getMember().getId());
-//			pd.setMember(memd);
-//			listpd.add(pd);
-//		}
-//		mrd.setParticipants(listpd);
+		MeetingReservationDTO mrd = new MeetingReservationDTO();
+		mrd.setId(entity.getId());
+		mrd.setStartTime(entity.getStartTime());
+		mrd.setEndTime(entity.getEndTime());
+		mrd.setMeetingDate(entity.getMeetingDate());
+		mrd.setPurpose(entity.getPurpose());
 		
-		return dto;
+		MeetingRoomDTO mr = new MeetingRoomDTO();
+		mr.setId(entity.getMeetingroom().getId());
+		mr.setName(entity.getMeetingroom().getName());
+		mr.setLocation(entity.getMeetingroom().getLocation());
+		mr.setMaxNum(entity.getMeetingroom().getMaxNum());
+		mr.setProjector(entity.getMeetingroom().getProjector());
+		mr.setSocket(entity.getMeetingroom().getSocket());
+		mr.setMonitor(entity.getMeetingroom().getMonitor());
+		mr.setMarker(entity.getMeetingroom().getMarker());
+		mrd.setMeetingroom(mr);
+		
+		MemberDTO md = new MemberDTO();
+		md.setId(entity.getMember().getId());
+		mrd.setMember(md);
+		
+		List<ParticipantsDTO> listpd = new ArrayList<>();
+		for(ParticipantsEntity pe : entity.getParticipants()) {
+			ParticipantsDTO pd = new ParticipantsDTO();
+			pd.setId(pe.getId());
+			
+			MeetingReservationDTO mrdd = new MeetingReservationDTO();
+			mrdd.setId(pe.getMeeting().getId());;
+			pd.setMeetingId(mrdd);
+			
+			MemberDTO memd = new MemberDTO();
+			memd.setId(pe.getMember().getId());
+			pd.setMember(memd);
+			listpd.add(pd);
+		}
+		mrd.setParticipants(listpd);
+		
+		return mrd;
 	}
 	
 	//VO->DTO 변환 (MeetingRoom)

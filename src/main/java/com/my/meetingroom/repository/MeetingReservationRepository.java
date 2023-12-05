@@ -13,21 +13,6 @@ import com.my.meetingroom.entity.MeetingroomDetailEntity;
 
 public interface MeetingReservationRepository extends JpaRepository<MeetingReservationEntity, Long> {
 	
-	//회의실 전체 목록
-	@Query(value="SELECT *\r\n"
-			+ "FROM meetingroom_detail md\r\n"
-			+ "LEFT JOIN meeting_reservation mr ON md.id = mr.meetingroom_id AND mr.meeting_date = :meetingDate\r\n"
-			+ "ORDER BY md.id",
-			nativeQuery=true)
-	public List<MeetingReservationEntity> findByMeetingRoomAll(String meetingDate);
-//	@Query(value="SELECT *\r\n"
-//			+ "FROM meetingroom_detail md\r\n"
-//			+ "LEFT JOIN meeting_reservation mr ON md.id = mr.meetingroom_id AND mr.meeting_date = :meetingDate\r\n"
-//			+ "ORDER BY md.id",
-//			nativeQuery=true)
-//	public List<MeetingroomDetailEntity> findAllMeetingRoom(String meetingDate);
-	
-	
 	//회의실 예약 상세보기
 	public Optional<MeetingReservationEntity> findById(Long id);
 	

@@ -58,8 +58,8 @@ public class MeetingroomDetailEntity {
 	//양방향 설정
 	@OneToMany
 	(		
-//			fetch = FetchType.EAGER
-//			,
+			fetch = FetchType.EAGER
+			,
 			cascade = CascadeType.ALL
 			,
 			mappedBy="meetingroom" //양방향
