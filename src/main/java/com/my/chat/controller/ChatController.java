@@ -15,8 +15,13 @@ public class ChatController {
 	private final ChatService chatService;
 
 	/**
+<<<<<<< HEAD
+	 * websocket에서 "/pub/chat/message"로 들어오는 메시징을 처리
+	 *
+=======
 	 * websocket에서 "/pub/chat/message"로 들어오는 메시징을 처리 해당 
 	 * 메시지를 다시 발행하여 채팅방의 다른 사용자들에게 전달
+>>>>>>> 27d13b7ec9921f895d8eb00725662cbbf3f2c60f
 	 */
 	@CrossOrigin(origins = "http://localhost:5173")
 	@MessageMapping("/chat/message")
