@@ -25,6 +25,7 @@ import lombok.RequiredArgsConstructor;
 @Controller
 @RequestMapping("/chat")
 public class ChatRoomController {
+	
 	private final ChatRoomRepository chatRoomRepository;
 
 	@Autowired

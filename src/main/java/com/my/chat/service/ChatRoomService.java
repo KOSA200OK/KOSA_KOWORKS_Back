@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import com.my.chat.dto.ChatRoom;
 import com.my.exception.FindException;
 
-@Service
 public interface ChatRoomService {
 	public List<ChatRoom> findAll() throws FindException;
 }
