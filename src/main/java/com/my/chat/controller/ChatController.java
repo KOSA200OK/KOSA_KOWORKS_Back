@@ -9,7 +9,6 @@ import com.my.chat.service.ChatService;
 
 import lombok.RequiredArgsConstructor;
 
-//https://github.com/gks930620/chatting3_redis_pubsub
 @RequiredArgsConstructor
 @Controller
 public class ChatController {

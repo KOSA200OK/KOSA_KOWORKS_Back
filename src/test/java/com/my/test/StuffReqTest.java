@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Commit;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.my.department.entity.DepartmentEntity;
 import com.my.exception.AddException;
 import com.my.exception.FindException;
 import com.my.member.dto.MemberDTO;
@@ -36,6 +37,27 @@ class StuffReqTest {
 	
 	@Autowired
 	StuffReqRepository sr;
+	
+	@Test
+	@Transactional
+	@Commit
+	void testFindByStuffReqEntity_DepartEnt_Name() {
+//    	String memberId = "0008";
+//    	MemberEntity me = new MemberEntity();
+//		me.setId(memberId);
+//		String nameD = new String("개발2팀");
+		
+		Long id = Long.valueOf(2L);
+		DepartmentEntity de = DepartmentEntity.builder()
+                .id(id)
+                .build();
+		
+		List<StuffReqEntity> srList = sr.findByMember_Department(de);
+		log.error("srList = {}", srList.size());
+		int lisrSize = srList.size();
+		assertTrue(lisrSize==8);
+	}
+	
     @Test
     void testFindByMemberIdLike() {
     	String memberId = "1";

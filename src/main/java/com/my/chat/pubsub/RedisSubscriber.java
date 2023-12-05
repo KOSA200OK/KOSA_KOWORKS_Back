@@ -12,7 +12,6 @@ import com.my.chat.dto.ChatMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-//https://github.com/gks930620/chatting3_redis_pubsub
 @Slf4j
 @RequiredArgsConstructor
 @Component

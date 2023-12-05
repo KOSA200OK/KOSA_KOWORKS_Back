@@ -12,8 +12,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,8 +43,8 @@ public class CarController {
 	//****************** 챠량 목록 ******************
 
 	
-	@GetMapping("/carlist")
-	public Page<CarDTO> findAllCar(int currentPage) throws FindException{
+	@GetMapping("/carlist/{currentPage}")
+	public Page<CarDTO> findAllCar(@PathVariable int currentPage) throws FindException{
 		System.out.println("currentPage: "+currentPage);
 		currentPage -=1;
 		Pageable pageable = PageRequest.of(currentPage, 10);
@@ -62,4 +66,25 @@ public class CarController {
 		Pageable pageable = PageRequest.of(currentPage, 10);
 		return cs.findAllMyCarRent(pageable, memberId);
 	}
+	
+	@DeleteMapping("/cancelreserve/{id}")
+	public ResponseEntity<?> removeByIdCarRent(@PathVariable Long id) {
+		cs.removeByIdCarRent(id);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	//******************* 차량 관리 메인 ***********************
+	
+//	@GetMapping("/carmanagelist/{currentPage}")
+//	public Page<CarDTO> findAllCarManage(@PathVariable int currentPage) throws FindException{
+//		System.out.println("currentPage: "+currentPage);
+//		currentPage -=1;
+//		Pageable pageable = PageRequest.of(currentPage, 10);
+//		return cs.findAllCarManage(pageable);
+//	}
+	
+//	@GetMapping("/test")
+//	public void test() {
+//		cs.modifyCarStatus();
+//	}
 }
