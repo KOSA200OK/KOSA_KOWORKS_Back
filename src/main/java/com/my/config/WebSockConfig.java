@@ -1,4 +1,3 @@
-
 package com.my.config;
 
 import org.springframework.context.annotation.Configuration;
@@ -7,8 +6,9 @@ import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBr
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 
-//https://github.com/gks930620/chatting3_redis_pubsub
 @Configuration
+// websocket서버로서 동작하겠다는 뜻. 근데 이제 Stomp가 적용돼서 MessageBroker로서 implements된 
+// interface도 MessageBroker기능이 있는걸로
 @EnableWebSocketMessageBroker
 public class WebSockConfig implements WebSocketMessageBrokerConfigurer {
 
@@ -22,7 +22,6 @@ public class WebSockConfig implements WebSocketMessageBrokerConfigurer {
 
 	@Override
 	public void registerStompEndpoints(StompEndpointRegistry registry) {
-		// setAllow 메소드이름이 바뀌었다.
 		registry.addEndpoint("/ws-stomp").setAllowedOriginPatterns("*").withSockJS();
 	}
 }

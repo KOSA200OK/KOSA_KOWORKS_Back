@@ -45,6 +45,7 @@ public class LoginController {
 	@GetMapping("/logout")
 	public ResponseEntity<String> logout(HttpSession session) {
 		session.removeAttribute("memberId");
+		System.out.println("로그아웃됨");
 		return ResponseEntity.ok("로그아웃 성공");
 	}
 }
