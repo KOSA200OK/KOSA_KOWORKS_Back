@@ -106,10 +106,19 @@ public class CarServiceImpl implements CarService {
 	
 	//***************** 차량 관리 메인 ************************
 	
-//	@Override
-//	public Page<CarDTO> findAllCarManage(Pageable pageable){
-//		Page<CarEntity> entityList = cr.findAllCarManage(pageable);
-//		CarMapper cm = new CarMapper();
-//		return entityList.map(cm::entityToDto);
-//	}
+	@Override
+	public Page<CarDTO> findAllCarManage(Pageable pageable){
+		Page<CarEntity> entityList = cr.findAll(pageable);
+		CarMapper cm = new CarMapper();
+		return entityList.map(cm::entityToDto);
+	}
+	
+	//***************** 차량 관리 승인 **************************
+	
+	@Override
+	public Page<CarRentDTO> findAllApprove(Pageable pageable){
+		Page<CarRentEntity> entityList = crr.findAllByStatusOrderByReqDate(pageable, (long)0);
+		CarRentMapper crm = new CarRentMapper();
+		return entityList.map(crm::entityToDto);
+	}
 }
