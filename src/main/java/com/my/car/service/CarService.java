@@ -28,4 +28,6 @@ public interface CarService {
 	public void modifyCarRentStatus(Long id, Long status);
 	
 	public void saveCarRentReject(CarRentDTO carRent, Long status);
+
+	public Page<CarRentDTO> findAllRentList(Pageable pageable);
 }

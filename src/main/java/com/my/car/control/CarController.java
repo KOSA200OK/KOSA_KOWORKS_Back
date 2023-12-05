@@ -110,6 +110,12 @@ public class CarController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
+//	@GetMapping("/reject")
+//	public ResponseEntity<?> modifyCarRentStatusReject(@RequestBody CarRentDTO carRent){
+//		cs.saveCarRentReject(carRent,(long)1);
+//		return new ResponseEntity<>(HttpStatus.OK);
+//	}
+	
 //	@GetMapping("/test")
 //	public void test() {
 //		cs.modifyCarStatus();

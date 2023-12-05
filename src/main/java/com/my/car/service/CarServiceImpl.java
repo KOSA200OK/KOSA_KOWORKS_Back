@@ -139,4 +139,13 @@ public class CarServiceImpl implements CarService {
 		crr.save(carRentEntity);
 		
 	}
+	
+	//***************** 차량 관리 대여 목록 *********************
+	
+	@Override
+	public Page<CarRentDTO> findAllRentList(Pageable pageable) {
+		Page<CarRentEntity> entityList = crr.findAllByReqDateDesc(pageable);
+		CarRentMapper crm = new CarRentMapper();
+		return entityList.map(crm::entityToDto);
+	}
 }
