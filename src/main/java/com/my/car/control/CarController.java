@@ -110,11 +110,14 @@ public class CarController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
-//	@GetMapping("/reject")
-//	public ResponseEntity<?> modifyCarRentStatusReject(@RequestBody CarRentDTO carRent){
-//		cs.saveCarRentReject(carRent,(long)1);
-//		return new ResponseEntity<>(HttpStatus.OK);
-//	}
+	//******************* 차량 관리 대여중 ***********************
+	
+	@GetMapping("/rentlist/{currentPage}")
+	public Page<CarRentDTO> modifyCarRentStatusReject(@PathVariable int currentPage){
+		currentPage -=1;
+		Pageable pageable = PageRequest.of(currentPage, 10);
+		return cs.findAllRentList(pageable);
+	}
 	
 //	@GetMapping("/test")
 //	public void test() {
