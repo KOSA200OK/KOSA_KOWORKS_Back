@@ -16,5 +16,5 @@ public interface CarRentRepository extends JpaRepository<CarRentEntity, Long>{
 	
 	@Query("SELECT cr FROM CarRentEntity cr LEFT JOIN cr.car c " +
 	           " WHERE cr.status = 2 AND SYSDATE BETWEEN cr.startDate AND cr.endDate")
-	Page<CarRentEntity> findAllByReqDateDesc(Pageable pageable);
+	Page<CarRentEntity> findAllOrderByReqDateDesc(Pageable pageable);
 }
