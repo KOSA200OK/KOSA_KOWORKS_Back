@@ -15,8 +15,8 @@ public class ChatController {
 	private final ChatService chatService;
 
 	/**
-	 * websocket에서 "/pub/chat/message"로 들어오는 메시징을 처리한다.
-	 *
+	 * websocket에서 "/pub/chat/message"로 들어오는 메시징을 처리 해당 
+	 * 메시지를 다시 발행하여 채팅방의 다른 사용자들에게 전달
 	 */
 	@CrossOrigin(origins = "http://localhost:5173")
 	@MessageMapping("/chat/message")
@@ -26,9 +26,12 @@ public class ChatController {
 		if (!chatService.isRegisteredChannelTopic(chatMessage.getRoomId())) {
 			chatService.registerChannelTopic(chatMessage.getRoomId());
 		}
+		// 만약 메시지의 타입이 입장 메시지라면, 메시지 내용을 변경
 		if (ChatMessage.MessageType.ENTER.equals(chatMessage.getType())) {
-			chatMessage.setMessage(chatMessage.getSender() + "님이 입장하셨습니다.");
+			chatMessage.setMessage(chatMessage.getSender() + "님이입장하셨습니다.");
 		}
+		// 변경된 메시지를 ChatService를 통해 발행.
+		// 발행된 메시지는 Redis를 통해 다른 서버 및 클라이언트에게 전달, 채팅내역을 저장
 		chatService.publish(chatMessage);
 	}
 }
