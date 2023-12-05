@@ -117,6 +117,44 @@ public class MeetingroomMapper {
 		Class<MeetingReservationDTO> destinationType = MeetingReservationDTO.class;
 		MeetingReservationDTO dto = mapper.map(source, destinationType);
 		
+//		MeetingReservationDTO mrd = new MeetingReservationDTO();
+//		mrd.setId(entity.getId());
+//		mrd.setStartTime(entity.getStartTime());
+//		mrd.setEndTime(entity.getEndTime());
+//		mrd.setMeetingDate(entity.getMeetingDate());
+//		mrd.setPurpose(entity.getPurpose());
+//		
+//		MeetingRoomDTO mr = new MeetingRoomDTO();
+//		mr.setId(entity.getMeetingroom().getId());
+//		mr.setName(entity.getMeetingroom().getName());
+//		mr.setLocation(entity.getMeetingroom().getLocation());
+//		mr.setMaxNum(entity.getMeetingroom().getMaxNum());
+//		mr.setProjector(entity.getMeetingroom().getProjector());
+//		mr.setSocket(entity.getMeetingroom().getSocket());
+//		mr.setMonitor(entity.getMeetingroom().getMonitor());
+//		mr.setMarker(entity.getMeetingroom().getMarker());
+//		mrd.setMeetingroom(mr);
+//		
+//		MemberDTO md = new MemberDTO();
+//		md.setId(entity.getMember().getId());
+//		mrd.setMember(md);
+//		
+//		List<ParticipantsDTO> listpd = new ArrayList<>();
+//		for(ParticipantsEntity pe : entity.getParticipants()) {
+//			ParticipantsDTO pd = new ParticipantsDTO();
+//			pd.setId(pe.getId());
+//			
+//			MeetingReservationDTO mrdd = new MeetingReservationDTO();
+//			mrdd.setId(pe.getMeeting().getId());;
+//			pd.setMeetingId(mrdd);
+//			
+//			MemberDTO memd = new MemberDTO();
+//			memd.setId(pe.getMember().getId());
+//			pd.setMember(memd);
+//			listpd.add(pd);
+//		}
+//		mrd.setParticipants(listpd);
+		
 		return dto;
 	}
 	
@@ -139,15 +177,18 @@ public class MeetingroomMapper {
 		//vo->dto
 		MeetingRoomDTO mrdto = new MeetingRoomDTO();
 		mrdto.setId(entity.getId());
+		mrdto.setName(entity.getName());
 		mrdto.setLocation(entity.getLocation());
 		mrdto.setMaxNum(entity.getMaxNum());
 		mrdto.setMonitor(entity.getMonitor());
 		mrdto.setProjector(entity.getProjector());
 		mrdto.setSocket(entity.getSocket());
 		mrdto.setMarker(entity.getSocket());
+		System.out.println("******" + entity.getReservation().get(0).getMeetingDate());
 		
 		List<MeetingReservationDTO> listmr = new ArrayList<>();
 		for(MeetingReservationEntity mre : entity.getReservation()) {
+			System.out.println("-----" + mre.getMeetingDate());
 			MeetingReservationDTO mrd = new MeetingReservationDTO();
 			mrd.setId(mre.getId());
 			mrd.setStartTime(mre.getStartTime());

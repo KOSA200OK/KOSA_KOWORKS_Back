@@ -42,14 +42,15 @@ public class MeetingroomServiceImpl implements MeetingroomService {
 	
 	@Override
 	public List<MeetingRoomDTO> findByMeetingRoom(String meetingDate) throws FindException {
-		
-		List<MeetingroomDetailEntity> entity = meetingroom.findByMeetingRoom(meetingDate);
+//		List<MeetingReservationEntity> entity = reservation.findByMeetingRoomAll(meetingDate);
+		List<MeetingroomDetailEntity> entity = meetingroom.findAllByMeetingRoom(meetingDate);
 		List<MeetingRoomDTO> list = new ArrayList();
 		MeetingroomMapper mapper = new MeetingroomMapper();
 		
 		//Vo->DTO
 		for (MeetingroomDetailEntity mre : entity) {
 			MeetingRoomDTO dto = mapper.Meetingroom_VoToDto(mre);
+			System.out.println("++++" + dto.getReservation().get(0).getMeetingDate());
 			list.add(dto);
 		}
 		return list;

@@ -21,7 +21,7 @@ public interface MeetingroomService {
 	 * @return Meeting객체 리스트
 	 * @throws FindException DB 연결을 실패하거나 조회되는 공지사항이 없는 경우 FindException이 발생한다
 	 */
-//	public List<MeetingReservationDTO> findAllMeetingRoom(String meetingDate) throws FindException;
+//	public List<MeetingReservationDTO> findByMeetingRoomAll(String meetingDate) throws FindException;
 	public List<MeetingRoomDTO> findByMeetingRoom(String meetingDate) throws FindException;
 
 	
