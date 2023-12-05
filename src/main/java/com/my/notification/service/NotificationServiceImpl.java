@@ -1,18 +1,21 @@
 package com.my.notification.service;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
+import com.my.attendance.entity.AttendanceEntity;
 import com.my.member.entity.MemberEntity;
 import com.my.notification.dao.EmitterRepository;
 import com.my.notification.dao.NotificationRepository;
 import com.my.notification.dto.NotificationDTO;
+import com.my.notification.dto.NotificationDTO.Response;
 import com.my.notification.entity.NotificationEntity;
-import com.my.notification.entity.NotificationEntity.NotificationType;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,6 +31,9 @@ public class NotificationServiceImpl implements NotificationService {
 	
 	@Autowired
 	private NotificationRepository notificationRepository;
+	
+	@Autowired
+	private NotificationMapper model;
 	
 //    public NotificationServiceImpl(EmitterRepository emitterRepository) {
 //        this.emitterRepository = emitterRepository;
@@ -110,13 +116,13 @@ public class NotificationServiceImpl implements NotificationService {
 		 NotificationEntity notification = notificationRepository.save(createNotification(memberEntity, notificationType, content)); // (2-1)⠀
 		
 		 String receiver = memberEntity.getId();
-		 String eventId = receiver + "_" + System.currentTimeMillis(); // (2-3)
+		 String eventId = receiver + "_" + System.currentTimeMillis();
 		 
 		 log.warn("NotificationServiceImpl send recevier : {}", receiver);
 		 log.warn("NotificationServiceImpl send eventId : {}", eventId);
 		 
 		 // 로그인 한 유저의 SseEmitter 모두 가져오기
-	     Map<String, SseEmitter> emitters = emitterRepository.findAllEmitterStartWithByMemberId(receiver); // (2-4)
+	     Map<String, SseEmitter> emitters = emitterRepository.findAllEmitterStartWithByMemberId(receiver);
 	     
 	     log.warn("emitters : {}", emitters.getClass().getName());
 
@@ -135,10 +141,25 @@ public class NotificationServiceImpl implements NotificationService {
 	
     private NotificationEntity createNotification(MemberEntity receiver, NotificationEntity.NotificationType notificationType, String content) { // (7)
         return NotificationEntity.builder()
-                .memberEntity(receiver) // 수신자
+                .receiverId(receiver) // 수신자
                 .notificationType(notificationType)
                 .content(content)
                 .build();
     } // createNotification
+    
+    // 조회
+
+    public List<NotificationDTO.Response> findAllByMemberId(String memberId) {
+        List<NotificationEntity> notificationEntities = notificationRepository.findAllByMemberEntity(memberId);
+        List<NotificationDTO.Response> notificationDTOs = new ArrayList<>();
+
+        for (NotificationEntity entity : notificationEntities) {
+            notificationDTOs.add(NotificationDTO.Response.createResponse(entity));
+        }
+
+        return notificationDTOs;
+    }
+    
+    
 
 } // end class

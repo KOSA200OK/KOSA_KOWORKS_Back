@@ -1,13 +1,17 @@
 package com.my.notification.control;
 
+import java.util.List;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
+import com.my.notification.dto.NotificationDTO;
 import com.my.notification.service.NotificationServiceImpl;
 
 import lombok.extern.slf4j.Slf4j;
@@ -43,4 +47,11 @@ public class NotificationController {
 	    // 이를 방지하기 위한 것이 last-event-id이다
 	    // 헤더는 클라이언트가 마지막으로 수신한 데이터의 id값을 의미한다. 이를 이용하여 유실된 데이털르 다시 보내줄 수 있음!
 	    
+	    @GetMapping()
+	    public List<NotificationDTO.Response> findAllByMemberId(@RequestParam String memberId) {
+	        log.warn("Controller memberId ==> {}", memberId);
+	        
+	        return notifyService.findAllByMemberId(memberId);
+	       
+	    }
 }

@@ -27,7 +27,7 @@ public class NotificationDTO {
 			return Response.builder()
 					.content(notify.getContent())
 					.id(notify.getId().toString())
-					.memberId(notify.getMemberEntity().getId())
+					.memberId(notify.getReceiverId().getId())
 					.build();
 		}
 	}
