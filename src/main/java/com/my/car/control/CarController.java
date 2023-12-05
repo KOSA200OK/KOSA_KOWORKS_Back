@@ -100,7 +100,13 @@ public class CarController {
 	public ResponseEntity<?> modifyCarRentStatusApprove(Long id, Long status){
 //		HttpSession session = request.getSession();
 //		Long memberId = (Long) session.getAttribute("memberId");
-		cs.modifyCarRentStatus(id, status);
+		cs.modifyCarRentStatus(id, (long)2);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	@PostMapping("/reject")
+	public ResponseEntity<?> modifyCarRentStatusReject(@RequestBody CarRentDTO carRent){
+		cs.saveCarRentReject(carRent,(long)1);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	

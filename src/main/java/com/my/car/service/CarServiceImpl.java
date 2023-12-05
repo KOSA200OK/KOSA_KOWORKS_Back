@@ -129,4 +129,14 @@ public class CarServiceImpl implements CarService {
 		carRentEntity.modifyCarRentStatus(status);
 		crr.save(carRentEntity);
 	}
+	
+	@Override
+	public void saveCarRentReject(CarRentDTO carRent, Long status) {
+		Optional<CarRentEntity> optC = crr.findById(carRent.getId());
+		CarRentEntity carRentEntity = optC.get();
+		carRentEntity.modifyCarRentStatus(status);
+		carRentEntity.modifyCarRentReject(carRent.getReject());
+		crr.save(carRentEntity);
+		
+	}
 }

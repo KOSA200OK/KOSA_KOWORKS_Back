@@ -73,5 +73,9 @@ public class CarRentEntity {
 	public void modifyCarRentStatus(Long status) {
 		this.status = status;
 	}
+	
+	public void modifyCarRentReject(String reject) {
+		this.reject = reject;
+	}
 
 }
