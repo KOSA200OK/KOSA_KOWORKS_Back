@@ -30,4 +30,6 @@ public interface CarService {
 	public void saveCarRentReject(CarRentDTO carRent, Long status);
 
 	public Page<CarRentDTO> findAllRentList(Pageable pageable);
+	
+	public Page<CarRentDTO> findAllNoReturnList(Pageable pageable);
 }
