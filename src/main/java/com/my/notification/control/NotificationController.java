@@ -53,5 +53,5 @@ public class NotificationController {
 	        
 	        return notifyService.findAllByMemberId(memberId);
 	       
-	    }
+	    } // findAllByMemberId
 }
