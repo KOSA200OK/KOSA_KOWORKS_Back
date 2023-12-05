@@ -1,6 +1,5 @@
-package com.my.chat.dto;
+package com.my.chat.model;
 
-import java.io.Serializable;
 import java.util.UUID;
 
 import lombok.Getter;
@@ -8,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ChatRoom implements Serializable {
+public class ChatRoom {
 	private static final long serialVersionUID = 6494678977089006639L;
 
 	private String roomId;

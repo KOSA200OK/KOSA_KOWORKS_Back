@@ -12,7 +12,6 @@ import com.my.chat.dto.ChatMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-//https://github.com/gks930620/chatting3_redis_pubsub
 @Slf4j
 @RequiredArgsConstructor
 @Component
@@ -22,14 +21,14 @@ public class RedisSubscriber implements MessageListener {
 	private final SimpMessageSendingOperations messagingTemplate;
 
 	/**
-	 * Redis에서 메시지가 발행(publish)되면 대기하고 있던 onMessage가 
-	 * 해당 메시지를 받아 처리한다. 단순히 redis에서 pub하면 여기가 실행됨
+	 * Redis에서 메시지가 발행(publish)되면 대기하고 있던 onMessage가 해당 메시지를 받아 처리한다. 단순히 redis에서
+	 * pub하면 여기가 실행됨
 	 *
-	 * redis의 channelTopic= ChatRoom 1:1 redis의 Subscriber는 
-	 * ChatRoom(channelTopic)에 한명
+	 * redis의 channelTopic= ChatRoom 1:1 redis의 Subscriber는 ChatRoom(channelTopic)에
+	 * 한명
 	 *
-	 * publish 될 때 Subscriber 한명에게만 메세지 전달 (onMessage) onMessage 메소드 
-	 * 실행 중 webscoket으로 연결된 user들 전부에게 message전달 (convertAndSend)
+	 * publish 될 때 Subscriber 한명에게만 메세지 전달 (onMessage) onMessage 메소드 실행 중
+	 * webscoket으로 연결된 user들 전부에게 message전달 (convertAndSend)
 	 *
 	 */
 	@Override

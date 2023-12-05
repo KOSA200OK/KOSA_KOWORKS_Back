@@ -21,5 +21,11 @@ public interface CarService {
 	
 	public void removeByIdCarRent(Long id);
 	
-//	public Page<CarDTO> findAllCarManage(Pageable pageable);
+	public Page<CarDTO> findAllCarManage(Pageable pageable);
+	
+	public Page<CarRentDTO> findAllApprove(Pageable pageable);
+	
+	public void modifyCarRentStatus(Long id, Long status);
+	
+	public void saveCarRentReject(CarRentDTO carRent, Long status);
 }

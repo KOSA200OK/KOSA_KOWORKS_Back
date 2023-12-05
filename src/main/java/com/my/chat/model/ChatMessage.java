@@ -1,10 +1,10 @@
-package com.my.chat.dto;
+package com.my.chat.model;
 
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
 @Setter
+@Getter
 public class ChatMessage {
 	// 메시지 타입 : 입장, 채팅, 나감
 	public enum MessageType {

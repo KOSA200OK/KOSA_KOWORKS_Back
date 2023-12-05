@@ -52,7 +52,7 @@ public class CarServiceImpl implements CarService {
 //		LocalDate today = LocalDate.parse(todaystring, formatter);
 //		System.out.println("*************service: "+today);
 		
-		cr.saveCarStatus(today);
+		cr.saveEndCarStatus(today);
 	}
 	
 	//*************** 차량 목록 **************************
@@ -106,10 +106,37 @@ public class CarServiceImpl implements CarService {
 	
 	//***************** 차량 관리 메인 ************************
 	
-//	@Override
-//	public Page<CarDTO> findAllCarManage(Pageable pageable){
-//		Page<CarEntity> entityList = cr.findAllCarManage(pageable);
-//		CarMapper cm = new CarMapper();
-//		return entityList.map(cm::entityToDto);
-//	}
+	@Override
+	public Page<CarDTO> findAllCarManage(Pageable pageable){
+		Page<CarEntity> entityList = cr.findAll(pageable);
+		CarMapper cm = new CarMapper();
+		return entityList.map(cm::entityToDto);
+	}
+	
+	//***************** 차량 관리 승인 **************************
+	
+	@Override
+	public Page<CarRentDTO> findAllApprove(Pageable pageable){
+		Page<CarRentEntity> entityList = crr.findAllByStatusOrderByReqDate(pageable, (long)0);
+		CarRentMapper crm = new CarRentMapper();
+		return entityList.map(crm::entityToDto);
+	}
+	
+	@Override
+	public void modifyCarRentStatus(Long id, Long status) {
+		Optional<CarRentEntity> optC = crr.findById(id);
+		CarRentEntity carRentEntity = optC.get();
+		carRentEntity.modifyCarRentStatus(status);
+		crr.save(carRentEntity);
+	}
+	
+	@Override
+	public void saveCarRentReject(CarRentDTO carRent, Long status) {
+		Optional<CarRentEntity> optC = crr.findById(carRent.getId());
+		CarRentEntity carRentEntity = optC.get();
+		carRentEntity.modifyCarRentStatus(status);
+		carRentEntity.modifyCarRentReject(carRent.getReject());
+		crr.save(carRentEntity);
+		
+	}
 }
