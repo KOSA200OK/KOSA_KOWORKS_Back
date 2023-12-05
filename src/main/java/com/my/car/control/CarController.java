@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,6 +94,14 @@ public class CarController {
 		currentPage -=1;
 		Pageable pageable = PageRequest.of(currentPage, 10);
 		return cs.findAllApprove(pageable);
+	}
+	
+	@GetMapping("/approve")
+	public ResponseEntity<?> modifyCarRentStatusApprove(Long id, Long status){
+//		HttpSession session = request.getSession();
+//		Long memberId = (Long) session.getAttribute("memberId");
+		cs.modifyCarRentStatus(id, status);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 //	@GetMapping("/test")

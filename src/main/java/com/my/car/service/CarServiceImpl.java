@@ -52,7 +52,7 @@ public class CarServiceImpl implements CarService {
 //		LocalDate today = LocalDate.parse(todaystring, formatter);
 //		System.out.println("*************service: "+today);
 		
-		cr.saveCarStatus(today);
+		cr.saveEndCarStatus(today);
 	}
 	
 	//*************** 차량 목록 **************************
@@ -120,5 +120,13 @@ public class CarServiceImpl implements CarService {
 		Page<CarRentEntity> entityList = crr.findAllByStatusOrderByReqDate(pageable, (long)0);
 		CarRentMapper crm = new CarRentMapper();
 		return entityList.map(crm::entityToDto);
+	}
+	
+	@Override
+	public void modifyCarRentStatus(Long id, Long status) {
+		Optional<CarRentEntity> optC = crr.findById(id);
+		CarRentEntity carRentEntity = optC.get();
+		carRentEntity.modifyCarRentStatus(status);
+		crr.save(carRentEntity);
 	}
 }
