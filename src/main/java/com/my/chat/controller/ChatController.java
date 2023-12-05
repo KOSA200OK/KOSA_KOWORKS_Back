@@ -15,7 +15,7 @@ public class ChatController {
 	private final ChatService chatService;
 
 	/**
-	 * websocket에서 "/pub/chat/message"로 들어오는 메시징을 처리한다.
+	 * websocket에서 "/pub/chat/message"로 들어오는 메시징을 처리
 	 *
 	 */
 	@MessageMapping("/chat/message")
