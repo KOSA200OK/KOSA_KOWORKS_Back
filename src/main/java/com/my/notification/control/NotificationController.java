@@ -55,4 +55,4 @@ public class NotificationController {
 	       
 	    } // findAllByMemberId
 	    
-}
+} // end class
