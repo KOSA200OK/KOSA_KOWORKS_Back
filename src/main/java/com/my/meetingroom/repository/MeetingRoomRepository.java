@@ -1,11 +1,13 @@
 package com.my.meetingroom.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import com.my.meetingroom.entity.MeetingReservationEntity;
 import com.my.meetingroom.entity.MeetingroomDetailEntity;
 
 
@@ -18,5 +20,8 @@ public interface MeetingRoomRepository extends JpaRepository<MeetingroomDetailEn
 			+ "WHERE mr.meeting_date IS NULL OR mr.meeting_date = :meetingDate\r\n"
 			+ "ORDER BY md.name", nativeQuery=true)
 	public List<MeetingroomDetailEntity> findAllByMeetingRoom(@Param("meetingDate") String meetingDate);
+	
+	//회의실 상세보기
+	public Optional<MeetingroomDetailEntity> findById(Long id);
 
 }

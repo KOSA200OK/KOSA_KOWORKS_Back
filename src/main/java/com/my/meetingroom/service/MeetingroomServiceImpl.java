@@ -63,7 +63,14 @@ public class MeetingroomServiceImpl implements MeetingroomService {
 	}
 
 	@Override
-	public Optional<MeetingReservationDTO> findById(Long id) throws FindException {
+	public Optional<MeetingRoomDTO> findByMeetingroomId(Long id) throws FindException {
+		Optional<MeetingroomDetailEntity> entity = meetingroom.findById(id);
+		MeetingroomMapper mapper = new MeetingroomMapper();
+		return entity.map(mapper::Meetingroom_VoToDto);
+	}
+
+	@Override
+	public Optional<MeetingReservationDTO> findByResId(Long id) throws FindException {
 		Optional<MeetingReservationEntity> entity = reservation.findById(id);
 		MeetingroomMapper mapper = new MeetingroomMapper();
 		return entity.map(mapper::Reservation_VoToDto);

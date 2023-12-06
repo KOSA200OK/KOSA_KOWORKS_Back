@@ -46,9 +46,14 @@ public class MeetingroomController {
 		return service.findByMeetingRoom(meetingDate);
 	}
 	
-	@GetMapping("/{id}") //상세보기
-	public Optional<MeetingReservationDTO> findById(@PathVariable Long id) throws FindException {
-		return service.findById(id);
+	@GetMapping("/{id}") //회의실 상세보기
+	public Optional<MeetingRoomDTO> findByMeetingroomId(@PathVariable Long id) throws FindException {
+		return service.findByMeetingroomId(id);
+	}
+	
+	@GetMapping("/reservation/{id}") //예약 상세보기
+	public Optional<MeetingReservationDTO> findByResId(@PathVariable Long id) throws FindException {
+		return service.findByResId(id);
 	}
 	
 	@PostMapping(value="", produces="application/json;charset=UTF-8") //회의실 예약하기(저장)

@@ -161,14 +161,14 @@ public class MeetingroomMapper {
 	//VO->DTO 변환 (MeetingRoom)
 	public MeetingRoomDTO Meetingroom_VoToDto(MeetingroomDetailEntity entity) {
 		
-		ModelMapper mapper = new ModelMapper();
-		mapper.getConfiguration()
-				.setMatchingStrategy(MatchingStrategies.STANDARD)
-				.setFieldAccessLevel(AccessLevel.PRIVATE)
-				.setFieldMatchingEnabled(true);
-		ObjectMapper omapper = new ObjectMapper();
-		omapper.enable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-		omapper.enable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
+//		ModelMapper mapper = new ModelMapper();
+//		mapper.getConfiguration()
+//				.setMatchingStrategy(MatchingStrategies.STANDARD)
+//				.setFieldAccessLevel(AccessLevel.PRIVATE)
+//				.setFieldMatchingEnabled(true);
+//		ObjectMapper omapper = new ObjectMapper();
+//		omapper.enable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+//		omapper.enable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
 		
 //		Object source = entity;
 //		Class<MeetingRoomDTO> destinationType = MeetingRoomDTO.class;
@@ -197,7 +197,7 @@ public class MeetingroomMapper {
 			mrd.setPurpose(mre.getPurpose());
 			listmr.add(mrd);
 		}
-		
+		System.out.println(listmr.size());
 		mrdto.setReservation(listmr);
 		return mrdto;
 	}
