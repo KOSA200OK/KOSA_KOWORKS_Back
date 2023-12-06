@@ -1,5 +1,7 @@
 package com.my.notification.dto;
 
+import java.time.format.DateTimeFormatter;
+
 import com.my.notification.entity.NotificationEntity;
 
 import lombok.AllArgsConstructor;
@@ -24,10 +26,12 @@ public class NotificationDTO {
 		String type;
 		String createdAt;
 		public static Response createResponse(NotificationEntity notify) {
+
 			return Response.builder()
 					.content(notify.getContent())
 					.id(notify.getId().toString())
 					.memberId(notify.getReceiverId().getId())
+					.createdAt(notify.getCreatedAt())
 					.build();
 		}
 	}

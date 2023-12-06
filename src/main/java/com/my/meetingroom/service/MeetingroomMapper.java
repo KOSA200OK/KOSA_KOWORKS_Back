@@ -83,6 +83,7 @@ public class MeetingroomMapper {
 		
 		MemberEntity me = new MemberEntity();
 		me.setId(dto.getMember().getId());
+		me.setName(dto.getMember().getName()); // 찬석
 		e.setMember(me);
 		
 		List<ParticipantsEntity> listpe = new ArrayList<>();
