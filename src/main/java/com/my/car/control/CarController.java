@@ -78,7 +78,7 @@ public class CarController {
 	
 	//******************* 차량 관리 메인 ***********************
 	
-	@GetMapping("/carmanagelist/{currentPage}")
+	@GetMapping("/managelist/{currentPage}")
 	public Page<CarDTO> findAllCarManage(@PathVariable int currentPage) throws FindException{
 		System.out.println("currentPage: "+currentPage);
 		currentPage -=1;
@@ -88,7 +88,7 @@ public class CarController {
 	
 	//******************* 차량 관리 승인 ***********************
 	
-	@GetMapping("/carwaitinglist/{currentPage}")
+	@GetMapping("/waitinglist/{currentPage}")
 	public Page<CarRentDTO> findAllApprove(@PathVariable int currentPage) throws FindException{
 		System.out.println("currentPage: "+currentPage);
 		currentPage -=1;
@@ -113,10 +113,17 @@ public class CarController {
 	//******************* 차량 관리 대여중 ***********************
 	
 	@GetMapping("/rentlist/{currentPage}")
-	public Page<CarRentDTO> modifyCarRentStatusReject(@PathVariable int currentPage){
+	public Page<CarRentDTO> findAllRentList(@PathVariable int currentPage){
 		currentPage -=1;
 		Pageable pageable = PageRequest.of(currentPage, 10);
 		return cs.findAllRentList(pageable);
+	}
+	
+	@GetMapping("/noreturnlist/{currentPage}")
+	public Page<CarRentDTO> findAllNoReturnList(@PathVariable int currentPage){
+		currentPage -=1;
+		Pageable pageable = PageRequest.of(currentPage, 10);
+		return cs.findAllNoReturnList(pageable);
 	}
 	
 //	@GetMapping("/test")

@@ -144,7 +144,14 @@ public class CarServiceImpl implements CarService {
 	
 	@Override
 	public Page<CarRentDTO> findAllRentList(Pageable pageable) {
-		Page<CarRentEntity> entityList = crr.findAllByReqDateDesc(pageable);
+		Page<CarRentEntity> entityList = crr.findAllRentList(pageable);
+		CarRentMapper crm = new CarRentMapper();
+		return entityList.map(crm::entityToDto);
+	}
+	
+	@Override
+	public Page<CarRentDTO> findAllNoReturnList(Pageable pageable){
+		Page<CarRentEntity> entityList = crr.findAllNoReturnList(pageable);
 		CarRentMapper crm = new CarRentMapper();
 		return entityList.map(crm::entityToDto);
 	}
