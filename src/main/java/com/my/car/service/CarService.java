@@ -1,5 +1,6 @@
 package com.my.car.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -13,7 +14,9 @@ import com.my.car.entity.CarRentEntity;
 public interface CarService {
 	public void modifyCarStatus();
 	
-	public Page<CarDTO> findAllCar(Pageable pageable);
+	public Page<CarDTO> findAllCarList(Pageable pageable, String startDate, String endDate);
+	
+//	public Page<CarDTO> findAllCarByDateSelect(Pageable pageable);
 	
 	public void createCarRent(CarRentDTO carRent);
 

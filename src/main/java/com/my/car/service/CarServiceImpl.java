@@ -1,6 +1,8 @@
 package com.my.car.service;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -58,11 +60,18 @@ public class CarServiceImpl implements CarService {
 	//*************** 차량 목록 **************************
 	
 	@Override
-	public Page<CarDTO> findAllCar(Pageable pageable) {
-		Page<CarEntity> entityList = cr.findAllByOrderByStatusAscIdDesc(pageable);
+	public Page<CarDTO> findAllCarList(Pageable pageable, String startDate, String endDate) {
+		Page<CarEntity> entityList = cr.findAllCarList(pageable, startDate, endDate);
 		CarMapper cm = new CarMapper();
 		return entityList.map(cm::entityToDto);
 	}
+	
+//	@Override
+//	public Page<CarDTO> findAllCarByDateSelect(Pageable pageable){
+//		Page<CarEntity> entityList = cr.findAllCarList(pageable);
+//		CarMapper cm = new CarMapper();
+//		return entityList.map(cm::entityToDto);
+//	}
 	
 	@Override
 	public void createCarRent(CarRentDTO carRent) {
@@ -76,10 +85,10 @@ public class CarServiceImpl implements CarService {
 		MemberEntity memberEntity = entity.getMember();
 		log.warn("차량예약 id : {}", memberEntity.getId());
 		
-		Optional<CarEntity> optC = cr.findById(carRent.getCar().getId());
-		CarEntity carEntity = optC.get();
-		carEntity.modifyCarStatus((long)1);
-		cr.save(carEntity);
+//		Optional<CarEntity> optC = cr.findById(carRent.getCar().getId());
+//		CarEntity carEntity = optC.get();
+//		carEntity.modifyCarStatus((long)1);
+//		cr.save(carEntity);
 		
 		log.warn("여기까진 오나..?");
 		

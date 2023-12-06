@@ -35,11 +35,11 @@ public class CarEntity {
 	@Column(nullable=false)
 	private String carType;
 	
-	@Column(nullable=false, length=2)
-	@ColumnDefault("0") 
-	private Long status;
+//	@Column(nullable=false, length=2)
+//	@ColumnDefault("0") 
+//	private Long status;
 	
-	public void modifyCarStatus(Long status) {
-		this.status = status;
-	}	
+//	public void modifyCarStatus(Long status) {
+//		this.status = status;
+//	}	
 }

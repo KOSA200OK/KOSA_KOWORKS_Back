@@ -49,10 +49,10 @@ public class CarRentEntity {
 	private Date reqDate;
 	
 	@Column(nullable=false)
-	private Date startDate;
+	private String startDate;
 	
 	@Column(nullable=false)
-	private Date endDate;
+	private String endDate;
 	
 	@Column(length=200)
 	private String purpose;

@@ -1,6 +1,7 @@
 package com.my.car.control;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.my.car.dto.CarDTO;
@@ -47,12 +49,20 @@ public class CarController {
 
 	
 	@GetMapping("/carlist/{currentPage}")
-	public Page<CarDTO> findAllCar(@PathVariable int currentPage) throws FindException{
+	public Page<CarDTO> findAllCarList(@PathVariable int currentPage, @RequestParam String startDate,  @RequestParam String endDate) throws FindException{
 		System.out.println("currentPage: "+currentPage);
 		currentPage -=1;
 		Pageable pageable = PageRequest.of(currentPage, 10);
-		return cs.findAllCar(pageable);
+		return cs.findAllCarList(pageable, startDate, endDate);
 	}
+	
+//	@GetMapping("/dateselectcarlist/{currentPage}")
+//	public Page<CarDTO> findAllCarByDateSelect(@PathVariable int currentPage) throws FindException{
+//		System.out.println("currentPage: "+currentPage);
+//		currentPage -=1;
+//		Pageable pageable = PageRequest.of(currentPage, 10);
+//		return cs.findAllCarList(pageable);
+//	}
 	
 	@PostMapping("/reserve")
 	public void createCarRent(@RequestBody CarRentDTO carRent) throws AddException{
