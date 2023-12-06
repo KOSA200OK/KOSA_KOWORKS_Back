@@ -35,4 +35,6 @@ public interface CarService {
 	public Page<CarRentDTO> findAllRentList(Pageable pageable);
 	
 	public Page<CarRentDTO> findAllNoReturnList(Pageable pageable);
+	
+	public Page<CarRentDTO> findAllRentListAll(Pageable pageable);
 }

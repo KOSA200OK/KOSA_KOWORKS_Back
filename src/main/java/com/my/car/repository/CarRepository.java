@@ -22,7 +22,7 @@ public interface CarRepository extends JpaRepository<CarEntity, String> {
 			" FROM CarEntity c "+
 			" WHERE c.id NOT IN "+ " ( SELECT cr.car.id " + 
 			" FROM CarRentEntity cr " +
-			" WHERE cr.status = 2 AND :start BETWEEN cr.startDate AND cr.endDate AND :end BETWEEN cr.startDate AND cr.endDate ) "+
+			" WHERE cr.status = 2 AND :start BETWEEN cr.startDate AND cr.endDate OR :end BETWEEN cr.startDate AND cr.endDate ) "+
 			" ORDER BY c.id DESC")
 	Page<CarEntity> findAllCarList(Pageable pageable, String start, String end);
 	

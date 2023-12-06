@@ -129,12 +129,25 @@ public class CarController {
 		return cs.findAllRentList(pageable);
 	}
 	
+	//******************* 차량 관리 미반납 ***********************
+	
 	@GetMapping("/noreturnlist/{currentPage}")
 	public Page<CarRentDTO> findAllNoReturnList(@PathVariable int currentPage){
 		currentPage -=1;
 		Pageable pageable = PageRequest.of(currentPage, 10);
 		return cs.findAllNoReturnList(pageable);
 	}
+	
+	//******************* 차량 관리 모든 예약 내역 ***********************
+	
+	@GetMapping("/allrentlist/{currentPage}")
+	public Page<CarRentDTO> findAllRentListAll(@PathVariable int currentPage){
+		currentPage -=1;
+		Pageable pageable = PageRequest.of(currentPage, 10);
+		return cs.findAllRentListAll(pageable);
+	}
+	
+	
 	
 //	@GetMapping("/test")
 //	public void test() {

@@ -158,9 +158,20 @@ public class CarServiceImpl implements CarService {
 		return entityList.map(crm::entityToDto);
 	}
 	
+	//***************** 차량 관리 대여 미반납 *********************
+	
 	@Override
 	public Page<CarRentDTO> findAllNoReturnList(Pageable pageable){
 		Page<CarRentEntity> entityList = crr.findAllNoReturnList(pageable);
+		CarRentMapper crm = new CarRentMapper();
+		return entityList.map(crm::entityToDto);
+	}
+	
+	//***************** 차량 관리 모든 예약 내역 *********************
+	
+	@Override
+	public Page<CarRentDTO> findAllRentListAll(Pageable pageable){
+		Page<CarRentEntity> entityList = crr.findAll(pageable);
 		CarRentMapper crm = new CarRentMapper();
 		return entityList.map(crm::entityToDto);
 	}
