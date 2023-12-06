@@ -81,6 +81,9 @@ public class MeetingroomServiceImpl implements MeetingroomService {
 		MemberEntity memberEntity = entity.getMember();
 		log.warn("회의실예약 id : {}", memberEntity.getId());
 		
+		List<ParticipantsEntity> participantsEntity = entity.getParticipants();
+		log.warn("회의실 참여 멤버 : {} ", entity.getParticipants());
+		
 		//최종
 		MeetingReservationEntity savedEntity = reservation.save(entity);
 		System.out.println("끝 : savedEntity" + savedEntity.getId());
@@ -97,6 +100,7 @@ public class MeetingroomServiceImpl implements MeetingroomService {
 		
 		// 찬석
 	    notify.send(memberEntity, NotificationEntity.NotificationType.MEETING, "회의실예약이 되었습니다.");
+	    notify.sendToParticipants(participantsEntity, NotificationEntity.NotificationType.MEETING, "회의실예약이 되었습니다.");
 		
 	}
 
