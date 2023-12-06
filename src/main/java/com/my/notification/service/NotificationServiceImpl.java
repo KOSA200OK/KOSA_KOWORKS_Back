@@ -10,12 +10,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import com.my.attendance.entity.AttendanceEntity;
+import com.my.meetingroom.entity.ParticipantsEntity;
 import com.my.member.entity.MemberEntity;
 import com.my.notification.dao.EmitterRepository;
 import com.my.notification.dao.NotificationRepository;
 import com.my.notification.dto.NotificationDTO;
 import com.my.notification.dto.NotificationDTO.Response;
 import com.my.notification.entity.NotificationEntity;
+import com.my.notification.entity.NotificationEntity.NotificationType;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -139,7 +141,24 @@ public class NotificationServiceImpl implements NotificationService {
 		
 	} // send
 	
-    private NotificationEntity createNotification(MemberEntity receiver, NotificationEntity.NotificationType notificationType, String content) { // (7)
+	
+	
+    @Override
+	public void sendToParticipants(List<ParticipantsEntity> participants, NotificationType notificationType, String content) {
+		
+    	if(participants == null) {
+    		log.warn("회의참여자가 없습니다");
+    		return;
+    	}
+    	
+    	 for (ParticipantsEntity participant : participants) {
+    	        MemberEntity member = participant.getMember();
+    	        send(member, notificationType, content);
+    	    } // for
+    	 
+	} // sendToParticipants
+
+	private NotificationEntity createNotification(MemberEntity receiver, NotificationEntity.NotificationType notificationType, String content) { // (7)
         return NotificationEntity.builder()
                 .receiverId(receiver) // 수신자
                 .notificationType(notificationType)
