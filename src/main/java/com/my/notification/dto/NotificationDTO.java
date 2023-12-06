@@ -35,7 +35,4 @@ public class NotificationDTO {
 					.build();
 		}
 	}
-	
-	// createdAt을 어떻게 하지..?
-	
 } // end class
