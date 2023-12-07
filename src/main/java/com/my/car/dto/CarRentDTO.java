@@ -30,7 +30,7 @@ public class CarRentDTO {
 	private MemberDTO member;
 	private CarDTO car;
 	
-	@JsonFormat(pattern = "yy/MM/dd", timezone = "Asia/Seoul")
+	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
 	private Date reqDate;
 	
 //	@JsonFormat(pattern = "yy/MM/dd", timezone = "Asia/Seoul")
@@ -49,7 +49,5 @@ public class CarRentDTO {
 	@Size(max=50, message="최대 50자까지 작성할 수 있습니다")
 	private String reject;
 	
-	private BigDecimal latitude;
-	private BigDecimal longitude;
 	
 }

@@ -2,7 +2,9 @@ package com.my.car.service;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -116,10 +118,15 @@ public class CarServiceImpl implements CarService {
 	//***************** 차량 관리 메인 ************************
 	
 	@Override
-	public Page<CarDTO> findAllCarManage(Pageable pageable){
-		Page<CarEntity> entityList = cr.findAll(pageable);
-		CarMapper cm = new CarMapper();
-		return entityList.map(cm::entityToDto);
+	public List<CarDTO> findAllCarManage(){
+		List<CarEntity> entityList = cr.findAll();
+		List<CarDTO> dtoList = new ArrayList<>();
+		for(CarEntity entity : entityList) {			
+			CarMapper cm = new CarMapper();
+			CarDTO dto = cm.entityToDto(entity);
+			dtoList.add(dto);
+		}
+		return dtoList;
 	}
 	
 	//***************** 차량 관리 승인 **************************

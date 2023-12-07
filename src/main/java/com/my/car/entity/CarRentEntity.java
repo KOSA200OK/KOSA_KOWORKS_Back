@@ -64,11 +64,6 @@ public class CarRentEntity {
 	@Column(length=200)
 	private String reject;
 	
-	@Column(precision=12, scale=6)
-	private BigDecimal latitude;
-	
-	@Column(precision=12, scale=6)
-	private BigDecimal longitude;
 	
 	public void modifyCarRentStatus(Long status) {
 		this.status = status;

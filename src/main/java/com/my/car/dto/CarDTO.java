@@ -1,5 +1,6 @@
 package com.my.car.dto;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -18,4 +19,6 @@ public class CarDTO {
 	private String id;
 	private String carNo;
 	private String carType;
+	private BigDecimal latitude;
+	private BigDecimal longitude;
 }
