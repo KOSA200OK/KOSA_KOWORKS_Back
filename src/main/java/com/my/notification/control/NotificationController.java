@@ -21,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequestMapping("/subscribe")
 @CrossOrigin(origins="http://localhost:5173")
+//@CrossOrigin(origins="http://192.168.1.105:5173")
 public class NotificationController {
 	
 	   private NotificationServiceImpl notifyService;
@@ -54,4 +55,5 @@ public class NotificationController {
 	        return notifyService.findAllByMemberId(memberId);
 	       
 	    } // findAllByMemberId
-}
+	    
+} // end class

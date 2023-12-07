@@ -18,5 +18,4 @@ public class CarDTO {
 	private String id;
 	private String carNo;
 	private String carType;
-	private Long status;
 }
