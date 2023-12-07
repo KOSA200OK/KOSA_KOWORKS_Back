@@ -72,7 +72,7 @@ public class NotificationController {
 	    		
 	    	} catch(RemoveException e) {
 	    		return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-	    	}
+	    	} // try-catch
 	    	
 	    } // deleteNotification
 	    
