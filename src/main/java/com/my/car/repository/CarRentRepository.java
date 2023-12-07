@@ -24,5 +24,5 @@ public interface CarRentRepository extends JpaRepository<CarRentEntity, Long>{
 				" ORDER BY cr.reqDate DESC")
 	Page<CarRentEntity> findAllNoReturnList(Pageable pageable);
 	
-//	Page<CarRentEntity> findAllOrderByReqDateDesc(Pageable pageable);
+	Page<CarRentEntity> findAllByOrderByReqDateDesc(Pageable pageable);
 }
