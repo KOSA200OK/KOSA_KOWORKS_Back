@@ -137,6 +137,7 @@ public class MeetingroomMapper {
 		
 		MemberDTO md = new MemberDTO();
 		md.setId(entity.getMember().getId());
+		md.setName(entity.getMember().getName());
 		mrd.setMember(md);
 		
 		List<ParticipantsDTO> listpd = new ArrayList<>();
@@ -212,17 +213,15 @@ public class MeetingroomMapper {
 				.setFieldMatchingEnabled(true);
 		
 		ParticipantsEntity pe = new ParticipantsEntity();
-		MeetingReservationEntity pmre = new MeetingReservationEntity();
 		pe.setId(pdto.getId());
+		
+		MeetingReservationEntity pmre = new MeetingReservationEntity();
 		pmre.setId(pdto.getMeetingId().getId());
 		pe.setMeeting(pmre);
 		
-		MeetingReservationEntity mrde = new MeetingReservationEntity();
-		mrde.setId(pdto.getMeetingId().getId());
-		pe.setMeeting(mrde);
-		
 		MemberEntity me = new MemberEntity();
 		me.setId(pdto.getMember().getId());
+		me.setName(pdto.getMember().getName());
 		pe.setMember(me);
 		
 		return pe;

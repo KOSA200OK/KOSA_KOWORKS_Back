@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -107,7 +108,8 @@ public class MeetingroomController {
 		}
 	}
 	
-	@DeleteMapping(value="/myreservation/{id}", produces="application/json;charset=UTF-8") //특정 회의의 참여자 제거하기
+	@Transactional
+	@DeleteMapping(value="/participants/{id}", produces="application/json;charset=UTF-8") //특정 회의의 참여자 제거하기
 	public ResponseEntity<?> removeParticipants(@PathVariable Long id) {
 		try {
 			service.removeParticipants(id);
@@ -120,7 +122,8 @@ public class MeetingroomController {
 		}
 	}
 	
-	@DeleteMapping(value="/{id}", produces="application/json;charset=UTF-8") //특정 회의의 참여자 제거하기
+	@Transactional
+	@DeleteMapping(value="/deletereservation/{id}", produces="application/json;charset=UTF-8") //회의 제거하기
 	public ResponseEntity<?> removeMeeting(@PathVariable Long id) {
 		try {
 			service.removeMeeting(id);

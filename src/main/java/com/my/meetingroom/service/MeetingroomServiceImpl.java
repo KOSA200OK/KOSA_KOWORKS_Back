@@ -4,13 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import javax.transaction.Transactional;
+import javax.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import org.springframework.transaction.annotation.Transactional;
 import com.my.exception.AddException;
 import com.my.exception.FindException;
 import com.my.exception.RemoveException;
@@ -45,6 +46,9 @@ public class MeetingroomServiceImpl implements MeetingroomService {
 	
 	@Autowired
 	ParticipantsRepository participants;
+	
+	@Autowired
+	EntityManager entityManager;
 		
 	
 	@Override
@@ -111,6 +115,7 @@ public class MeetingroomServiceImpl implements MeetingroomService {
 		
 	}
 
+	
 	@Override
 	public Page<MeetingReservationDTO> findAllByMemberId(Pageable pageable, String memberId) throws FindException {
 		Page<MeetingReservationEntity> entity = reservation.findAllByMemberId(pageable, memberId);
@@ -121,9 +126,10 @@ public class MeetingroomServiceImpl implements MeetingroomService {
 	@Override
 	public void createParticipants(ParticipantsDTO pdto) throws AddException {		
 		//DTO->Vo
+		
 		MeetingroomMapper mapper = new MeetingroomMapper();
 		ParticipantsEntity pentity = mapper.Participants_DtoToVo(pdto);
-		participants.save(pentity);
+		ParticipantsEntity savedEntity = participants.save(pentity);
 	}
 
 	@Override
@@ -135,13 +141,26 @@ public class MeetingroomServiceImpl implements MeetingroomService {
 		}
 	}
 
+	@Transactional
 	@Override
 	public void removeMeeting(Long id) throws RemoveException {
 		try {
-			reservation.deleteById(id);
+			Optional<MeetingReservationEntity> mrentity = reservation.findById(id);
+//			MeetingReservationEntity entity = mrentity.orElse(null);
+	        MeetingReservationEntity entity = mrentity.get();
+			System.out.println(")))))))" + id);
+			
+			//영속성 제거 (자식 엔터티와의 연관관계를 해제한다)
+			entity.getParticipants().clear();
+			entityManager.clear();
+			
+			reservation.delete(entity);		
+//			reservation.deleteById(id); //delete, deleteById 둘다 가능
+			reservation.save(entity);
 		} catch (Exception e) {
 			throw new RemoveException();
 		}
+		
 	}
 
 }
