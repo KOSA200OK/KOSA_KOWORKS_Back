@@ -18,35 +18,44 @@ public class EmitterRepositoryImpl implements EmitterRepository {
 	public SseEmitter save(String emitterId, SseEmitter sseEmitter) {  // emitter 저장
 		emitters.put(emitterId, sseEmitter);	// emitters에 매개변수로 받음 emitterId와 sseEmiiter를 key와 value 값으로 저장
 		return sseEmitter;						// 메서드가 호출될 때 sseEmitter를 반환하여 외부에서 사용할 수 있도록 return
-	}
+	} // save
 
 	// key : eventCacheId, value : event를 맵에 저장
 	@Override
 	public void saveEventCache(String eventCacheId, Object event ) {		// 이벤트를 저장
 		eventCache.put(eventCacheId, event);
-	}
+	} // saveEvnetCache
 	
 	// memberId로 시작하는 키를 가진 emitters 맵의 값들을 memberId와 그에 해당하는 SseEMitter 값으로 이루어진 맵을 변환하여 반환
 	@Override
 	public Map<String, SseEmitter> findAllEmitterStartWithByMemberId(String memberId) { // memberId에 관련된 모든 이벤트를 찾음
-		
-		return emitters.entrySet()				// entrySet을 사용해서 emitters의 key,value를 가져옴			
-						.stream()				// 가져온 entry들을 Stream으로 변환함
-						.filter(entry -> entry.getKey().startsWith(memberId))
-						// filter연산을 사용해서 stream의 각 entry에 조건을 적용(emitters맵의 key들 중 memberId로 시작하는 것들을 필터링 )
-						.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-						// collect 연산을 사용해서 필터링된 entry들을 다시 맵으로 변환한다, collectors.toMap을 이용하여 새로운 맵 생성
-		// entrySet을 가져와서 그대로 사용할 수 있지만, 유지보수, 기능 확장을 위해 데이터를 변환하여 사용
+	
+		 Map<String, SseEmitter> filteredEmitters = new ConcurrentHashMap<>();
+
+		 // emitters 맵의 각 항목을 반복하면서 entrySet()메서드를 이용해서 memberId로 시작하는지 확인
+		    for (Map.Entry<String, SseEmitter> entry : emitters.entrySet()) {
+		        if (entry.getKey().startsWith(memberId)) {						// 조건이 참인 경우 SseEmitter값을 filteredEmitters맵에 추가한다
+		            filteredEmitters.put(entry.getKey(), entry.getValue());
+		        } // if
+		    } // for 
+
+		    return filteredEmitters;
 		
 	} // findAllEmitterStartWithByMemberId
 	
 	// memberId로 시작하는 키를 가진 eventCache 맵의 값들을 memberId와 그에 해당하는 Object 값으로 이루어진 맵을 변환하여 반환
 	@Override
 	public Map<String, Object> findAllEventCacheStartWithByMemberId(String memerId) {	
+
+		Map<String, Object> filteredEventCache = new ConcurrentHashMap<>();
 		
-		return eventCache.entrySet().stream()
-				.filter(entry -> entry.getKey().startsWith(memerId))
-				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+		for(Map.Entry<String, Object> entry : filteredEventCache.entrySet()) {
+			if(entry.getKey().startsWith(memerId)) {
+				filteredEventCache.put(entry.getKey(), entry.getValue());
+			} // if
+		} // for
+		
+		return filteredEventCache;
 		
 	} // findAllCacheStartWithByMemberId
 	
@@ -75,7 +84,7 @@ public class EmitterRepositoryImpl implements EmitterRepository {
 					} // if
 				}
 		); // forEach
-	}
+	} // deleteAllEventCacheStartWithId
 	
 	
-}
+} // end class

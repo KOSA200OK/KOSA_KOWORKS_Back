@@ -12,7 +12,6 @@ import com.my.chat.dto.ChatRoom;
 
 import lombok.RequiredArgsConstructor;
 
-//https://github.com/gks930620/chatting3_redis_pubsub
 @RequiredArgsConstructor
 @Repository
 public class ChatRoomRepository {
@@ -39,7 +38,7 @@ public class ChatRoomRepository {
 	public ChatRoom createChatRoom(String name) {
 		ChatRoom chatRoom = ChatRoom.create(name);
 		// redis에 저장
-		opsHashChatRoom.put(CHAT_ROOMS_KEY, chatRoom.getRoomId(), chatRoom); 
+		opsHashChatRoom.put(CHAT_ROOMS_KEY, chatRoom.getRoomId(), chatRoom);
 		return chatRoom;
 	}
 }

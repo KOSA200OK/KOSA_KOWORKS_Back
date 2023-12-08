@@ -1,13 +1,17 @@
 package com.my.notification.control;
 
+import java.util.List;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
+import com.my.notification.dto.NotificationDTO;
 import com.my.notification.service.NotificationServiceImpl;
 
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequestMapping("/subscribe")
 @CrossOrigin(origins="http://localhost:5173")
+//@CrossOrigin(origins="http://192.168.1.105:5173")
 public class NotificationController {
 	
 	   private NotificationServiceImpl notifyService;
@@ -41,6 +46,14 @@ public class NotificationController {
 	    // last-event-id라는 헤더를 받고 있음, 헤더는 항상 담겨있는 것이 아니다
 	    // sse 연결 기간 만료 등의 이류로 끊어졌을 경우 알림이 발생하는 경우 그 시간동안 알림은 클라이언트에 도달하지 못한다
 	    // 이를 방지하기 위한 것이 last-event-id이다
-	    // 헤더는 클라이언트가 마지막으로 수신한 데이터의 id값을 의미한다. 이를 이용하여 유실된 데이털르 다시 보내줄 수 있음
+	    // 헤더는 클라이언트가 마지막으로 수신한 데이터의 id값을 의미한다. 이를 이용하여 유실된 데이털르 다시 보내줄 수 있음!
 	    
-}
+	    @GetMapping()
+	    public List<NotificationDTO.Response> findAllByMemberId(@RequestParam String memberId) {
+	        log.warn("Controller memberId ==> {}", memberId);
+	        
+	        return notifyService.findAllByMemberId(memberId);
+	       
+	    } // findAllByMemberId
+	    
+} // end class

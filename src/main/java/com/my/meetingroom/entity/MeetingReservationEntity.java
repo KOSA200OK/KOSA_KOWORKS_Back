@@ -64,7 +64,7 @@ public class MeetingReservationEntity {
 	//양방향 설정
 	@OneToMany
 	(
-			fetch = FetchType.LAZY
+			fetch = FetchType.EAGER
 			,
 			cascade = CascadeType.ALL
 //			cascade = CascadeType.REMOVE //단방향일 때는 remove만
