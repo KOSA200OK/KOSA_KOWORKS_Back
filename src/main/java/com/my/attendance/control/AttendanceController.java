@@ -41,7 +41,7 @@ public class AttendanceController {
 //		
 //	}
 	
-	@GetMapping()
+	@GetMapping("/all")
 	public Page<AttendanceDTO> findByMemberEntity(@RequestParam String memberId, int currentPage) throws FindException {
 		
 //		Long LongMemberId = (long)memberId;
