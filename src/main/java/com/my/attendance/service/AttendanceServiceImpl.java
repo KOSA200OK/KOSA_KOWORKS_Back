@@ -3,7 +3,6 @@ package com.my.attendance.service;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,8 +15,6 @@ import org.springframework.stereotype.Service;
 import com.my.attendance.dao.AttendanceRepository;
 import com.my.attendance.dto.AttendanceDTO;
 import com.my.attendance.entity.AttendanceEntity;
-import com.my.car.repository.CarRepository;
-import com.my.car.service.CarMapper;
 import com.my.exception.AddException;
 import com.my.exception.FindException;
 import com.my.exception.ModifyException;
@@ -134,7 +131,26 @@ public class AttendanceServiceImpl implements AttendanceService {
 	        
 	    } // if-else
 	    
-	} // end class
+	} // modifyAttendance
 
+	// 수정 후 코드: 변경된 Repository의 메서드 호출
+	@Override
+	public Page<AttendanceDTO> findAllByAttendanceDate(String memberId, String attendanceDate, Pageable pageable) throws FindException {
+	    log.warn("1. findAllByAttendanceDate의 memberid ===> {} ", memberId);
+	    log.warn("2. findAllByAttendanceDate의 dt ===> {}", attendanceDate);
+	    
+	    // MemberEntity 객체 생성 (예시로 memberId가 "1"인 경우)
+	    MemberEntity memberEntity = new MemberEntity();
+	    memberEntity.setId(memberId);
+	    
+	    // 수정 후 코드: 변경된 Repository의 메서드 호출
+	    Page<AttendanceEntity> entityList = repository.findByAttendanceDateStartingWithAndMemberId(attendanceDate, memberEntity, pageable);
+	    
+	    model = new AttendanceMapper();
+	    return entityList.map(model::VoToDTO);
+	}
+
+
+	
 	
 } // end class

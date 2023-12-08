@@ -86,4 +86,16 @@ public class AttendanceController {
 		
 	} // updateAttendance
 	
+	@GetMapping("/date")
+	public Page<AttendanceDTO> findAllByAttendanceDate(@RequestParam String memberId, String attendanceDate,int currentPage) throws FindException {	
+		
+		log.warn("Controller findAllByAttendanceDate : {}", attendanceDate);
+		
+		currentPage -=1;
+		Pageable pageable = PageRequest.of(currentPage, 10);
+	    
+	    return service.findAllByAttendanceDate(memberId, attendanceDate, pageable);
+
+	} // findAllByAttendanceDate
+	
 } // end class
