@@ -15,6 +15,7 @@ public interface AttendanceService {
 
 	public List<AttendanceEntity> findAll() throws FindException;
 	
+	// 전체 조회
 	public Page<AttendanceDTO> findAllByMemberId(String memberId, Pageable pageable) throws FindException;
 	
 	// 출석
@@ -22,5 +23,8 @@ public interface AttendanceService {
 	
 	// 퇴근
 	public void modifyAttendance(AttendanceDTO dto) throws ModifyException;
+	
+	// 월별 조회
+	public Page<AttendanceDTO> findAllByAttendanceDate(String memberId, String attendanceDate, Pageable pageable) throws FindException;
 	
 } // end class
