@@ -89,9 +89,18 @@ public class CarController {
 	
 	//******************* 차량 관리 메인 ***********************
 	
-	@GetMapping("/managelist")
-	public List<CarDTO> findAllCarManage() throws FindException{
-		return cs.findAllCarManage();
+	@GetMapping("/manage")
+	public Map findAllCarManage() throws FindException{
+		Map map = cs.findAllCarManage();
+		return map;
+	}
+	
+	@GetMapping("/managelist/{currentPage}")
+	public Page<CarDTO> findAllCarManageList(@PathVariable int currentPage) throws FindException{
+		System.out.println("currentPage: "+currentPage);
+		currentPage -=1;
+		Pageable pageable = PageRequest.of(currentPage, 10);
+		return cs.findAllCarManageList(pageable);
 	}
 	
 	//******************* 차량 관리 승인 ***********************
@@ -101,7 +110,7 @@ public class CarController {
 		System.out.println("currentPage: "+currentPage);
 		currentPage -=1;
 		Pageable pageable = PageRequest.of(currentPage, 10);
-		return cs.findAllApprove(pageable);
+		return cs.findAllWaiting(pageable);
 	}
 	
 	@GetMapping("/approve")
