@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
+import com.my.exception.RemoveException;
 import com.my.meetingroom.entity.ParticipantsEntity;
 import com.my.member.entity.MemberEntity;
 import com.my.notification.dto.NotificationDTO.Response;
@@ -27,4 +28,7 @@ public interface NotificationService {
 	
 	// 미팅 참여자 알림 조회
 	
-}
+	// 알림 삭제
+	public void deleteNotification(int id) throws RemoveException;
+
+} // end class
