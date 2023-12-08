@@ -23,7 +23,14 @@ public interface CarRepository extends JpaRepository<CarEntity, String> {
 					" WHERE id IN "+"(SELECT r.car_id "+
 					" FROM CAR_RENT r "+
 					"WHERE r.end_date < :today)", nativeQuery=true)
-	void saveCarStatus(LocalDate today);
+	void saveEndCarStatus(LocalDate today);
 	
-	Page<CarEntity> findAllByOrderByStatusDescIdDesc(Pageable pageble);
+	Page<CarEntity> findAll(Pageable pageble);
+	
+//	Page<CarEntity> findAllByOrderByStatusDescIdDesc(Pageable pageble);
+	
+//	@Query("SELECT c FROM CarEntity c LEFT JOIN c.CarEntity cr " +
+//	           "ORDER BY cr.status DESC, cr.startDate DESC")
+//	Page<CarEntity> findAllCarManage(Pageable pageble);
+	
 }

@@ -1,5 +1,6 @@
 package com.my.meetingroom.dto;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.my.member.dto.MemberDTO;
 
 import lombok.AllArgsConstructor;
@@ -13,7 +14,7 @@ import lombok.Setter;
 public class ParticipantsDTO {
 	private Long id;
 //	private Long meetingId;
-	private MeetingReservationDTO meeting;
+	private MeetingReservationDTO meetingId;
 	private MemberDTO member;
 	
 }

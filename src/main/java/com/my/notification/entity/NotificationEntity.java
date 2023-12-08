@@ -47,7 +47,7 @@ public class NotificationEntity {
 	@ManyToOne
 	@JoinColumn(name = "receiverId",
 				nullable = false)
-	private MemberEntity memberEntity;
+	private MemberEntity receiverId;
 	
 	@Enumerated(EnumType.STRING)
 	@Column(name = "type",
@@ -58,13 +58,13 @@ public class NotificationEntity {
 	private String content;
 	
 	@Column(name = "createdAt")
-	private Date createdAt;
+	private String createdAt;
 
 	@Column(name = "status")
 	private Integer status;
 
-	public NotificationEntity(MemberEntity memberEntity, NotificationType notificationType, String content) {
-	      this.memberEntity = memberEntity;
+	public NotificationEntity(MemberEntity receiverId, NotificationType notificationType, String content) {
+	      this.receiverId = receiverId;
 	      this.notificationType = notificationType;
 	      this.content = content;
 

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,18 +15,27 @@ import com.my.exception.AddException;
 import com.my.exception.FindException;
 import com.my.exception.RemoveException;
 import com.my.meetingroom.dto.MeetingReservationDTO;
+import com.my.meetingroom.dto.MeetingRoomDTO;
 import com.my.meetingroom.dto.ParticipantsDTO;
 import com.my.meetingroom.entity.MeetingReservationEntity;
+import com.my.meetingroom.entity.MeetingroomDetailEntity;
 import com.my.meetingroom.entity.ParticipantsEntity;
 import com.my.meetingroom.repository.MeetingReservationRepository;
 import com.my.meetingroom.repository.MeetingRoomRepository;
 import com.my.meetingroom.repository.ParticipantsRepository;
+import com.my.member.entity.MemberEntity;
+import com.my.notification.entity.NotificationEntity;
+import com.my.notification.service.NotificationServiceImpl;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
 public class MeetingroomServiceImpl implements MeetingroomService {
+	
+	// 찬석
+	@Autowired
+	NotificationServiceImpl notify;
 	
 	@Autowired
 	MeetingRoomRepository meetingroom;
@@ -40,15 +48,15 @@ public class MeetingroomServiceImpl implements MeetingroomService {
 		
 	
 	@Override
-	public List<MeetingReservationDTO> findAllMeetingRoom(String meetingDate) throws FindException {
-		
-		List<MeetingReservationEntity> entity = reservation.findAllMeetingRoom(meetingDate);
-		List<MeetingReservationDTO> list = new ArrayList();
+	public List<MeetingRoomDTO> findByMeetingRoom(String meetingDate) throws FindException {
+		List<MeetingroomDetailEntity> entity = meetingroom.findAllByMeetingRoom(meetingDate);
+		List<MeetingRoomDTO> list = new ArrayList();
 		MeetingroomMapper mapper = new MeetingroomMapper();
 		
 		//Vo->DTO
-		for (MeetingReservationEntity mre : entity) {
-			MeetingReservationDTO dto = mapper.Reservation_VoToDto(mre);
+		for (MeetingroomDetailEntity mre : entity) {
+			MeetingRoomDTO dto = mapper.Meetingroom_VoToDto(mre);
+			System.out.println("++++" + dto.getReservation().get(0).getMeetingDate());
 			list.add(dto);
 		}
 		return list;
@@ -69,6 +77,13 @@ public class MeetingroomServiceImpl implements MeetingroomService {
 		MeetingroomMapper mapper = new MeetingroomMapper();
 		MeetingReservationEntity entity = mapper.Reservation_DtoToVo(msdto);
 		
+		// 찬석
+		MemberEntity memberEntity = entity.getMember();
+		List<ParticipantsEntity> participantsEntity = entity.getParticipants();
+
+		String memberName = entity.getMember().getName();
+
+		
 		//최종
 		MeetingReservationEntity savedEntity = reservation.save(entity);
 		System.out.println("끝 : savedEntity" + savedEntity.getId());
@@ -82,6 +97,10 @@ public class MeetingroomServiceImpl implements MeetingroomService {
 //		}
 		
 //		reservation.deleteById(159L);
+		
+		// 찬석
+	    notify.send(memberEntity, NotificationEntity.NotificationType.MEETING, "회의실예약이 되었습니다.");
+	    notify.sendToParticipants(participantsEntity, NotificationEntity.NotificationType.MEETING, memberName + "님이 회의실을 예약했습니다.");
 		
 	}
 

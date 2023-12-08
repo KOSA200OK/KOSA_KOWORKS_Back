@@ -1,9 +1,6 @@
 package com.my.car.service;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -19,16 +16,31 @@ import com.my.car.entity.CarEntity;
 import com.my.car.entity.CarRentEntity;
 import com.my.car.repository.CarRentRepository;
 import com.my.car.repository.CarRepository;
+import com.my.member.entity.MemberEntity;
+import com.my.notification.entity.NotificationEntity;
+import com.my.notification.service.NotificationServiceImpl;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Service
+@Slf4j
 public class CarServiceImpl implements CarService {
 	private CarRepository cr;
 	private CarRentRepository crr;
+	
+	// 찬석
+	private NotificationServiceImpl notify;
 	
 	@Autowired
 	public CarServiceImpl(CarRepository cr, CarRentRepository crr) {
 		this.cr = cr;
 		this.crr = crr;
+	}
+	
+	// 찬석
+	@Autowired
+	public void NotificationServiceImpl(NotificationServiceImpl notify) {
+	    this.notify = notify; // NotificationServiceImpl 주입
 	}
 	
 	@Transactional
@@ -40,7 +52,7 @@ public class CarServiceImpl implements CarService {
 //		LocalDate today = LocalDate.parse(todaystring, formatter);
 //		System.out.println("*************service: "+today);
 		
-		cr.saveCarStatus(today);
+		cr.saveEndCarStatus(today);
 	}
 	
 	//*************** 차량 목록 **************************
@@ -59,10 +71,21 @@ public class CarServiceImpl implements CarService {
 		System.out.println("entity carId   "+entity.getCar().getId());
 		crr.save(entity);
 		
+		// 찬석
+//		String memberEntity = entity.getMember().getId();
+		MemberEntity memberEntity = entity.getMember();
+		log.warn("차량예약 id : {}", memberEntity.getId());
+		
 		Optional<CarEntity> optC = cr.findById(carRent.getCar().getId());
 		CarEntity carEntity = optC.get();
 		carEntity.modifyCarStatus((long)1);
 		cr.save(carEntity);
+		
+		log.warn("여기까진 오나..?");
+		
+	    // 찬석
+	    notify.send(memberEntity, NotificationEntity.NotificationType.CAR, "차량이 등록 되었습니다.");
+
 	}
 	
 	//****************** 차량 대여 목록 **************************
@@ -85,8 +108,51 @@ public class CarServiceImpl implements CarService {
 	
 	@Override
 	public Page<CarDTO> findAllCarManage(Pageable pageable){
-		Page<CarEntity> entityList = cr.findAllByOrderByStatusDescIdDesc(pageable);
+		Page<CarEntity> entityList = cr.findAll(pageable);
 		CarMapper cm = new CarMapper();
 		return entityList.map(cm::entityToDto);
+	}
+	
+	//***************** 차량 관리 승인 **************************
+	
+	@Override
+	public Page<CarRentDTO> findAllApprove(Pageable pageable){
+		Page<CarRentEntity> entityList = crr.findAllByStatusOrderByReqDate(pageable, (long)0);
+		CarRentMapper crm = new CarRentMapper();
+		return entityList.map(crm::entityToDto);
+	}
+	
+	@Override
+	public void modifyCarRentStatus(Long id, Long status) {
+		Optional<CarRentEntity> optC = crr.findById(id);
+		CarRentEntity carRentEntity = optC.get();
+		carRentEntity.modifyCarRentStatus(status);
+		crr.save(carRentEntity);
+	}
+	
+	@Override
+	public void saveCarRentReject(CarRentDTO carRent, Long status) {
+		Optional<CarRentEntity> optC = crr.findById(carRent.getId());
+		CarRentEntity carRentEntity = optC.get();
+		carRentEntity.modifyCarRentStatus(status);
+		carRentEntity.modifyCarRentReject(carRent.getReject());
+		crr.save(carRentEntity);
+		
+	}
+	
+	//***************** 차량 관리 대여 목록 *********************
+	
+	@Override
+	public Page<CarRentDTO> findAllRentList(Pageable pageable) {
+		Page<CarRentEntity> entityList = crr.findAllRentList(pageable);
+		CarRentMapper crm = new CarRentMapper();
+		return entityList.map(crm::entityToDto);
+	}
+	
+	@Override
+	public Page<CarRentDTO> findAllNoReturnList(Pageable pageable){
+		Page<CarRentEntity> entityList = crr.findAllNoReturnList(pageable);
+		CarRentMapper crm = new CarRentMapper();
+		return entityList.map(crm::entityToDto);
 	}
 }

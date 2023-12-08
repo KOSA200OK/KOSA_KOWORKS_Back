@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,12 +78,52 @@ public class CarController {
 	
 	//******************* 차량 관리 메인 ***********************
 	
-	@GetMapping("/carmanagelist/{currentPage}")
+	@GetMapping("/managelist/{currentPage}")
 	public Page<CarDTO> findAllCarManage(@PathVariable int currentPage) throws FindException{
 		System.out.println("currentPage: "+currentPage);
 		currentPage -=1;
 		Pageable pageable = PageRequest.of(currentPage, 10);
 		return cs.findAllCarManage(pageable);
+	}
+	
+	//******************* 차량 관리 승인 ***********************
+	
+	@GetMapping("/waitinglist/{currentPage}")
+	public Page<CarRentDTO> findAllApprove(@PathVariable int currentPage) throws FindException{
+		System.out.println("currentPage: "+currentPage);
+		currentPage -=1;
+		Pageable pageable = PageRequest.of(currentPage, 10);
+		return cs.findAllApprove(pageable);
+	}
+	
+	@GetMapping("/approve")
+	public ResponseEntity<?> modifyCarRentStatusApprove(Long id, Long status){
+//		HttpSession session = request.getSession();
+//		Long memberId = (Long) session.getAttribute("memberId");
+		cs.modifyCarRentStatus(id, (long)2);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	@PostMapping("/reject")
+	public ResponseEntity<?> modifyCarRentStatusReject(@RequestBody CarRentDTO carRent){
+		cs.saveCarRentReject(carRent,(long)1);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	//******************* 차량 관리 대여중 ***********************
+	
+	@GetMapping("/rentlist/{currentPage}")
+	public Page<CarRentDTO> findAllRentList(@PathVariable int currentPage){
+		currentPage -=1;
+		Pageable pageable = PageRequest.of(currentPage, 10);
+		return cs.findAllRentList(pageable);
+	}
+	
+	@GetMapping("/noreturnlist/{currentPage}")
+	public Page<CarRentDTO> findAllNoReturnList(@PathVariable int currentPage){
+		currentPage -=1;
+		Pageable pageable = PageRequest.of(currentPage, 10);
+		return cs.findAllNoReturnList(pageable);
 	}
 	
 //	@GetMapping("/test")
