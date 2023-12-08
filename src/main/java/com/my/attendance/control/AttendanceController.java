@@ -95,6 +95,7 @@ public class AttendanceController {
 		Pageable pageable = PageRequest.of(currentPage, 10);
 	    
 	    return service.findAllByAttendanceDate(memberId, attendanceDate, pageable);
+	    //
 
 	} // findAllByAttendanceDate
 	
