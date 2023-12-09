@@ -20,7 +20,6 @@ import com.my.exception.FindException;
 
 import lombok.RequiredArgsConstructor;
 
-//https://github.com/gks930620/chatting3_redis_pubsub
 @RequiredArgsConstructor
 @Controller
 @RequestMapping("/chat")
@@ -35,22 +34,24 @@ public class ChatRoomController {
 	@CrossOrigin(origins = "http://localhost:5173")
 	@GetMapping("/roomlist")
 	public List<ChatRoom> rooms(Model model) throws FindException {
+		System.out.println("roomlist");
 		return chatRoomService.findAll();
 	}
 
-	// 채팅방 입장 화면 단순히 화면으로 이동
-	@CrossOrigin(origins = "http://localhost:5173")
-	@GetMapping("/room/enter/{roomId}")
-	public String roomDetail(Model model, @PathVariable String roomId) {
-		model.addAttribute("roomId", roomId);
-		return "/chat/roomDetail";
-	}
+//	// 채팅방 입장 화면 단순히 화면으로 이동
+//	@CrossOrigin(origins = "http://localhost:5173")
+//	@GetMapping("/room/enter/{roomId}")
+//	public String roomDetail(Model model, @PathVariable String roomId) {
+//		model.addAttribute("roomId", roomId);
+//		return "/chat/roomDetail";
+//	}
 
 	// 모든 채팅방 목록 반환
 	@CrossOrigin(origins = "http://localhost:5173")
 	@GetMapping("/rooms")
 	@ResponseBody
 	public List<ChatRoom> room() {
+		System.out.println("rooms");
 		return chatRoomRepository.findAllRoom();
 	}
 
@@ -59,6 +60,7 @@ public class ChatRoomController {
 	@PostMapping("/room")
 	@ResponseBody
 	public ChatRoom createRoom(@RequestParam String name) {
+		System.out.println("room");
 		return chatRoomRepository.createChatRoom(name);
 	}
 
@@ -67,6 +69,7 @@ public class ChatRoomController {
 	@GetMapping("/room/{roomId}")
 	@ResponseBody
 	public ChatRoom roomInfo(@PathVariable String roomId) {
+		System.out.println("room/{roomId}");
 		return chatRoomRepository.findRoomById(roomId);
 	}
 }
