@@ -84,6 +84,9 @@ public class MeetingroomServiceImpl implements MeetingroomService {
 	@Override
 	public void createMeetingReservation(MeetingReservationDTO msdto) throws AddException {
 		
+		//Validation
+		
+		
 		//DTO->Vo
 		MeetingroomMapper mapper = new MeetingroomMapper();
 		MeetingReservationEntity entity = mapper.Reservation_DtoToVo(msdto);
@@ -146,7 +149,6 @@ public class MeetingroomServiceImpl implements MeetingroomService {
 	public void removeMeeting(Long id) throws RemoveException {
 		try {
 			Optional<MeetingReservationEntity> mrentity = reservation.findById(id);
-//			MeetingReservationEntity entity = mrentity.orElse(null);
 	        MeetingReservationEntity entity = mrentity.get();
 			System.out.println(")))))))" + id);
 			
