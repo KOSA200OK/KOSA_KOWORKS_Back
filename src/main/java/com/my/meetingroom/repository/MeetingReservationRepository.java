@@ -17,7 +17,4 @@ public interface MeetingReservationRepository extends JpaRepository<MeetingReser
 	//내 예약 전체 조회
 	public Page<MeetingReservationEntity> findAllByMemberId(Pageable pageable, String memberId);
 	
-	//내 예약 삭제하기
-//	@Query(value="delete from meeting_reservation where id = :id", nativeQuery=true)
-//	void deleteById(Long id);
 }

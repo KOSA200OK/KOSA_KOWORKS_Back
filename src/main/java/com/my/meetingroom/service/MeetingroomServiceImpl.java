@@ -1,6 +1,8 @@
 package com.my.meetingroom.service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,8 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
 import org.springframework.transaction.annotation.Transactional;
+
 import com.my.exception.AddException;
 import com.my.exception.FindException;
 import com.my.exception.RemoveException;
@@ -84,12 +86,41 @@ public class MeetingroomServiceImpl implements MeetingroomService {
 	@Override
 	public void createMeetingReservation(MeetingReservationDTO msdto) throws AddException {
 		
-		//Validation
-		
-		
 		//DTO->Vo
 		MeetingroomMapper mapper = new MeetingroomMapper();
 		MeetingReservationEntity entity = mapper.Reservation_DtoToVo(msdto);
+		
+		//Validation -> 따로 메소드 빼기 고민
+		//예약 가능한 시간인지 검증
+//		String date = msdto.getMeetingDate();
+//		SimpleDateFormat formatter = new SimpleDateFormat("HH시 mm분 ss초");
+//		
+//		List<MeetingroomDetailEntity> mrlist = meetingroom.findAllByMeetingRoom(date);
+//		for (MeetingroomDetailEntity mde : mrlist) {
+//			Date starttime = formatter.parse(mde.getReservation().get(0).getStartTime());
+//			Date newstarttime = formatter.parse(entity.getEndTime());
+//			Date endtime = formatter.parse(mde.getReservation().get(0).getEndTime());
+//			Date newendtime = formatter.parse(entity.getStartTime());
+//			
+//			if (starttime.after(newstarttime) && endtime.before(newendtime)) {
+//				MeetingReservationEntity savedEntity = reservation.save(entity);
+//			}
+//		}
+
+		//같은 아이디의 동시간 예약 검증
+//		String memberId = localStorage.getItem("memberId");
+//		Page<MeetingReservationEntity> mrentity = reservation.findAllByMemberId(null, memberId);
+//		if (mrentity.getContent().get(0).getMeetingDate() == entity.getMeetingDate()) {
+//			SimpleDateFormat formatter = new SimpleDateFormat("HH시 mm분 ss초");
+//			Date starttime = formatter.parse(mrentity.getContent().get(0).getStartTime());
+//			Date newstarttime = formatter.parse(entity.getEndTime());
+//			Date endtime = formatter.parse(mrentity.getContent().get(0).getEndTime());
+//			Date newendtime = formatter.parse(entity.getStartTime());
+//			
+//			if (starttime.after(newstarttime) && endtime.before(newendtime)) {
+//				MeetingReservationEntity savedEntity = reservation.save(entity);
+//			}
+//		}
 		
 		// 찬석
 		MemberEntity memberEntity = entity.getMember();

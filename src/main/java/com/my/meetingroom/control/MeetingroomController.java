@@ -88,8 +88,8 @@ public class MeetingroomController {
 	
 	//--------내 예약보기에서 할일-----------
 	
-	@GetMapping("/myreservation")
-	public Page<MeetingReservationDTO> findAllByMemberId(@RequestParam int currentPage, String memberId) throws FindException {
+	@GetMapping("/myreservation/{currentPage}")
+	public Page<MeetingReservationDTO> findAllByMemberId(@PathVariable int currentPage, @RequestParam String memberId) throws FindException {
 		currentPage -= 1;
 		Pageable pageable = PageRequest.of(currentPage, 10);
 		return service.findAllByMemberId(pageable, memberId);
