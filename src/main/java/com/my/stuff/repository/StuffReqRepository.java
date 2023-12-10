@@ -2,6 +2,7 @@ package com.my.stuff.repository;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -24,14 +25,6 @@ public interface StuffReqRepository extends JpaRepository<StuffReqEntity, Long> 
 	 */
 	List<StuffReqEntity> findByMember(MemberEntity member);
 	
-	List<StuffReqEntity> findByMember_Department(DepartmentEntity department);
-	
-	/**
-	 * stuff_req 테이블에서 status 값에 따라 조회한다
-	 * @param status
-	 * @return
-	 */
-	List<StuffReqEntity> findByStatusOrderByReqDateDesc(Long status);
 	
 	/**
 	 * 멤버, 날짜구간
@@ -136,5 +129,143 @@ public interface StuffReqRepository extends JpaRepository<StuffReqEntity, Long> 
 	List<StuffReqEntity> findByMemberAndStatusAndStuffLike(MemberEntity member, Long status, StuffEntity stuff);
 	
 	// 비품요청내역 조회 끝 ===========================================================================================================
+	
+	// 관리자용 비품요청내역 조회  ===========================================================================================================
+	
+	/**
+	 * stuff_req 테이블에서 status 값에 따라 조회한다
+	 * @param status
+	 * @return
+	 */
+	List<StuffReqEntity> findByStatusOrderByReqDateDesc(Long status);
+	
+	
+	/**
+	 * stuff_req 테이블에서 부서별 필터링
+	 * @param department
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 */
+	List<StuffReqEntity> findByMember_Department(DepartmentEntity department);	
+	
+	/**
+	 * stuff_req 테이블에서 날짜 구간별 필터링
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 */
+	List<StuffReqEntity> findByReqDateBetween (Date startDate, Date endDate);
+
+    /**
+     * 날짜. 요청상태
+     * @param startDate
+     * @param endDate
+     * @param status
+     * @return
+     */
+	List<StuffReqEntity> findByStatusAndReqDateBetween (Long status, Date startDate, Date endDate);
+	
+    /**
+     * 날짜. 요청상태구간
+     * @param startDate
+     * @param endDate
+     * @param startS
+     * @param endS
+     * @return
+     */
+	List<StuffReqEntity> findByStatusBetweenAndReqDateBetween (Date startDate, Date endDate, Long startS, Long endS);
+	
+	/**
+	 * 날짜. 부서
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 */
+	List<StuffReqEntity> findByMember_DepartmentAndReqDateBetween (DepartmentEntity department, Date startDate, Date endDate);
+	
+	/**
+	 * 날짜. 비품
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 */
+	List<StuffReqEntity> findByStuffLikeAndReqDateBetween (StuffEntity stuff, Date startDate, Date endDate);
+	
+	/**
+	 * 날짜.요청.부서
+	 * @param startDate
+	 * @param endDate
+	 * @param department
+	 * @param status
+	 * @return
+	 */
+	List<StuffReqEntity> findByStatusAndMember_DepartmentAndReqDateBetween(Long status, DepartmentEntity department, Date startDate, Date endDate);
+	
+	/**
+	 * 날짜.요청구간.부서
+	 * @param startDate
+	 * @param endDate
+	 * @param department
+	 * @param status
+	 * @return
+	 */
+	List<StuffReqEntity> findByStatusBetweenAndMember_DepartmentAndReqDateBetween(
+			Date startDate, Date endDate, DepartmentEntity department, Long startS, Long endS);
+	
+	/**
+	 * 날짜.요청.비품
+	 * @param startDate
+	 * @param endDate
+	 * @param department
+	 * @param status
+	 * @return
+	 */
+	List<StuffReqEntity> findByStatusAndStuffLikeAndReqDateBetween(Long status, StuffEntity stuff, Date startDate, Date endDate);
+	
+	/**
+	 * 날짜.요청구간.비품
+	 * @param startDate
+	 * @param endDate
+	 * @param department
+	 * @param status
+	 * @return
+	 */
+	List<StuffReqEntity> findByStatusBetweenAndStuffLikeAndReqDateBetween(
+			Date startDate, Date endDate, StuffEntity stuff, Long startS, Long endS);
+	
+	/**
+	 * 날짜.부서.비품
+	 * @param startDate
+	 * @param endDate
+	 * @param department
+	 * @param status
+	 * @return
+	 */
+	List<StuffReqEntity> findByMember_DepartmentAndStuffLikeAndReqDateBetween(DepartmentEntity department, StuffEntity stuff, Date startDate, Date endDate);
+	
+	/**
+	 * 날짜.요청. 부서.비품
+	 * @param startDate
+	 * @param endDate
+	 * @param department
+	 * @param status
+	 * @return
+	 */
+	List<StuffReqEntity> findByMember_DepartmentAndStuffLikeAndStatusAndReqDateBetween(
+			DepartmentEntity department, StuffEntity stuff, Long status, Date startDate, Date endDate);
+	
+	/**
+	 * 날짜.요청구간. 부서.비품
+	 * @param startDate
+	 * @param endDate
+	 * @param department
+	 * @param status
+	 * @return
+	 */
+	List<StuffReqEntity> findByMember_DepartmentAndStuffLikeAndStatusBetweenAndReqDateBetween(Date startDate, Date endDate, 
+			                                                                       StuffEntity stuff, DepartmentEntity department,
+			                                                                       Long startS, Long endS);
+
     
 }

@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -46,9 +47,14 @@ public class MeetingroomController {
 		return service.findByMeetingRoom(meetingDate);
 	}
 	
-	@GetMapping("/{id}") //상세보기
-	public Optional<MeetingReservationDTO> findById(@PathVariable Long id) throws FindException {
-		return service.findById(id);
+	@GetMapping("/{id}") //회의실 상세보기
+	public Optional<MeetingRoomDTO> findByMeetingroomId(@PathVariable Long id) throws FindException {
+		return service.findByMeetingroomId(id);
+	}
+	
+	@GetMapping("/reservation/{id}") //예약 상세보기
+	public Optional<MeetingReservationDTO> findByResId(@PathVariable Long id) throws FindException {
+		return service.findByResId(id);
 	}
 	
 	@PostMapping(value="", produces="application/json;charset=UTF-8") //회의실 예약하기(저장)
@@ -82,8 +88,8 @@ public class MeetingroomController {
 	
 	//--------내 예약보기에서 할일-----------
 	
-	@GetMapping("/myreservation")
-	public Page<MeetingReservationDTO> findAllByMemberId(@RequestParam int currentPage, String memberId) throws FindException {
+	@GetMapping("/myreservation/{currentPage}")
+	public Page<MeetingReservationDTO> findAllByMemberId(@PathVariable int currentPage, @RequestParam String memberId) throws FindException {
 		currentPage -= 1;
 		Pageable pageable = PageRequest.of(currentPage, 10);
 		return service.findAllByMemberId(pageable, memberId);
@@ -102,7 +108,8 @@ public class MeetingroomController {
 		}
 	}
 	
-	@DeleteMapping(value="/myreservation/{id}", produces="application/json;charset=UTF-8") //특정 회의의 참여자 제거하기
+	@Transactional
+	@DeleteMapping(value="/participants/{id}", produces="application/json;charset=UTF-8") //특정 회의의 참여자 제거하기
 	public ResponseEntity<?> removeParticipants(@PathVariable Long id) {
 		try {
 			service.removeParticipants(id);
@@ -115,7 +122,8 @@ public class MeetingroomController {
 		}
 	}
 	
-	@DeleteMapping(value="/{id}", produces="application/json;charset=UTF-8") //특정 회의의 참여자 제거하기
+	@Transactional
+	@DeleteMapping(value="/deletereservation/{id}", produces="application/json;charset=UTF-8") //회의 제거하기
 	public ResponseEntity<?> removeMeeting(@PathVariable Long id) {
 		try {
 			service.removeMeeting(id);

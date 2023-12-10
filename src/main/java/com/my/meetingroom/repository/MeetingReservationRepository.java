@@ -1,6 +1,5 @@
 package com.my.meetingroom.repository;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -9,7 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import com.my.meetingroom.entity.MeetingReservationEntity;
-import com.my.meetingroom.entity.MeetingroomDetailEntity;
 
 public interface MeetingReservationRepository extends JpaRepository<MeetingReservationEntity, Long> {
 	

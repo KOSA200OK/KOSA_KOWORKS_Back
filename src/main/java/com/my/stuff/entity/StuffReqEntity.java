@@ -65,10 +65,13 @@ public class StuffReqEntity {
 	@Column(length=200)
 	private String reject;
 	
-//	public void modifyReject(String reject) {
-//		this.reject = reject;
-//	}
+	public void modifyReject(String reject) {
+		this.reject = reject;
+	}
 	
+	public void modifyStatus(Long status) {
+		this.status = status;
+	}
 	
 
 }

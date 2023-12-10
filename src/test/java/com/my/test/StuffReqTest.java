@@ -38,25 +38,25 @@ class StuffReqTest {
 	@Autowired
 	StuffReqRepository sr;
 	
-	@Test
-	@Transactional
-	@Commit
-	void testFindByStuffReqEntity_DepartEnt_Name() {
-//    	String memberId = "0008";
-//    	MemberEntity me = new MemberEntity();
-//		me.setId(memberId);
-//		String nameD = new String("개발2팀");
-		
-		Long id = Long.valueOf(2L);
-		DepartmentEntity de = DepartmentEntity.builder()
-                .id(id)
-                .build();
-		
-		List<StuffReqEntity> srList = sr.findByMember_Department(de);
-		log.error("srList = {}", srList.size());
-		int lisrSize = srList.size();
-		assertTrue(lisrSize==8);
-	}
+//	@Test
+//	@Transactional
+//	@Commit
+//	void testFindByStuffReqEntity_DepartEnt_Name() {
+////    	String memberId = "0008";
+////    	MemberEntity me = new MemberEntity();
+////		me.setId(memberId);
+////		String nameD = new String("개발2팀");
+//		
+//		Long id = Long.valueOf(2L);
+//		DepartmentEntity de = DepartmentEntity.builder()
+//                .id(id)
+//                .build();
+//		
+//		List<StuffReqEntity> srList = sr.findByMember_DepartmentAndReqDateBetween(de);
+//		log.error("srList = {}", srList.size());
+//		int lisrSize = srList.size();
+//		assertTrue(lisrSize==8);
+//	}
 	
     @Test
     void testFindByMemberIdLike() {

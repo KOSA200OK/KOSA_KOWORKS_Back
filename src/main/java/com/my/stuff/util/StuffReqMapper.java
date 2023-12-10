@@ -68,7 +68,7 @@ public class StuffReqMapper {
         StuffEntity se = entity.getStuff();
         
         
-        log.error("entityToDto - 1");
+//        log.error("entityToDto - 1");
         StuffDTO sd = StuffDTO
         		.builder()
         		.id(se.getId())
@@ -78,7 +78,7 @@ public class StuffReqMapper {
         
         MemberEntity me = entity.getMember();
         
-        log.error("entityToDto - 2");
+//        log.error("entityToDto - 2");
         DepartmentEntity de = me.getDepartment();
        
         DepartmentDTO dd = DepartmentDTO
@@ -87,7 +87,7 @@ public class StuffReqMapper {
 				.name(de.getName())
 				.build();
         
-        log.error("entityToDto - 3");        
+//        log.error("entityToDto - 3");        
 		
         MemberDTO md = MemberDTO
 				.builder()
@@ -98,7 +98,7 @@ public class StuffReqMapper {
 				.position(me.getPosition())
 				.tel(me.getTel())
 				.build();
-        log.error("entityToDto - 4");
+//        log.error("entityToDto - 4");
 		StuffReqDTO dto = StuffReqDTO.builder()
 				.id(entity.getId())
 				.stuff(sd)

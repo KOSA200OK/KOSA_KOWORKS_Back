@@ -3,13 +3,16 @@ package com.my.stuff.service;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+import org.modelmapper.internal.objenesis.instantiator.basic.DelegatingToExoticInstantiator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.my.department.entity.DepartmentEntity;
 import com.my.exception.AddException;
 import com.my.exception.FindException;
+import com.my.exception.ModifyException;
 import com.my.member.entity.MemberEntity;
 import com.my.stuff.dto.StuffReqDTO;
 import com.my.stuff.entity.StuffEntity;
@@ -89,7 +92,6 @@ public class StuffReqService {
 
 		if(status == 3) {// 날짜만 선택할 경우 - 요청상태는 전부
 			if(stuffId.equals("default")) {
-				log.error("case = 1");
 				Long startS = 0L;
 				Long endS = 2L;
 				List<StuffReqEntity> srEntityList = sr.findByMemberAndReqDateBetweenAndStatusBetween(me, startDate, endDate,
@@ -114,7 +116,6 @@ public class StuffReqService {
 			}
 		}else {
 			if(stuffId.equals("default")) { // 날짜, 요청상태만 선택할 경우
-				log.error("case = 2");
 				List<StuffReqEntity> srEntityList = sr.findByMemberAndReqDateBetweenAndStatus(me, startDate, endDate,
 						status);
 				for (StuffReqEntity stuffReqEntity : srEntityList) {
@@ -144,18 +145,6 @@ public class StuffReqService {
 		sr.deleteById(id);
 	}
 	
-//	public List<StuffReqDTO> findByManageCase(String memberId, Long departmentId, Long status, String stuffId, Date startDate, Date endDate) throws FindException {
-//        
-//		switch (key) {
-//		case value:
-//			
-//			break;
-//
-//		default:
-//			break;
-//		}
-//	    return null;
-//	}
 	
 	public List<StuffReqDTO> findByApprove(){
 		// 전달할 리스트 세팅
@@ -170,109 +159,138 @@ public class StuffReqService {
 		return srDTOList;
 		
 	}
-//	
-//	public List<StuffReqDTO> findByDepartment(Long departmentId){
-//		// 전달할 리스트 세팅
-//		List<StuffReqDTO> srDTOList = new ArrayList<>();
-//		//승인 상태인 status값 세팅
-//		DepartmentEntity de = DepartmentEntity.builder()
-//				                              .id(departmentId)
-//				                              .build();
-//		List<StuffReqEntity> srEntityList = sr.findByMember_Department(de);
-//		for (StuffReqEntity stuffReqEntity : srEntityList) {
-//			StuffReqDTO srDTO = StuffReqMapper.entityToDto(stuffReqEntity);
-//			srDTOList.add(srDTO);
-//		}
-//		return srDTOList;
-//		
-//	}
 	
-	
+	public List<StuffReqDTO> findByManageCase(Long departmentId, Long status, String stuffId, Date startDate, Date endDate)
+			throws FindException {
 
-//	public List<StuffReqDTO> findByDate(String memberId, Date startDate, Date endDate) throws FindException {
-//		MemberEntity me = MemberEntity.builder().id(memberId).build();
-//
-//		List<StuffReqEntity> srEntityList = sr.findByMemberAndReqDateBetween(me, startDate, endDate);
-//		List<StuffReqDTO> srDTOList = new ArrayList<>();
-//		for (StuffReqEntity stuffReqEntity : srEntityList) {
-//			StuffReqDTO srDTO = StuffReqMapper.entityToDto(stuffReqEntity);
-//			srDTOList.add(srDTO);
-//		}
-//
-//		return srDTOList;
-//	}
-	
-//	/**
-//	 * DB에서 해당 멤버의 비품요청목록중 StuffId에 인자로 넘겨받은 문자열이 포함된 행을 가져와 DTO타입으로 변환해 반환한다.
-//	 * 
-//	 * @param memberId
-//	 * @param stuffId
-//	 * @return List<StuffReqDTO>
-//	 * @throws FindException
-//	 */
-//	public List<StuffReqDTO> findByMemberIdLikeStuffId(String memberId, String stuffId) throws FindException {
-//
-//		MemberEntity me = new MemberEntity();
-//		me.setId(memberId);
-//
-////		stuffId += "%";
-//		String stuffIdM = new String();
-//		stuffIdM = "%" + stuffId + "%";
-////		log.error("stuffNameM={}", stuffIdM);
-//		StuffEntity se = new StuffEntity();
-//		se.setId(stuffIdM);
-//
-//		List<StuffReqEntity> srEntityList = sr.findByMemberAndStuffLike(me, se);
-////		List<StuffReqEntity> srEntityList = sr.findByMemberAndStuffContaining(me, se);
-//		List<StuffReqDTO> srDTOList = new ArrayList<>();
-//		for (StuffReqEntity stuffReqEntity : srEntityList) {
-//			StuffReqDTO srDTO = StuffReqMapper.entityToDto(stuffReqEntity);
-//			srDTOList.add(srDTO);
-//		}
-//		log.error("findByMemberIdLikeStuffId size=" + srDTOList.size());
-//		return srDTOList;
-//	}
-	
-//	/**
-//	 * stuff_req 테이블에서 사용자가 작성한 비품 요청 행 중 stuffId에 압력한 문자열이포함되는 경우, status값이 일치라는
-//	 * 경우를 찾아 DTO타입으로 변환해 반환한다
-//	 * 
-//	 * @param memberId
-//	 * @param stuffId
-//	 * @return List<StuffReqDTO>
-//	 * @throws FindException
-//	 */
-//	public List<StuffReqDTO> findByMemberIdStatusLikeStuffId(String memberId, Long status, String stuffId)
-//			throws FindException {
-//
-//		MemberEntity me = new MemberEntity();
-//		me.setId(memberId);
-//
-////		stuffId += "%";
-//		String stuffIdM = new String();
-//		stuffIdM = "%" + stuffId + "%";
-//		log.error("stuffNameM={}", stuffIdM);
-//		StuffEntity se = new StuffEntity();
-//		se.setId(stuffIdM);
-//		List<StuffReqDTO> srDTOList = new ArrayList<>();
-//		if (status == 3) {
-//			Long startS = 0L;
-//			Long endS = 2L;
-//			List<StuffReqEntity> srEntityList = sr.findByMemberAndStatusBetweenAndStuffLike(me, startS, endS, se);
-//			for (StuffReqEntity stuffReqEntity : srEntityList) {
-//				StuffReqDTO srDTO = StuffReqMapper.entityToDto(stuffReqEntity);
-//				srDTOList.add(srDTO);
-//			}
-//		} else {
-//			List<StuffReqEntity> srEntityList = sr.findByMemberAndStatusAndStuffLike(me, status, se);
-//			for (StuffReqEntity stuffReqEntity : srEntityList) {
-//				StuffReqDTO srDTO = StuffReqMapper.entityToDto(stuffReqEntity);
-//				srDTOList.add(srDTO);
-//			}
-//		}
-//		log.error("findByMemberIdLikeStuffId size=" + srDTOList.size());
-//		return srDTOList;
-//	}
+		// Date = 필수 / status = 0, 1, 2, 선택 안할경우 3 /stuffId = %s%, 선택 안할경우 default
+        
+		//departmentId 세팅
+		DepartmentEntity de = DepartmentEntity.builder()
+        .id(departmentId)
+        .build();
+ 
+		// stuffId 가공
+		String stuffIdM = new String();
+		stuffIdM = "%" + stuffId + "%";
+		log.error("stuffNameM={}", stuffIdM);
+		StuffEntity se = new StuffEntity();
+		se.setId(stuffIdM);
 
-
+		// 전달할 리스트 세팅
+		List<StuffReqDTO> srDTOList = new ArrayList<>();
+		
+		//조건에 따른 메세드 호출
+		
+		if ( (status ==3) && (stuffId.equals("default")) && (departmentId == 0) ) { //날짜만 선택
+			log.error("case = 1");
+			List<StuffReqEntity> srEntityList = sr.findByReqDateBetween(startDate, endDate);
+			for (StuffReqEntity stuffReqEntity : srEntityList) {
+				StuffReqDTO srDTO = StuffReqMapper.entityToDto(stuffReqEntity);
+				srDTOList.add(srDTO);
+			}
+			log.error("size=" + srDTOList.size());
+			return srDTOList;
+			
+		} else if ( (stuffId.equals("default")) && (departmentId == 0) ) { // 날짜. 요청상태 선택
+			log.error("case = 2");
+			List<StuffReqEntity> srEntityList = sr.findByStatusAndReqDateBetween(status, startDate, endDate);
+			for (StuffReqEntity stuffReqEntity : srEntityList) {
+				StuffReqDTO srDTO = StuffReqMapper.entityToDto(stuffReqEntity);
+				srDTOList.add(srDTO);
+			}
+			log.error("size=" + srDTOList.size());
+			return srDTOList;
+			
+		} else if ( (status ==3) && (stuffId.equals("default")) ){ //날짜. 부서 선택
+			log.error("case = 3");
+			List<StuffReqEntity> srEntityList = sr.findByMember_DepartmentAndReqDateBetween(de, startDate, endDate);
+			for (StuffReqEntity stuffReqEntity : srEntityList) {
+				StuffReqDTO srDTO = StuffReqMapper.entityToDto(stuffReqEntity);
+				srDTOList.add(srDTO);
+			}
+			log.error("size=" + srDTOList.size());
+			return srDTOList;
+			
+		} else if ( (status ==3) && (departmentId == 0) ) { //날짜. 비품 선택
+			log.error("case = 4");
+			List<StuffReqEntity> srEntityList = sr.findByStuffLikeAndReqDateBetween(se, startDate, endDate);
+			for (StuffReqEntity stuffReqEntity : srEntityList) {
+				StuffReqDTO srDTO = StuffReqMapper.entityToDto(stuffReqEntity);
+				srDTOList.add(srDTO);
+			}
+			log.error("size=" + srDTOList.size());
+			return srDTOList;	
+			
+		} else if ( stuffId.equals("default") ) { //날짜. 요청. 부서
+			log.error("case = 5");
+			List<StuffReqEntity> srEntityList = 
+					sr.findByStatusAndMember_DepartmentAndReqDateBetween(status, de, startDate, endDate);
+			for (StuffReqEntity stuffReqEntity : srEntityList) {
+				StuffReqDTO srDTO = StuffReqMapper.entityToDto(stuffReqEntity);
+				srDTOList.add(srDTO);
+			}
+			log.error("size=" + srDTOList.size());
+			return srDTOList;	
+			
+		} else if ( departmentId == 0 ) { //날짜.요청.비품
+			log.error("case = 6");
+			List<StuffReqEntity> srEntityList = 
+					sr.findByStatusAndStuffLikeAndReqDateBetween(status, se, startDate, endDate);
+			for (StuffReqEntity stuffReqEntity : srEntityList) {
+				StuffReqDTO srDTO = StuffReqMapper.entityToDto(stuffReqEntity);
+				srDTOList.add(srDTO);
+			}
+			log.error("size=" + srDTOList.size());
+			return srDTOList;	
+			
+		} else if ( status == 3 ) { //날짜.부서.비품
+			log.error("case = 7");
+			List<StuffReqEntity> srEntityList = 
+					sr.findByMember_DepartmentAndStuffLikeAndReqDateBetween(de, se, startDate, endDate);
+			for (StuffReqEntity stuffReqEntity : srEntityList) {
+				StuffReqDTO srDTO = StuffReqMapper.entityToDto(stuffReqEntity);
+				srDTOList.add(srDTO);
+			}
+			log.error("size=" + srDTOList.size());
+			return srDTOList;	
+			
+		} else { //날짜. 요청. 부서. 비품
+			log.error("case = 8");
+			List<StuffReqEntity> srEntityList = 
+					sr.findByMember_DepartmentAndStuffLikeAndStatusAndReqDateBetween(de, se, status, startDate, endDate);
+			for (StuffReqEntity stuffReqEntity : srEntityList) {
+				StuffReqDTO srDTO = StuffReqMapper.entityToDto(stuffReqEntity);
+				srDTOList.add(srDTO);
+			}
+			log.error("size=" + srDTOList.size());
+			return srDTOList;	
+		}
+	}
+	
+	/**
+	 * 비품요청 상세내역을 반환한다
+	 * @param id
+	 * @return
+	 */
+	public StuffReqDTO findById(Long id) {
+		Optional<StuffReqEntity> optS = sr.findById(id);
+		StuffReqEntity se = optS.get();
+		StuffReqDTO sd = StuffReqMapper.entityToDto(se);
+		return sd;
+	}
+	
+	/**
+	 * 비품요청 행의 요청상태와 반려사유를 수정한다.
+	 * @param id
+	 * @param dto
+	 * @throws ModifyException
+	 */
+	public void modifyReq(Long id, StuffReqDTO dto) throws ModifyException{
+		Optional<StuffReqEntity> optS = sr.findById(id);
+		StuffReqEntity se = optS.get();
+        se.modifyStatus(dto.getStatus());
+        se.modifyReject(dto.getReject());
+        sr.save(se);
+	}
 }
