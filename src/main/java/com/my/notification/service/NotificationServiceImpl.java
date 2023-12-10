@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import com.my.attendance.entity.AttendanceEntity;
+import com.my.exception.RemoveException;
 import com.my.meetingroom.entity.ParticipantsEntity;
 import com.my.member.entity.MemberEntity;
 import com.my.notification.dao.EmitterRepository;
@@ -182,8 +183,13 @@ public class NotificationServiceImpl implements NotificationService {
         }
 
         return notificationDTOs;
-    }
-    
-    
+    } // findAllByMemberId
+
+	@Override
+	public void deleteNotification(int id) throws RemoveException {
+		
+		notificationRepository.deleteById(id);
+		
+	} // deleteNotification
 
 } // end class
