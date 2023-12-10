@@ -33,7 +33,6 @@ public class AttendanceController {
 	@Autowired
 	private AttendanceService service;
 
-//	인사팀
 //	@GetMapping()
 //	public List<AttendanceEntity> findAll() throws FindException {
 //		
