@@ -13,8 +13,7 @@ import lombok.Setter;
 @Builder
 public class ParticipantsDTO {
 	private Long id;
-//	private Long meetingId;
+
 	private MeetingReservationDTO meetingId;
-	private MemberDTO member;
-	
+	private MemberDTO member;	
 }
