@@ -16,12 +16,15 @@ import com.my.login.dto.LoginRequestDTO;
 import com.my.login.service.LoginService;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:5173")
+//@CrossOrigin(origins="http://192.168.1.105:5173")
 public class LoginController {
 
 	@Autowired
 	private LoginService service;
 
-	@CrossOrigin(origins = "http://localhost:5173")
+//	@CrossOrigin(origins = "http://localhost:5173")
+//	@CrossOrigin(origins="http://192.168.1.105:5173")
 	@PostMapping("/login")
 	public ResponseEntity<String> login(@RequestBody LoginRequestDTO loginRequestDTO, HttpSession session)
 			throws FindException {
@@ -41,7 +44,8 @@ public class LoginController {
 		}
 	}
 
-	@CrossOrigin(origins = "http://localhost:5173")
+//	@CrossOrigin(origins = "http://localhost:5173")
+//	@CrossOrigin(origins="http://192.168.1.105:5173")
 	@GetMapping("/logout")
 	public ResponseEntity<String> logout(HttpSession session) {
 		session.removeAttribute("memberId");
