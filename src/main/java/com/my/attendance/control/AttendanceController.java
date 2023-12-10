@@ -72,9 +72,7 @@ public class AttendanceController {
 	
 	@PutMapping()
 	public ResponseEntity<?> modifyAttendance(@RequestBody AttendanceDTO dto) throws ModifyException {
-		
-//		log.warn("put dto ======> {}", dto.getMemberId());
-		
+	
 		try {
 			service.modifyAttendance(dto);
 			
