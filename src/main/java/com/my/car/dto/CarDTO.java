@@ -1,5 +1,6 @@
 package com.my.car.dto;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -15,7 +16,9 @@ import lombok.ToString;
 @Builder
 @ToString
 public class CarDTO {
-	private String carId;
+	private String id;
+	private String carNo;
 	private String carType;
-	private Long status;
+	private BigDecimal latitude;
+	private BigDecimal longitude;
 }

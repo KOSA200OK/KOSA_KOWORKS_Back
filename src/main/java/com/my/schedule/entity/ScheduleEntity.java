@@ -31,7 +31,7 @@ import lombok.NoArgsConstructor;
 public class ScheduleEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "schedule_seq_generator")
-	private Long scheduleId;
+	private Long id;
 	
 	@ManyToOne
 	@JoinColumn(name="memberId", nullable=false)

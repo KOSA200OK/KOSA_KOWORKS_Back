@@ -1,7 +1,5 @@
 package com.my.attendance.entity;
 
-import java.sql.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,6 +12,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.DynamicInsert;
 
+import com.my.member.dto.MemberDTO;
 import com.my.member.entity.MemberEntity;
 
 import lombok.AllArgsConstructor;
@@ -38,10 +37,9 @@ import lombok.Setter;
 public class AttendanceEntity {
 
 	@Id
-	@Column(name="attendanceId")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE,
 					generator = "attendance_seq_generator")
-	private Integer attendanceId;
+	private Integer id;
 
 	@ManyToOne
 	@JoinColumn(name = "memberId",
@@ -49,15 +47,21 @@ public class AttendanceEntity {
 	private MemberEntity memberId;
 	
 	@Column(name="attendaceDate")
-	private Date attendanceDate;
+	private String  attendanceDate;
 	
 	@Column(name="startTime")
-	private Date startTime;
+	private String  startTime;
 	
 	@Column(name="endTime")
-	private Date endTime;
+	private String  endTime;
 	
 	@Column(name="status")
 	private Integer status;
+
+	public void modifyAttendance(String endTime, Integer status) {
+		this.endTime = endTime;
+		this.status = status;
+	}
+
 	
 } // end class

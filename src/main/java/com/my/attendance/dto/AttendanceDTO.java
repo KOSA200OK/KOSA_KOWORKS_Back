@@ -1,6 +1,7 @@
 package com.my.attendance.dto;
 
-import java.util.Date;
+import com.my.member.dto.MemberDTO;
+import com.my.member.entity.MemberEntity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,18 +14,22 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class AttendanceDTO {
+public class AttendanceDTO {	
 
-	private Integer attendanceId; 		// 근태번호
+	private Integer id; 		// 근태번호
 	
-	private Integer memberId;			// 회원아이디
+//	private String memberId;			// 회원아이디
 	
-	private Date attendanceDate;		// 일자
+	private String attendanceDate;		// 일자
 	
-	private Date startTime;				// 출근시간
+	private String startTime;			// 출근시간
 	
-	private Date endTime;				// 퇴근시간
+	private String endTime;				// 퇴근시간
 	
 	private Integer status;				// 상태 0: 출석, 1: 지각, 2: 결근, 3: 조퇴
+	
+	private MemberDTO member;			// 조회
+	
+	private MemberEntity memberEntity;
 	
 } // end class	

@@ -9,18 +9,22 @@ import javax.persistence.Table;
 
 import com.my.department.entity.DepartmentEntity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Table(name="member")
+@Table(name = "member")
 public class MemberEntity {
 	@Id
-	private Long memberId;
+	private String id;
 
 	@Column(nullable = false)
 	private String name;
@@ -30,6 +34,9 @@ public class MemberEntity {
 
 	@Column(nullable = false, unique = true)
 	private String tel;
+
+	@Column(nullable = false)
+	private String password;
 
 	@ManyToOne
 	@JoinColumn(name = "departmentId")

@@ -1,6 +1,5 @@
 package com.my.car.entity;
 
-import java.math.BigDecimal;
 import java.sql.Date;
 
 import javax.persistence.Column;
@@ -18,10 +17,13 @@ import org.hibernate.annotations.DynamicInsert;
 
 import com.my.member.entity.MemberEntity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-@NoArgsConstructor
-@Getter
+import lombok.Setter;
+@NoArgsConstructor @AllArgsConstructor
+@Getter @Setter @Builder
 
 @Entity
 @Table(name="car_rent")
@@ -30,7 +32,7 @@ import lombok.NoArgsConstructor;
 public class CarRentEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "car_rent_seq_generator")
-	private Long rentId;
+	private Long id;
 	
 	@ManyToOne
 	@JoinColumn(name="memberId",nullable=false)
@@ -45,10 +47,10 @@ public class CarRentEntity {
 	private Date reqDate;
 	
 	@Column(nullable=false)
-	private Date startDate;
+	private String startDate;
 	
 	@Column(nullable=false)
-	private Date endDate;
+	private String endDate;
 	
 	@Column(length=200)
 	private String purpose;
@@ -60,9 +62,13 @@ public class CarRentEntity {
 	@Column(length=200)
 	private String reject;
 	
-	@Column(precision=12, scale=6)
-	private BigDecimal latitude;
 	
-	@Column(precision=12, scale=6)
-	private BigDecimal longitude;
+	public void modifyCarRentStatus(Long status) {
+		this.status = status;
+	}
+	
+	public void modifyCarRentReject(String reject) {
+		this.reject = reject;
+	}
+
 }
