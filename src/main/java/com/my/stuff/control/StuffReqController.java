@@ -33,6 +33,9 @@ public class StuffReqController {
     @Autowired
     private StuffReqService service;
     
+    @Autowired
+    private StuffService serviceS;
+    
     /**
      * Json 문자열로 인계된 비품요청을 stuff_req 테이블 행으로 생성한다.
      * @param StuffReqDTO
@@ -119,10 +122,20 @@ public class StuffReqController {
 		return service.findById(id);
     	
     }
+    
     @CrossOrigin(origins="http://localhost:5173")
-    @PutMapping("/requestmanage/{id}")
-    public void modifyReq(@PathVariable Long id, @RequestBody StuffReqDTO dto) throws ModifyException{
-    	service.modifyReq(id, dto);
+    @PutMapping("/approve/{id}")
+    public void modifyReqApprove(@PathVariable Long id, @RequestParam Long status
+    		                                          , @RequestParam String stuffId,
+    		                                            @RequestParam Long stock) throws ModifyException{
+    	service.modifyReqApprove(id, status);
+    	serviceS.modifyStock(stock, stuffId);
+    }
+    
+    @CrossOrigin(origins="http://localhost:5173")
+    @PutMapping("/reject/{id}")
+    public void modifyReqReject(@PathVariable Long id, @RequestBody StuffReqDTO dto) throws ModifyException{
+    	service.modifyReqReject(id, dto);
     }
       
     
