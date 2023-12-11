@@ -44,6 +44,9 @@ public class MeetingroomController {
 
 	@GetMapping("") //전체 리스트
 	public List<MeetingRoomDTO> findByMeetingRoom(@RequestParam String meetingDate) throws FindException {
+		
+		log.warn("controller dd {}", meetingDate);
+		
 		return service.findByMeetingRoom(meetingDate);
 	}
 	

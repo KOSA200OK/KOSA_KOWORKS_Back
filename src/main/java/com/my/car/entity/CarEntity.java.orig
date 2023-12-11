@@ -27,6 +27,35 @@ import lombok.Setter;
 @DynamicInsert
 @Table(name="car")
 public class CarEntity {
+<<<<<<< HEAD
+   @Id
+   @Column(length=30)
+   private String id;
+   
+   @Column(nullable=false)
+   private String carNo;
+   
+   @Column(nullable=false)
+   private String carType;
+   
+   @Column
+   private String maxNum;
+   
+   @Column(precision=12, scale=6)
+   private BigDecimal latitude;
+   
+   @Column(precision=12, scale=6)
+   private BigDecimal longitude;
+   
+//   @Column(nullable=false, length=2)
+//   @ColumnDefault("0") 
+//   private Long status;
+   
+//   public void modifyCarStatus(Long status) {
+//      this.status = status;
+//   }   
+}
+=======
 	@Id
 	@Column(length=30)
 	private String id;
@@ -51,3 +80,4 @@ public class CarEntity {
 //		this.status = status;
 //	}	
 }
+>>>>>>> f729249ff1f6237ce0badb72cd877d6180de6fde

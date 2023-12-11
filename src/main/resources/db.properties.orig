@@ -20,6 +20,12 @@ spring.datasource.hikari.password=hr
 spring.datasource.hikari.minimum-idle=3
 
 #-- yoonky
+<<<<<<< HEAD
+# spring.datasource.hikari.jdbc-url=jdbc:oracle:thin:@localhost:1521:xe
+# spring.datasource.hikari.username=test
+# spring.datasource.hikari.password=test
+# spring.datasource.hikari.minimum-idle=3
+=======
 # spring.datasource.hikari.jdbc-url=jdbc:log4jdbc:oracle:thin:@localhost:1521:xe
 # spring.datasource.hikari.username=test
 # spring.datasource.hikari.password=test
@@ -41,3 +47,4 @@ spring.datasource.hikari.minimum-idle=3
 #spring.datasource.hikari.password=Oracle12345678
 #spring.datasource.hikari.minimum-idle=3
 #-- j1
+>>>>>>> f729249ff1f6237ce0badb72cd877d6180de6fde

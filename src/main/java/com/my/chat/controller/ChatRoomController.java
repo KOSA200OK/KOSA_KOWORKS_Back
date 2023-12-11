@@ -38,14 +38,6 @@ public class ChatRoomController {
 		return chatRoomService.findAll();
 	}
 
-//	// 채팅방 입장 화면 단순히 화면으로 이동
-//	@CrossOrigin(origins = "http://localhost:5173")
-//	@GetMapping("/room/enter/{roomId}")
-//	public String roomDetail(Model model, @PathVariable String roomId) {
-//		model.addAttribute("roomId", roomId);
-//		return "/chat/roomDetail";
-//	}
-
 	// 모든 채팅방 목록 반환
 	@CrossOrigin(origins = "http://localhost:5173")
 	@GetMapping("/rooms")

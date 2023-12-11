@@ -33,7 +33,6 @@ public class AttendanceController {
 	@Autowired
 	private AttendanceService service;
 
-//	인사팀
 //	@GetMapping()
 //	public List<AttendanceEntity> findAll() throws FindException {
 //		
@@ -73,9 +72,7 @@ public class AttendanceController {
 	
 	@PutMapping()
 	public ResponseEntity<?> modifyAttendance(@RequestBody AttendanceDTO dto) throws ModifyException {
-		
-//		log.warn("put dto ======> {}", dto.getMemberId());
-		
+	
 		try {
 			service.modifyAttendance(dto);
 			
