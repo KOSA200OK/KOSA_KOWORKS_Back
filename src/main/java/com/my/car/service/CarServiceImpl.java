@@ -75,12 +75,6 @@ public class CarServiceImpl implements CarService {
 //		String memberEntity = entity.getMember().getId();
 		MemberEntity memberEntity = entity.getMember();
 		log.warn("차량예약 id : {}", memberEntity.getId());
-		
-		Optional<CarEntity> optC = cr.findById(carRent.getCar().getId());
-		CarEntity carEntity = optC.get();
-		carEntity.modifyCarStatus((long)1);
-		cr.save(carEntity);
-		
 		log.warn("여기까진 오나..?");
 		
 	    // 찬석
