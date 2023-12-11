@@ -12,7 +12,6 @@ import com.my.chat.dto.ChatMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-//https://github.com/gks930620/chatting3_redis_pubsub
 @Slf4j
 @RequiredArgsConstructor
 @Component
@@ -35,11 +34,16 @@ public class RedisSubscriber implements MessageListener {
 	@Override
 	public void onMessage(Message message, byte[] pattern) {
 		try {
+			// Redis에서 온 메시지를 문자열로 변환
 			String publishMessage = (String) redisTemplate.getStringSerializer().deserialize(message.getBody());
+			// JSON 문자열을 ChatMessage 객체로 변환
 			ChatMessage roomMessage = objectMapper.readValue(publishMessage, ChatMessage.class);
 
 			// Websocket 구독자에게 채팅 메시지 Send (실제 websocket으로 message 전달하는 기능)
+			System.out.println("convertAndSend");
 			messagingTemplate.convertAndSend("/sub/chat/room/" + roomMessage.getRoomId(), roomMessage);
+			System.out.println("publishMessage" + publishMessage);
+			System.out.println("roomMessage" + roomMessage);
 		} catch (Exception e) {
 			log.error(e.getMessage());
 		}
