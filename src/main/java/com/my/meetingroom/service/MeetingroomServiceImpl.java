@@ -187,8 +187,8 @@ public class MeetingroomServiceImpl implements MeetingroomService {
 			entity.getParticipants().clear();
 			entityManager.clear();
 			
-			reservation.delete(entity);		
-//			reservation.deleteById(id); //delete, deleteById 둘다 가능
+//			reservation.delete(entity);		
+			reservation.deleteById(id); //delete, deleteById 둘다 가능
 			reservation.save(entity);
 		} catch (Exception e) {
 			throw new RemoveException();
