@@ -35,7 +35,7 @@ public class ScheduleDTO {
 	private String content;
 	
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
-	private Date startDate;
+	private Date startTime;
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
-	private Date endDate;
+	private Date endTime;
 }

@@ -43,7 +43,7 @@ public class ScheduleEntity {
 	@Column(length=200)
 	private String content;
 	
-	private Timestamp startDate;
+	private Timestamp startTime;
 	
-	private Timestamp endDate;
+	private Timestamp endTime;
 }
