@@ -6,7 +6,6 @@ import java.util.UUID;
 import lombok.Getter;
 import lombok.Setter;
 
-//https://github.com/gks930620/chatting3_redis_pubsub
 @Getter
 @Setter
 public class ChatRoom implements Serializable {
