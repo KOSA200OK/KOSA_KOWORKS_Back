@@ -99,9 +99,9 @@ public class MeetingroomController {
 	}
 	
 	@PostMapping(value="/myreservation", produces="application/json;charset=UTF-8") //특정 회의에 참여자 추가하기
-	public ResponseEntity<?> createParticipants(@RequestBody ParticipantsDTO pdto) throws AddException {
+	public ResponseEntity<?> createParticipants(@RequestBody List<ParticipantsDTO> pdtoli) throws AddException {
 		try {
-			service.createParticipants(pdto);
+			service.createParticipants(pdtoli);
 			HttpHeaders headers = new HttpHeaders();
 			headers.add("Content-Type", "text/html; charset=UTF-8");
 			return new ResponseEntity<>("저장되었습니다", headers, HttpStatus.OK);			
