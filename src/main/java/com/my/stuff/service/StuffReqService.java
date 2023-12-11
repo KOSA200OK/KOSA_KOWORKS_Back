@@ -286,7 +286,20 @@ public class StuffReqService {
 	 * @param dto
 	 * @throws ModifyException
 	 */
-	public void modifyReq(Long id, StuffReqDTO dto) throws ModifyException{
+	public void modifyReqApprove(Long id, Long status) throws ModifyException{
+		Optional<StuffReqEntity> optS = sr.findById(id);
+		StuffReqEntity se = optS.get();
+        se.modifyStatus(status);
+        sr.save(se);
+	}
+	
+	/**
+	 * 비품요청 행의 요청상태와 반려사유를 수정한다.
+	 * @param id
+	 * @param dto
+	 * @throws ModifyException
+	 */
+	public void modifyReqReject(Long id, StuffReqDTO dto) throws ModifyException{
 		Optional<StuffReqEntity> optS = sr.findById(id);
 		StuffReqEntity se = optS.get();
         se.modifyStatus(dto.getStatus());
