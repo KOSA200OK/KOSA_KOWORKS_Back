@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.my.address.dto.AddressMemberDTO;
@@ -32,5 +35,20 @@ public class AddressServiceImpl implements AddressService {
 		dto.setTel(memberEntity.getTel());
 		dto.setDepartmentName(memberEntity.getDepartment().getName());
 		return dto;
+	}
+
+	@Override
+	public List<AddressMemberDTO> findPagedMembers(int page, int size) {
+		// Pageable 객체를 생성하여 페이징 정보 설정
+		Pageable pageable = PageRequest.of(page - 1, size); // 페이지는 0부터 시작하므로 1을 빼줍니다.
+
+		// 페이징 처리된 주소록을 조회
+		Page<MemberEntity> pagedMembers = memberRepository.findAll(pageable);
+
+		// 조회된 페이징 데이터를 DTO로 변환
+		List<AddressMemberDTO> pagedMembersDTO = pagedMembers.getContent().stream().map(this::convertToDTO)
+				.collect(Collectors.toList());
+
+		return pagedMembersDTO;
 	}
 }

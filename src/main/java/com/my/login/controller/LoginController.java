@@ -1,5 +1,8 @@
 package com.my.login.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +27,7 @@ public class LoginController {
 
 	@CrossOrigin(origins = "http://localhost:5173")
 	@PostMapping("/login")
-	public ResponseEntity<String> login(@RequestBody LoginRequestDTO loginRequestDTO, HttpSession session)
+	public ResponseEntity<Map<String, Object>> login(@RequestBody LoginRequestDTO loginRequestDTO, HttpSession session)
 			throws FindException {
 		MemberEntity member = service.findByMemberId(loginRequestDTO);
 
@@ -34,17 +37,21 @@ public class LoginController {
 
 			// session에 있는 id값 확인
 			String memberId = (String) session.getAttribute("memberId");
-			String departmentId = (String) session.getAttribute("departmentId");
+			Long departmentId = (Long) session.getAttribute("departmentId");
 			if (memberId != null) {
 				System.out.println("로그인 상태입니다. memberId: " + memberId + " 부서 ID: " + departmentId);
 			} else {
 				System.out.println("사용자가 로그인하지 않은 상태입니다.");
 			}
+			Map<String, Object> response = new HashMap<>();
+			response.put("memberId", memberId);
+			response.put("departmentId", departmentId);
 
-			return ResponseEntity.ok("로그인 성공");
+			return ResponseEntity.ok(response);
 		} else {
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인 실패");
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
 		}
+
 	}
 
 	@CrossOrigin(origins = "http://localhost:5173")

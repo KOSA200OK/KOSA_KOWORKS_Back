@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 public class DepartmentEntity {
 	
 	@Id
-	private String id;
+	private Long id;
 
 	@Column(nullable = false)
 	private String name;
