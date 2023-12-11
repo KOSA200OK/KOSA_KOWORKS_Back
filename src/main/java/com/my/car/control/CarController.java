@@ -146,6 +146,12 @@ public class CarController {
 		return cs.findAllNoReturnList(pageable);
 	}
 	
+	@GetMapping("/return")
+	public ResponseEntity<?> findAllNoReturnList(Long id){
+		cs.modifyCarRentStatus(id, (long)3);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
 	//******************* 차량 관리 모든 예약 내역 ***********************
 	
 	@GetMapping("/allrentlist/{currentPage}")
