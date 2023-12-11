@@ -36,7 +36,7 @@ public class CarEntity {
 	private String carType;
 	
 	@Column(nullable=false, length=2)
-	@ColumnDefault("0") 
+	@ColumnDefault("0")
 	private Long status;
 	
 	public void modifyCarStatus(Long status) {
