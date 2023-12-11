@@ -30,6 +30,7 @@ public class AddressServiceImpl implements AddressService {
 		dto.setName(memberEntity.getName());
 		dto.setPosition(memberEntity.getPosition());
 		dto.setTel(memberEntity.getTel());
+		dto.setDepartmentName(memberEntity.getDepartment().getName());
 		return dto;
 	}
 }
