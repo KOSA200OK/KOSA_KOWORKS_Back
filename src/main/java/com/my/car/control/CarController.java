@@ -54,8 +54,8 @@ public class CarController {
 		currentPage -=1;
 		Pageable pageable = PageRequest.of(currentPage, 10);
 		System.out.println("**********startDate: "+startDate+", endDate: "+endDate);
-//		return cs.findAllCarList(pageable, startDate, endDate);
-		return cs.findAllCarList(pageable);
+		return cs.findAllCarList(pageable, startDate, endDate);
+//		return cs.findAllCarList(pageable);
 	}
 	
 //	@GetMapping("/dateselectcarlist/{currentPage}")

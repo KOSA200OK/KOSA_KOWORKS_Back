@@ -19,20 +19,27 @@ import com.my.car.entity.CarEntity;
 public interface CarRepository extends JpaRepository<CarEntity, String> {
 //	Page<CarEntity> findAllByOrderByStatusAscIdDesc(Pageable pageble);
 	
-//	@Query("SELECT c "+ 
-//			" FROM CarEntity c "+
-//			" WHERE c.id NOT IN "+ " ( SELECT cr.car.id " + 
-//			" FROM CarRentEntity cr " +
-//			" WHERE ( cr.status = 2 OR cr.status = 0 ) AND ( ( :start BETWEEN cr.startDate AND cr.endDate) OR ( :end BETWEEN cr.startDate AND cr.endDate) OR ( cr.startDate BETWEEN :start AND :end ) OR ( cr.endDate BETWEEN :start AND :end ) ) ) "+
-//			" ORDER BY c.id DESC")
-//	Page<CarEntity> findAllCarList(Pageable pageable, String start, String end);
+	/**
+	 * status값이 0 혹은 2이고, 설정한 대여시작날짜, 설정한 대여마감날짜가 기존에 겹치지 않는 행을 조회한다.
+	 * @param pageable 페이징 요청 객체
+	 * @param start 설정한 대여시작날짜
+	 * @param end 설정한 대여마감날짜
+	 * @return 페이징된 신청 가능 차량 목록
+	 */
 	@Query("SELECT c "+ 
 			" FROM CarEntity c "+
 			" WHERE c.id NOT IN "+ " ( SELECT cr.car.id " + 
 			" FROM CarRentEntity cr " +
-			" WHERE cr.status = 2 OR cr.status = 0 ) "+
+			" WHERE ( cr.status = 2 OR cr.status = 0 ) AND ( ( :start BETWEEN cr.startDate AND cr.endDate) OR ( :end BETWEEN cr.startDate AND cr.endDate) OR ( cr.startDate BETWEEN :start AND :end ) OR ( cr.endDate BETWEEN :start AND :end ) ) ) "+
 			" ORDER BY c.id DESC")
-	Page<CarEntity> findAllCarList(Pageable pageable);
+	Page<CarEntity> findAllCarList(Pageable pageable, String start, String end);
+//	@Query("SELECT c "+ 
+//			" FROM CarEntity c "+
+//			" WHERE c.id NOT IN "+ " ( SELECT cr.car.id " + 
+//			" FROM CarRentEntity cr " +
+//			" WHERE cr.status = 2 OR cr.status = 0 ) "+
+//			" ORDER BY c.id DESC")
+//	Page<CarEntity> findAllCarList(Pageable pageable);
 
 	
 	@Transactional
@@ -43,6 +50,12 @@ public interface CarRepository extends JpaRepository<CarEntity, String> {
 					"WHERE r.end_date < :today)", nativeQuery=true)
 	void saveEndCarStatus(LocalDate today);
 	
+	/**
+	 * 페이징된 차량 목록
+	 * @author 나원희
+	 * @pageable 페이징 요청객체
+	 * @return 페이징된 차량 목록
+	 */
 	Page<CarEntity> findAll(Pageable pageble);
 	
 //	Page<CarEntity> findAllByOrderByStatusDescIdDesc(Pageable pageble);
