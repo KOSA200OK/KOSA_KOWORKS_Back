@@ -1,6 +1,8 @@
 package com.my.car.repository;
 
 import java.time.LocalDate;
+import java.util.Date;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -15,7 +17,14 @@ import com.my.car.entity.CarEntity;
 
 @Repository
 public interface CarRepository extends JpaRepository<CarEntity, String> {
-	Page<CarEntity> findAllByOrderByStatusAscIdDesc(Pageable pageble);
+//	Page<CarEntity> findAllByOrderByStatusAscIdDesc(Pageable pageble);
+	@Query("SELECT c "+ 
+			" FROM CarEntity c "+
+			" WHERE c.id NOT IN "+ " ( SELECT cr.car.id " + 
+			" FROM CarRentEntity cr " +
+			" WHERE cr.status = 2 AND ( ( :start BETWEEN cr.startDate AND cr.endDate) OR ( :end BETWEEN cr.startDate AND cr.endDate) OR ( cr.startDate BETWEEN :start AND :end ) OR ( cr.endDate BETWEEN :start AND :end ) ) ) "+
+			" ORDER BY c.id DESC")
+	Page<CarEntity> findAllCarList(Pageable pageable, String start, String end);
 	
 	@Transactional
 	@Modifying
