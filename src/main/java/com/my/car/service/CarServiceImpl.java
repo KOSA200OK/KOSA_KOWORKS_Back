@@ -66,6 +66,8 @@ public class CarServiceImpl implements CarService {
 	@Override
 	public Page<CarDTO> findAllCarList(Pageable pageable, String startDate, String endDate) {
 		Page<CarEntity> entityList = cr.findAllCarList(pageable, startDate, endDate);
+//		Page<CarEntity> entityList = cr.findAllCarList(pageable);
+
 		CarMapper cm = new CarMapper();
 		return entityList.map(cm::entityToDto);
 	}
@@ -85,15 +87,8 @@ public class CarServiceImpl implements CarService {
 		crr.save(entity);
 		
 		// 찬석
-//		String memberEntity = entity.getMember().getId();
 		MemberEntity memberEntity = entity.getMember();
 		log.warn("차량예약 id : {}", memberEntity.getId());
-		
-//		Optional<CarEntity> optC = cr.findById(carRent.getCar().getId());
-//		CarEntity carEntity = optC.get();
-//		carEntity.modifyCarStatus((long)1);
-//		cr.save(carEntity);
-		
 		log.warn("여기까진 오나..?");
 		
 	    // 찬석
