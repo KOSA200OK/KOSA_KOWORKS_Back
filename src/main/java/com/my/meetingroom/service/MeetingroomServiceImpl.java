@@ -158,12 +158,13 @@ public class MeetingroomServiceImpl implements MeetingroomService {
 	}
 
 	@Override
-	public void createParticipants(ParticipantsDTO pdto) throws AddException {		
+	public void createParticipants(List<ParticipantsDTO> pdtoli) throws AddException {		
 		//DTO->Vo
-		
 		MeetingroomMapper mapper = new MeetingroomMapper();
-		ParticipantsEntity pentity = mapper.Participants_DtoToVo(pdto);
-		ParticipantsEntity savedEntity = participants.save(pentity);
+		for (ParticipantsDTO pdto : pdtoli) {
+			ParticipantsEntity pentity = mapper.Participants_DtoToVo(pdto);			
+			ParticipantsEntity savedEntity = participants.save(pentity);
+		}
 	}
 
 	@Override
