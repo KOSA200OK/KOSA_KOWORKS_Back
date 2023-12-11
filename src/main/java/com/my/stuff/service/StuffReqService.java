@@ -297,6 +297,18 @@ public class StuffReqService {
 		StuffReqEntity se = optS.get();
         se.modifyStatus(status);
         sr.save(se);
+        
+        // 비품 승인 알림
+    	// 찬석
+//		String memberEntity = entity.getMember().getId();
+		MemberEntity memberEntity = se.getMember();
+		log.warn("비품 승인 id : {}", memberEntity.getId());
+        
+        if(se.getStatus() == 1) {
+    	    // 찬석
+    	    notify.send(memberEntity, NotificationEntity.NotificationType.STUFF, "비품요청이 승인되었습니다.");
+
+        } // if
 	}
 	
 	/**
@@ -320,7 +332,7 @@ public class StuffReqService {
         
         if(se.getStatus() == 2) {
     	    // 찬석
-    	    notify.send(memberEntity, NotificationEntity.NotificationType.STUFF, "비품이 반려되었습니다.");
+    	    notify.send(memberEntity, NotificationEntity.NotificationType.STUFF, "비품요청이 반려되었습니다.");
 
         } // if
         
