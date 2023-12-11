@@ -37,6 +37,9 @@ public class CarEntity {
 	@Column(nullable=false)
 	private String carType;
 	
+	@Column
+	private String maxNum; 
+	
 	@Column(precision=12, scale=6)
 	private BigDecimal latitude;
 	

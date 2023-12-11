@@ -55,6 +55,7 @@ public class CarController {
 		Pageable pageable = PageRequest.of(currentPage, 10);
 		System.out.println("**********startDate: "+startDate+", endDate: "+endDate);
 		return cs.findAllCarList(pageable, startDate, endDate);
+//		return cs.findAllCarList(pageable);
 	}
 	
 //	@GetMapping("/dateselectcarlist/{currentPage}")
@@ -143,6 +144,12 @@ public class CarController {
 		currentPage -=1;
 		Pageable pageable = PageRequest.of(currentPage, 10);
 		return cs.findAllNoReturnList(pageable);
+	}
+	
+	@GetMapping("/return")
+	public ResponseEntity<?> findAllNoReturnList(Long id){
+		cs.modifyCarRentStatus(id, (long)3);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	//******************* 차량 관리 모든 예약 내역 ***********************
