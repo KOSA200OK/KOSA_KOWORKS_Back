@@ -37,7 +37,7 @@ public class ChatService {
 	}
 
 	public void registerChannelTopic(String roomId) {
-		ChannelTopic channelTopic = channelTopicMap.get(roomId); //
+		ChannelTopic channelTopic = channelTopicMap.get(roomId);
 		if (channelTopic == null) { // 처음 들어오는 사람의 경우
 			channelTopic = new ChannelTopic(roomId);
 			// listener에 channelTopic 설정.
@@ -50,13 +50,12 @@ public class ChatService {
 		// 내가 접속한 방 얻기
 		ChannelTopic channelTopic = channelTopicMap.get(chatMessage.getRoomId());
 		
-		//---원본
 	    // redis에 채팅 메시지 저장
 		redisTemplate.opsForList().leftPush("CHAT_ROOM:" + chatMessage.getRoomId(), chatMessage);
-		//---
 	    
 	    // 채팅방 데이터를 유지할 시간 설정 (예: 7일)
 		// redisTemplate.expire(roomId, 7, TimeUnit.DAYS);
+		
 		// 방에다가 publish 하는 메소드 이 후sucscriber의 onMessage가 실행됨 자동으로.
 		redisTemplate.convertAndSend(channelTopic.getTopic(), chatMessage);
 	}

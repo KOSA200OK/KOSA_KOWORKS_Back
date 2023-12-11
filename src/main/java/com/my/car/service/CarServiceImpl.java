@@ -1,6 +1,12 @@
 package com.my.car.service;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -58,11 +64,18 @@ public class CarServiceImpl implements CarService {
 	//*************** 차량 목록 **************************
 	
 	@Override
-	public Page<CarDTO> findAllCar(Pageable pageable) {
-		Page<CarEntity> entityList = cr.findAllByOrderByStatusAscIdDesc(pageable);
+	public Page<CarDTO> findAllCarList(Pageable pageable, String startDate, String endDate) {
+		Page<CarEntity> entityList = cr.findAllCarList(pageable, startDate, endDate);
 		CarMapper cm = new CarMapper();
 		return entityList.map(cm::entityToDto);
 	}
+	
+//	@Override
+//	public Page<CarDTO> findAllCarByDateSelect(Pageable pageable){
+//		Page<CarEntity> entityList = cr.findAllCarList(pageable);
+//		CarMapper cm = new CarMapper();
+//		return entityList.map(cm::entityToDto);
+//	}
 	
 	@Override
 	public void createCarRent(CarRentDTO carRent) {
@@ -76,10 +89,10 @@ public class CarServiceImpl implements CarService {
 		MemberEntity memberEntity = entity.getMember();
 		log.warn("차량예약 id : {}", memberEntity.getId());
 		
-		Optional<CarEntity> optC = cr.findById(carRent.getCar().getId());
-		CarEntity carEntity = optC.get();
-		carEntity.modifyCarStatus((long)1);
-		cr.save(carEntity);
+//		Optional<CarEntity> optC = cr.findById(carRent.getCar().getId());
+//		CarEntity carEntity = optC.get();
+//		carEntity.modifyCarStatus((long)1);
+//		cr.save(carEntity);
 		
 		log.warn("여기까진 오나..?");
 		
@@ -107,7 +120,50 @@ public class CarServiceImpl implements CarService {
 	//***************** 차량 관리 메인 ************************
 	
 	@Override
-	public Page<CarDTO> findAllCarManage(Pageable pageable){
+	public Map findAllCarManage(){
+		Map map = new HashMap<>();
+		
+		List<CarEntity> carEntityList = cr.findAll();
+		List<CarDTO> carDtoList = new ArrayList<>();
+		for(CarEntity entity : carEntityList) {			
+			CarMapper cm = new CarMapper();
+			CarDTO dto = cm.entityToDto(entity);
+			carDtoList.add(dto);
+		}
+		
+		List<CarRentEntity> waitingEntityList = crr.findAllByStatusOrderByReqDate((long)0);
+		List<CarRentDTO> waitingDtoList = new ArrayList<>();
+		for(CarRentEntity entity : waitingEntityList) {			
+			CarRentMapper crm = new CarRentMapper();
+			CarRentDTO dto = crm.entityToDto(entity);
+			waitingDtoList.add(dto);
+		}
+		
+		List<CarRentEntity> rentEntityList = crr.findAllRentList();
+		List<CarRentDTO> rentDtoList = new ArrayList<>();
+		for(CarRentEntity entity : rentEntityList) {			
+			CarRentMapper crm = new CarRentMapper();
+			CarRentDTO dto = crm.entityToDto(entity);
+			rentDtoList.add(dto);
+		}
+		
+		List<CarRentEntity> noReturnEntityList = crr.findAllNoReturnList();
+		List<CarRentDTO> noReturnDtoList = new ArrayList<>();
+		for(CarRentEntity entity : noReturnEntityList) {			
+			CarRentMapper crm = new CarRentMapper();
+			CarRentDTO dto = crm.entityToDto(entity);
+			noReturnDtoList.add(dto);
+		}
+		
+		map.put("carlist", carDtoList);
+		map.put("waitinglist", waitingDtoList);
+		map.put("rentlist", rentDtoList);
+		map.put("noreturnlist", noReturnDtoList);
+		
+		return map;
+	}
+	
+	public Page<CarDTO> findAllCarManageList(Pageable pageable){
 		Page<CarEntity> entityList = cr.findAll(pageable);
 		CarMapper cm = new CarMapper();
 		return entityList.map(cm::entityToDto);
@@ -116,7 +172,7 @@ public class CarServiceImpl implements CarService {
 	//***************** 차량 관리 승인 **************************
 	
 	@Override
-	public Page<CarRentDTO> findAllApprove(Pageable pageable){
+	public Page<CarRentDTO> findAllWaiting(Pageable pageable){
 		Page<CarRentEntity> entityList = crr.findAllByStatusOrderByReqDate(pageable, (long)0);
 		CarRentMapper crm = new CarRentMapper();
 		return entityList.map(crm::entityToDto);
@@ -164,9 +220,20 @@ public class CarServiceImpl implements CarService {
 		return entityList.map(crm::entityToDto);
 	}
 	
+	//***************** 차량 관리 대여 미반납 *********************
+	
 	@Override
 	public Page<CarRentDTO> findAllNoReturnList(Pageable pageable){
 		Page<CarRentEntity> entityList = crr.findAllNoReturnList(pageable);
+		CarRentMapper crm = new CarRentMapper();
+		return entityList.map(crm::entityToDto);
+	}
+	
+	//***************** 차량 관리 모든 예약 내역 *********************
+	
+	@Override
+	public Page<CarRentDTO> findAllRentListAll(Pageable pageable){
+		Page<CarRentEntity> entityList = crr.findAllByOrderByReqDateDesc(pageable);
 		CarRentMapper crm = new CarRentMapper();
 		return entityList.map(crm::entityToDto);
 	}

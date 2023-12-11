@@ -49,10 +49,10 @@ public class CarRentEntity {
 	private Date reqDate;
 	
 	@Column(nullable=false)
-	private Date startDate;
+	private String startDate;
 	
 	@Column(nullable=false)
-	private Date endDate;
+	private String endDate;
 	
 	@Column(length=200)
 	private String purpose;
@@ -64,11 +64,6 @@ public class CarRentEntity {
 	@Column(length=200)
 	private String reject;
 	
-	@Column(precision=12, scale=6)
-	private BigDecimal latitude;
-	
-	@Column(precision=12, scale=6)
-	private BigDecimal longitude;
 	
 	public void modifyCarRentStatus(Long status) {
 		this.status = status;
