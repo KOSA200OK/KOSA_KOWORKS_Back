@@ -128,6 +128,14 @@ public class CarServiceImpl implements CarService {
 		CarRentEntity carRentEntity = optC.get();
 		carRentEntity.modifyCarRentStatus(status);
 		crr.save(carRentEntity);
+		
+		// 반납, 승인
+		Long approveStatus = carRentEntity.getStatus();
+		
+		if(approveStatus == 2) {
+//			notify.send(memberEntity, NotificationEntity.NotificationType.CAR, "차량요청이 승인되었습니다");
+		}
+		
 	}
 	
 	@Override
@@ -137,6 +145,13 @@ public class CarServiceImpl implements CarService {
 		carRentEntity.modifyCarRentStatus(status);
 		carRentEntity.modifyCarRentReject(carRent.getReject());
 		crr.save(carRentEntity);
+		
+		// 반려 알림
+		// 찬석
+		MemberEntity memberEntity = carRentEntity.getMember();
+		log.warn("차량반려 id : {}", memberEntity.getId());
+		
+	    notify.send(memberEntity, NotificationEntity.NotificationType.CAR, "차량이 반려되었습니다.");
 		
 	}
 	
