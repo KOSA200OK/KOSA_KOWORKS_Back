@@ -186,10 +186,13 @@ public class CarServiceImpl implements CarService {
 		crr.save(carRentEntity);
 		
 		// 반납, 승인
+		MemberEntity memberEntity = carRentEntity.getMember();
+		log.warn("차량반려 id : {}", memberEntity.getId());
+		
 		Long approveStatus = carRentEntity.getStatus();
 		
 		if(approveStatus == 2) {
-//			notify.send(memberEntity, NotificationEntity.NotificationType.CAR, "차량요청이 승인되었습니다");
+			notify.send(memberEntity, NotificationEntity.NotificationType.CAR, "차량요청이 승인되었습니다");
 		}
 		
 	}

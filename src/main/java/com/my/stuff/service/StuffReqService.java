@@ -1,11 +1,10 @@
 package com.my.stuff.service;
 
-import java.util.Date;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import org.modelmapper.internal.objenesis.instantiator.basic.DelegatingToExoticInstantiator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +13,8 @@ import com.my.exception.AddException;
 import com.my.exception.FindException;
 import com.my.exception.ModifyException;
 import com.my.member.entity.MemberEntity;
+import com.my.notification.entity.NotificationEntity;
+import com.my.notification.service.NotificationServiceImpl;
 import com.my.stuff.dto.StuffReqDTO;
 import com.my.stuff.entity.StuffEntity;
 import com.my.stuff.entity.StuffReqEntity;
@@ -27,6 +28,11 @@ import lombok.extern.slf4j.Slf4j;
 public class StuffReqService {
 	@Autowired
 	private StuffReqRepository sr;
+	
+	// 찬석
+	@Autowired
+	private NotificationServiceImpl notify;
+	
 
 	/**
 	 * StuffReqDTO타입의 비품 요청 데이터를 DB에 추가한다
@@ -292,5 +298,18 @@ public class StuffReqService {
         se.modifyStatus(dto.getStatus());
         se.modifyReject(dto.getReject());
         sr.save(se);
+        
+        // 비품 반려 알림
+    	// 찬석
+//		String memberEntity = entity.getMember().getId();
+		MemberEntity memberEntity = se.getMember();
+		log.warn("비품반려 id : {}", memberEntity.getId());
+        
+        if(se.getStatus() == 2) {
+    	    // 찬석
+    	    notify.send(memberEntity, NotificationEntity.NotificationType.STUFF, "비품이 반려되었습니다.");
+
+        } // if
+        
 	}
 }
