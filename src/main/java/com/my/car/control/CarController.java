@@ -1,6 +1,7 @@
 package com.my.car.control;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.my.car.dto.CarDTO;
@@ -47,12 +49,21 @@ public class CarController {
 
 	
 	@GetMapping("/carlist/{currentPage}")
-	public Page<CarDTO> findAllCar(@PathVariable int currentPage) throws FindException{
+	public Page<CarDTO> findAllCarList(@PathVariable int currentPage, @RequestParam String startDate,  @RequestParam String endDate) throws FindException{
 		System.out.println("currentPage: "+currentPage);
 		currentPage -=1;
 		Pageable pageable = PageRequest.of(currentPage, 10);
-		return cs.findAllCar(pageable);
+		System.out.println("**********startDate: "+startDate+", endDate: "+endDate);
+		return cs.findAllCarList(pageable, startDate, endDate);
 	}
+	
+//	@GetMapping("/dateselectcarlist/{currentPage}")
+//	public Page<CarDTO> findAllCarByDateSelect(@PathVariable int currentPage) throws FindException{
+//		System.out.println("currentPage: "+currentPage);
+//		currentPage -=1;
+//		Pageable pageable = PageRequest.of(currentPage, 10);
+//		return cs.findAllCarList(pageable);
+//	}
 	
 	@PostMapping("/reserve")
 	public void createCarRent(@RequestBody CarRentDTO carRent) throws AddException{
@@ -78,12 +89,18 @@ public class CarController {
 	
 	//******************* 차량 관리 메인 ***********************
 	
+	@GetMapping("/manage")
+	public Map findAllCarManage() throws FindException{
+		Map map = cs.findAllCarManage();
+		return map;
+	}
+	
 	@GetMapping("/managelist/{currentPage}")
-	public Page<CarDTO> findAllCarManage(@PathVariable int currentPage) throws FindException{
+	public Page<CarDTO> findAllCarManageList(@PathVariable int currentPage) throws FindException{
 		System.out.println("currentPage: "+currentPage);
 		currentPage -=1;
 		Pageable pageable = PageRequest.of(currentPage, 10);
-		return cs.findAllCarManage(pageable);
+		return cs.findAllCarManageList(pageable);
 	}
 	
 	//******************* 차량 관리 승인 ***********************
@@ -93,7 +110,7 @@ public class CarController {
 		System.out.println("currentPage: "+currentPage);
 		currentPage -=1;
 		Pageable pageable = PageRequest.of(currentPage, 10);
-		return cs.findAllApprove(pageable);
+		return cs.findAllWaiting(pageable);
 	}
 	
 	@GetMapping("/approve")
@@ -119,12 +136,25 @@ public class CarController {
 		return cs.findAllRentList(pageable);
 	}
 	
+	//******************* 차량 관리 미반납 ***********************
+	
 	@GetMapping("/noreturnlist/{currentPage}")
 	public Page<CarRentDTO> findAllNoReturnList(@PathVariable int currentPage){
 		currentPage -=1;
 		Pageable pageable = PageRequest.of(currentPage, 10);
 		return cs.findAllNoReturnList(pageable);
 	}
+	
+	//******************* 차량 관리 모든 예약 내역 ***********************
+	
+	@GetMapping("/allrentlist/{currentPage}")
+	public Page<CarRentDTO> findAllRentListAll(@PathVariable int currentPage){
+		currentPage -=1;
+		Pageable pageable = PageRequest.of(currentPage, 10);
+		return cs.findAllRentListAll(pageable);
+	}
+	
+	
 	
 //	@GetMapping("/test")
 //	public void test() {

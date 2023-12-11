@@ -1,5 +1,7 @@
 package com.my.car.entity;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -35,11 +37,17 @@ public class CarEntity {
 	@Column(nullable=false)
 	private String carType;
 	
-	@Column(nullable=false, length=2)
-	@ColumnDefault("0") 
-	private Long status;
+	@Column(precision=12, scale=6)
+	private BigDecimal latitude;
 	
-	public void modifyCarStatus(Long status) {
-		this.status = status;
-	}	
+	@Column(precision=12, scale=6)
+	private BigDecimal longitude;
+	
+//	@Column(nullable=false, length=2)
+//	@ColumnDefault("0") 
+//	private Long status;
+	
+//	public void modifyCarStatus(Long status) {
+//		this.status = status;
+//	}	
 }
