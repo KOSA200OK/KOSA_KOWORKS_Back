@@ -64,8 +64,10 @@ public class CarServiceImpl implements CarService {
 	//*************** 차량 목록 **************************
 	
 	@Override
-	public Page<CarDTO> findAllCarList(Pageable pageable, String startDate, String endDate) {
-		Page<CarEntity> entityList = cr.findAllCarList(pageable, startDate, endDate);
+	public Page<CarDTO> findAllCarList(Pageable pageable) {
+//		Page<CarEntity> entityList = cr.findAllCarList(pageable, startDate, endDate);
+		Page<CarEntity> entityList = cr.findAllCarList(pageable);;
+
 		CarMapper cm = new CarMapper();
 		return entityList.map(cm::entityToDto);
 	}

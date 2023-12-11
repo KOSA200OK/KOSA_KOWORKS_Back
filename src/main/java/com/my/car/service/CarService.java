@@ -15,7 +15,7 @@ import com.my.car.entity.CarRentEntity;
 public interface CarService {
 	public void modifyCarStatus();
 	
-	public Page<CarDTO> findAllCarList(Pageable pageable, String startDate, String endDate);
+	public Page<CarDTO> findAllCarList(Pageable pageable);
 	
 //	public Page<CarDTO> findAllCarByDateSelect(Pageable pageable);
 	
