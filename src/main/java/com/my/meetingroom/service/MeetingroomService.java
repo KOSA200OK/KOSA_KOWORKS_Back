@@ -60,7 +60,7 @@ public interface MeetingroomService {
 	 * @param pdto Participants객체
 	 * @throws AddException DB에 저장하지 못한 경우 AddException이 발생한다
 	 */
-	public void createParticipants(ParticipantsDTO pdto) throws AddException;
+	public void createParticipants(List<ParticipantsDTO> pdtoli) throws AddException;
 	
 	/**
 	 * 내 회의실 내역에서 회의 참여자를 제거한다.
