@@ -77,10 +77,8 @@ public class MeetingroomController {
 			e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		} catch (UnavailableException e) {
-			e.printStackTrace();
 			return new ResponseEntity<>("해당 시간에 예약이 차있습니다", headers, HttpStatus.FORBIDDEN);
 		} catch (DuplicateException e) {
-			e.printStackTrace();
 			return new ResponseEntity<>("같은 시간에 이미 예약이 되어있습니다", headers, HttpStatus.FORBIDDEN);
 		}
 	}
