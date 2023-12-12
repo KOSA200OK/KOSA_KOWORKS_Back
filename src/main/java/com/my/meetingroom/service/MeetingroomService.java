@@ -1,5 +1,6 @@
 package com.my.meetingroom.service;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,12 +8,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.my.exception.AddException;
+import com.my.exception.DuplicateException;
 import com.my.exception.FindException;
 import com.my.exception.RemoveException;
+import com.my.exception.UnavailableException;
 import com.my.meetingroom.dto.MeetingReservationDTO;
 import com.my.meetingroom.dto.MeetingRoomDTO;
 import com.my.meetingroom.dto.ParticipantsDTO;
-import com.my.meetingroom.entity.MeetingroomDetailEntity;
 
 public interface MeetingroomService {
 	
@@ -45,7 +47,8 @@ public interface MeetingroomService {
 	 * @param msdto MeetingReservation객체
 	 * @throws AddException DB에 저장하지 못한 경우 AddException이 발생한다
 	 */
-	public void createMeetingReservation(MeetingReservationDTO msdto) throws AddException;	
+	public void createMeetingReservation(MeetingReservationDTO msdto) 
+			throws AddException, UnavailableException, DuplicateException, ParseException;	
 	
 	/**
 	 * 내 회의실 예약내역 리스트를 조회한다.
