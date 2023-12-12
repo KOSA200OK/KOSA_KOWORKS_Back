@@ -34,18 +34,21 @@ public class LoginController {
 		if (member != null) {
 			session.setAttribute("memberId", member.getId());
 			session.setAttribute("departmentId", member.getDepartment().getId());
+			session.setAttribute("name", member.getName());
 
 			// session에 있는 id값 확인
 			String memberId = (String) session.getAttribute("memberId");
 			Long departmentId = (Long) session.getAttribute("departmentId");
+			String name = (String) session.getAttribute("name");
 			if (memberId != null) {
-				System.out.println("로그인 상태입니다. memberId: " + memberId + " 부서 ID: " + departmentId);
+				System.out.println("로그인 상태입니다. memberId: " + memberId + " 부서 ID: " + departmentId + " 이름: " + name);
 			} else {
 				System.out.println("사용자가 로그인하지 않은 상태입니다.");
 			}
 			Map<String, Object> response = new HashMap<>();
 			response.put("memberId", memberId);
 			response.put("departmentId", departmentId);
+			response.put("name", name);
 
 			return ResponseEntity.ok(response);
 		} else {
@@ -59,6 +62,7 @@ public class LoginController {
 	public ResponseEntity<String> logout(HttpSession session) {
 		session.removeAttribute("memberId");
 		session.removeAttribute("departmentId");
+		session.removeAttribute("name");
 		return ResponseEntity.ok("로그아웃 성공");
 	}
 }
