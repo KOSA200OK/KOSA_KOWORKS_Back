@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.my.exception.FindException;
 import com.my.exception.ModifyException;
 import com.my.stuff.dto.StuffDTO;
+import com.my.stuff.dto.StuffReqDTO;
 import com.my.stuff.entity.StuffEntity;
 import com.my.stuff.entity.StuffReqEntity;
 import com.my.stuff.repository.StuffRepository;
@@ -38,11 +39,12 @@ public class StuffService {
 		return stuffDTOList;
 	}
 	
-	public void modifyStock(Long stock, String stuffId) throws ModifyException{
-		Optional<StuffEntity> optS = stuffRepository.findById(stuffId);
+	public void modifyStock(StuffReqDTO dto) throws ModifyException{
+		Optional<StuffEntity> optS = stuffRepository.findById(dto.getStuff().getId());
 		StuffEntity se = optS.get();
 		Long origStock = se.getStock();
-		Long newStock = (origStock - stock);
+		Long quantity = dto.getQuantity();
+		Long newStock = (origStock - quantity);
 		se.modifyStock(newStock);
 		stuffRepository.save(se);
 	}
