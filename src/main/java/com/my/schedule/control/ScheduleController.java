@@ -43,6 +43,7 @@ public class ScheduleController {
 	
 	@PostMapping("/add")
 	public ResponseEntity<?> createCarRent(@RequestBody ScheduleDTO schedule) throws AddException{
+		System.out.println("*****memberId: "+schedule.getMember().getId());
 		ss.createSchedule(schedule);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
