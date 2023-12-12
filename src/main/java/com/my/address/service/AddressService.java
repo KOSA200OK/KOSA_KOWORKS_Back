@@ -7,4 +7,6 @@ import com.my.exception.FindException;
 
 public interface AddressService {
 	public List<AddressMemberDTO> findAll() throws FindException;
+
+	public List<AddressMemberDTO> findPagedMembers(int page, int size);
 }
