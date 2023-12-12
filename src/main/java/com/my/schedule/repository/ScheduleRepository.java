@@ -15,9 +15,11 @@ public interface ScheduleRepository extends JpaRepository<ScheduleEntity, Long> 
 //	           " WHERE s.member.id = :memberId AND EXTRACT(MONTH FROM s.startTime) = :month"+
 //				" ORDER BY s.startTime DESC")
 //	public List<ScheduleEntity> findAllSchedule(String memberId, Long month);
-	
-	@Query("SELECT s FROM ScheduleEntity s " +
-    " WHERE s.member.id = :memberId"+
-		" ORDER BY s.startTime DESC")
-	public List<ScheduleEntity> findAllSchedule(String memberId);
+	/**
+	 * 사원아이디와 일치하는 일정을 모두 조회한다
+	 * @param memberId 사원아이디
+	 * @return 사원아이디와 일치하는 일정
+	 */
+	public List<ScheduleEntity> findAllByMemberIdOrderByStartTimeDesc(String memberId);
+
 }

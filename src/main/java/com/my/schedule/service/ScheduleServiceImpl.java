@@ -21,7 +21,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 	
 	@Override
 	public List<ScheduleDTO> findAllSchedule(String memberId) {
-		List<ScheduleEntity> entityList = sr.findAllSchedule(memberId);
+		List<ScheduleEntity> entityList = sr.findAllByMemberIdOrderByStartTimeDesc(memberId);
 		List<ScheduleDTO> dtoList = new ArrayList<>();
 		for(ScheduleEntity entity : entityList) {			
 			ScheduleMapper sm = new ScheduleMapper();
