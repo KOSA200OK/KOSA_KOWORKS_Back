@@ -15,13 +15,13 @@ public class ScheduleServiceImpl implements ScheduleService {
 	private ScheduleRepository sr;
 	
 	@Autowired
-	public ScheduleServiceImpl(ScheduleRepository scheduleRepository) {
+	public ScheduleServiceImpl(ScheduleRepository sr) {
 		this.sr = sr;
 	}
 	
 	@Override
-	public List<ScheduleDTO> findAllSchedule(String memberId, Long month) {
-		List<ScheduleEntity> entityList = sr.findAllSchedule(memberId, month);
+	public List<ScheduleDTO> findAllSchedule(String memberId) {
+		List<ScheduleEntity> entityList = sr.findAllSchedule(memberId);
 		List<ScheduleDTO> dtoList = new ArrayList<>();
 		for(ScheduleEntity entity : entityList) {			
 			ScheduleMapper sm = new ScheduleMapper();

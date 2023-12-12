@@ -11,8 +11,13 @@ import com.my.schedule.entity.ScheduleEntity;
 @Repository
 public interface ScheduleRepository extends JpaRepository<ScheduleEntity, Long> {
 	
+//	@Query("SELECT s FROM ScheduleEntity s " +
+//	           " WHERE s.member.id = :memberId AND EXTRACT(MONTH FROM s.startTime) = :month"+
+//				" ORDER BY s.startTime DESC")
+//	public List<ScheduleEntity> findAllSchedule(String memberId, Long month);
+	
 	@Query("SELECT s FROM ScheduleEntity s " +
-	           " WHERE s.member.id = :memberId AND EXTRACT(MONTH FROM s.startTime) = :month"+
-				" ORDER BY s.startTime DESC")
-	public List<ScheduleEntity> findAllSchedule(String memberId, Long month);
+    " WHERE s.member.id = :memberId"+
+		" ORDER BY s.startTime DESC")
+	public List<ScheduleEntity> findAllSchedule(String memberId);
 }

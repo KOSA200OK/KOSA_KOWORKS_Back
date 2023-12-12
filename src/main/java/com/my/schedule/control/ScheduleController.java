@@ -31,7 +31,7 @@ public class ScheduleController {
 	private ScheduleService ss;
 	
 	@GetMapping("/calendar")
-	public List<ScheduleDTO> findAllSchedule(String memberId, Long month) throws FindException{
-		return ss.findAllSchedule(memberId, month);
+	public List<ScheduleDTO> findAllSchedule(String memberId) throws FindException{
+		return ss.findAllSchedule(memberId);
 	}
 }

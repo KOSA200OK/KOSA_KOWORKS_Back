@@ -11,5 +11,5 @@ import com.my.schedule.dto.ScheduleDTO;
 
 @Service
 public interface ScheduleService {
-	public List<ScheduleDTO> findAllSchedule(String memberId, Long month);
+	public List<ScheduleDTO> findAllSchedule(String memberId);
 }
