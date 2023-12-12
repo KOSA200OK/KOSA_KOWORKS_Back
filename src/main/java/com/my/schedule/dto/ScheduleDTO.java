@@ -34,8 +34,8 @@ public class ScheduleDTO {
 	@Size(max=50, message="최대 50자까지 작성할 수 있습니다")
 	private String content;
 	
-	@JsonFormat(pattern = "yy/MM/dd", timezone = "Asia/Seoul")
-	private Date startDate;
-	@JsonFormat(pattern = "yy/MM/dd", timezone = "Asia/Seoul")
-	private Date endDate;
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
+	private Date startTime;
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
+	private Date endTime;
 }
