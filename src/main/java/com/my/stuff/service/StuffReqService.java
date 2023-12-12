@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import org.modelmapper.internal.objenesis.instantiator.basic.DelegatingToExoticInstantiator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -292,10 +293,10 @@ public class StuffReqService {
 	 * @param dto
 	 * @throws ModifyException
 	 */
-	public void modifyReqApprove(Long id, Long status) throws ModifyException{
-		Optional<StuffReqEntity> optS = sr.findById(id);
+	public void modifyReqApprove(StuffReqDTO dto) throws ModifyException{
+		Optional<StuffReqEntity> optS = sr.findById(dto.getId());
 		StuffReqEntity se = optS.get();
-        se.modifyStatus(status);
+        se.modifyStatus(dto.getStatus());
         sr.save(se);
         
         // 비품 승인 알림
@@ -317,8 +318,8 @@ public class StuffReqService {
 	 * @param dto
 	 * @throws ModifyException
 	 */
-	public void modifyReqReject(Long id, StuffReqDTO dto) throws ModifyException{
-		Optional<StuffReqEntity> optS = sr.findById(id);
+	public void modifyReqReject(StuffReqDTO dto) throws ModifyException{
+		Optional<StuffReqEntity> optS = sr.findById(dto.getId());
 		StuffReqEntity se = optS.get();
         se.modifyStatus(dto.getStatus());
         se.modifyReject(dto.getReject());
