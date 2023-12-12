@@ -40,7 +40,9 @@ public class StuffEntity {
 	@ColumnDefault("0")
 	private Long stock;
 	
-	
+	public void modifyStock(Long stock) {
+		this.stock = stock;
+	}
 	
 
 }

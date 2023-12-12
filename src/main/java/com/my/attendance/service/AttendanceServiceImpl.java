@@ -8,6 +8,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -47,9 +48,17 @@ public class AttendanceServiceImpl implements AttendanceService {
 	public Page<AttendanceDTO> findAllByMemberId(String memberId, Pageable pageable) throws FindException {
 	    log.warn("1. findByMemberId의 memberid ===> {} ", memberId);
 	    
-	    Page<AttendanceEntity> entityList= repository.findAllByMemberId(memberId, pageable);
+
+	    // 내림차순 정렬 조건 추가
+	    Pageable sortedPageable = PageRequest.of(
+	        pageable.getPageNumber(),
+	        pageable.getPageSize(),
+	        Sort.by("id").descending()
+	    );
+
+	    Page<AttendanceEntity> entityList = repository.findAllByMemberId(memberId, sortedPageable);
 	    model = new AttendanceMapper();
-		return entityList.map(model::VoToDTO);
+	    return entityList.map(model::VoToDTO);
 
 	} // findAllByMemberId
 

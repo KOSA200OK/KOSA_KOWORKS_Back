@@ -92,7 +92,7 @@ public class CarServiceImpl implements CarService {
 		log.warn("여기까진 오나..?");
 		
 	    // 찬석
-	    notify.send(memberEntity, NotificationEntity.NotificationType.CAR, "차량이 등록 되었습니다.");
+	    notify.send(memberEntity, NotificationEntity.NotificationType.CAR, "차량이 예약 되었습니다.");
 
 	}
 	
@@ -164,7 +164,7 @@ public class CarServiceImpl implements CarService {
 		return entityList.map(cm::entityToDto);
 	}
 	
-	//***************** 차량 관리 승인 **************************
+	//***************** 차량 	 승인 **************************
 	
 	@Override
 	public Page<CarRentDTO> findAllWaiting(Pageable pageable){
@@ -179,6 +179,17 @@ public class CarServiceImpl implements CarService {
 		CarRentEntity carRentEntity = optC.get();
 		carRentEntity.modifyCarRentStatus(status);
 		crr.save(carRentEntity);
+		
+		// 반납, 승인
+		MemberEntity memberEntity = carRentEntity.getMember();
+		log.warn("차량반려 id : {}", memberEntity.getId());
+		
+		Long approveStatus = carRentEntity.getStatus();
+		
+		if(approveStatus == 2) {
+			notify.send(memberEntity, NotificationEntity.NotificationType.CAR, "차량요청이 승인되었습니다");
+		}
+		
 	}
 	
 	@Override
@@ -188,6 +199,13 @@ public class CarServiceImpl implements CarService {
 		carRentEntity.modifyCarRentStatus(status);
 		carRentEntity.modifyCarRentReject(carRent.getReject());
 		crr.save(carRentEntity);
+		
+		// 반려 알림
+		// 찬석
+		MemberEntity memberEntity = carRentEntity.getMember();
+		log.warn("차량반려 id : {}", memberEntity.getId());
+		
+	    notify.send(memberEntity, NotificationEntity.NotificationType.CAR, "차량이 반려되었습니다.");
 		
 	}
 	
