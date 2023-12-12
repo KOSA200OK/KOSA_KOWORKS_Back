@@ -1,5 +1,6 @@
 package com.my.meetingroom.control;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,8 +23,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.my.exception.AddException;
+import com.my.exception.DuplicateException;
 import com.my.exception.FindException;
 import com.my.exception.RemoveException;
+import com.my.exception.UnavailableException;
 import com.my.meetingroom.dto.MeetingReservationDTO;
 import com.my.meetingroom.dto.MeetingRoomDTO;
 import com.my.meetingroom.dto.ParticipantsDTO;
@@ -62,14 +65,23 @@ public class MeetingroomController {
 	
 	@PostMapping(value="", produces="application/json;charset=UTF-8") //회의실 예약하기(저장)
 	public ResponseEntity<?> createMeetingReservation(@RequestBody MeetingReservationDTO mrdto) throws AddException {
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Type", "text/html; charset=UTF-8");
 		try {
 			service.createMeetingReservation(mrdto);
-			HttpHeaders headers = new HttpHeaders();
-			headers.add("Content-Type", "text/html; charset=UTF-8");
 			return new ResponseEntity<>("저장되었습니다", headers, HttpStatus.OK);			
 		} catch (AddException e) {
 			e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		} catch (UnavailableException e) {
+			e.printStackTrace();
+			return new ResponseEntity<>("해당 시간에 예약이 차있습니다", headers, HttpStatus.FORBIDDEN);
+		} catch (DuplicateException e) {
+			e.printStackTrace();
+			return new ResponseEntity<>("같은 시간에 이미 예약이 되어있습니다", headers, HttpStatus.FORBIDDEN);
 		}
 	}
 	
