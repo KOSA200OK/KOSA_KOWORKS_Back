@@ -8,4 +8,5 @@ public class AddressMemberDTO {
 	private String name;
 	private String position;
 	private String tel;
+	private String departmentName;
 }
