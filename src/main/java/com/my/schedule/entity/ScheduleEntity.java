@@ -1,6 +1,7 @@
 package com.my.schedule.entity;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -42,7 +43,7 @@ public class ScheduleEntity {
 	@Column(length=200)
 	private String content;
 	
-	private Date startDate;
+	private Timestamp startTime;
 	
-	private Date endDate;
+	private Timestamp endTime;
 }
