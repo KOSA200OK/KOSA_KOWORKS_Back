@@ -24,5 +24,4 @@ public class AttendanceConfig {
 //	 @Value("#{'${attendance.time}'.split(',')}")
 	private List<String> time;
 	
-	
 }
