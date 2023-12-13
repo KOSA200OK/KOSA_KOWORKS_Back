@@ -23,18 +23,18 @@ import com.my.exception.FindException;
 import com.my.exception.ModifyException;
 import com.my.stuff.dto.StuffDTO;
 import com.my.stuff.dto.StuffReqDTO;
-import com.my.stuff.service.StuffReqService;
-import com.my.stuff.service.StuffService;
+import com.my.stuff.service.StuffReqServiceImpl;
+import com.my.stuff.service.StuffServiceImpl;
 
 @RestController
 @RequestMapping("/stuff")
 
 public class StuffReqController {
     @Autowired
-    private StuffReqService service;
+    private StuffReqServiceImpl service;
     
     @Autowired
-    private StuffService serviceS;
+    private StuffServiceImpl serviceS;
     
     /**
      * Json 문자열로 인계된 비품요청을 stuff_req 테이블 행으로 생성한다.
@@ -94,8 +94,8 @@ public class StuffReqController {
      * @param id
      */
     @CrossOrigin(origins="http://localhost:5173")
-    @DeleteMapping("/requestlist/{id}")
-    public void removeById(@PathVariable Long id) {
+    @DeleteMapping("/request")
+    public void removeById(@RequestParam Long id) {	
 		service.removeById(id);
 
 	}
@@ -124,18 +124,16 @@ public class StuffReqController {
     }
     
     @CrossOrigin(origins="http://localhost:5173")
-    @PutMapping("/approve/{id}")
-    public void modifyReqApprove(@PathVariable Long id, @RequestParam Long status
-    		                                          , @RequestParam String stuffId,
-    		                                            @RequestParam Long stock) throws ModifyException{
-    	service.modifyReqApprove(id, status);
-    	serviceS.modifyStock(stock, stuffId);
+    @PutMapping("/approve")
+    public void modifyReqApprove(@RequestBody StuffReqDTO dto) throws ModifyException{
+    	service.modifyReqApprove(dto);
+    	serviceS.modifyStock(dto);
     }
     
     @CrossOrigin(origins="http://localhost:5173")
-    @PutMapping("/reject/{id}")
-    public void modifyReqReject(@PathVariable Long id, @RequestBody StuffReqDTO dto) throws ModifyException{
-    	service.modifyReqReject(id, dto);
+    @PutMapping("/reject")
+    public void modifyReqReject(@RequestBody StuffReqDTO dto) throws ModifyException{
+    	service.modifyReqReject(dto);
     }
       
     
