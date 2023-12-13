@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -11,14 +13,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
-import com.my.attendance.entity.AttendanceEntity;
 import com.my.exception.RemoveException;
 import com.my.meetingroom.entity.ParticipantsEntity;
 import com.my.member.entity.MemberEntity;
 import com.my.notification.dao.EmitterRepository;
 import com.my.notification.dao.NotificationRepository;
 import com.my.notification.dto.NotificationDTO;
-import com.my.notification.dto.NotificationDTO.Response;
 import com.my.notification.entity.NotificationEntity;
 import com.my.notification.entity.NotificationEntity.NotificationType;
 
@@ -181,6 +181,10 @@ public class NotificationServiceImpl implements NotificationService {
         for (NotificationEntity entity : notificationEntities) {
             notificationDTOs.add(NotificationDTO.Response.createResponse(entity));
         }
+        
+        // id 필드를 기준으로 내림차순 정렬
+        Collections.sort(notificationDTOs, Comparator.comparing(NotificationDTO.Response::getId).reversed());
+
 
         return notificationDTOs;
     } // findAllByMemberId

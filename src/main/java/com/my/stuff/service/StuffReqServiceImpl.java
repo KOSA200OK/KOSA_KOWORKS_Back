@@ -266,11 +266,13 @@ public class StuffReqServiceImpl implements StuffReqService{
 		MemberEntity memberEntity = se.getMember();
 		log.warn("비품 승인 id : {}", memberEntity.getId());
         
-        if(se.getStatus() == 1) {
-    	    // 찬석
-    	    notify.send(memberEntity, NotificationEntity.NotificationType.STUFF, "비품요청이 승인되었습니다.");
-
-        } // if
+		 notify.send(memberEntity, NotificationEntity.NotificationType.STUFF, "비품요청이 승인되었습니다.");
+		
+//        if(se.getStatus() == 1) {
+//    	    // 찬석
+//    	    notify.send(memberEntity, NotificationEntity.NotificationType.STUFF, "비품요청이 승인되었습니다.");
+//
+//        } // if
 	}
 	
 	public void modifyReqReject(StuffReqDTO dto) throws ModifyException{
@@ -286,11 +288,13 @@ public class StuffReqServiceImpl implements StuffReqService{
 		MemberEntity memberEntity = se.getMember();
 		log.warn("비품반려 id : {}", memberEntity.getId());
         
-        if(se.getStatus() == 2) {
-    	    // 찬석
-    	    notify.send(memberEntity, NotificationEntity.NotificationType.STUFF, "비품요청이 반려되었습니다.");
-
-        } // if
+		 notify.send(memberEntity, NotificationEntity.NotificationType.STUFF, "비품요청이 반려되었습니다.");
+		
+//        if(se.getStatus() == 2) {
+//    	    // 찬석
+//    	    notify.send(memberEntity, NotificationEntity.NotificationType.STUFF, "비품요청이 반려되었습니다.");
+//
+//        } // if
         
 	}
 }
