@@ -114,8 +114,9 @@ public class MeetingroomServiceImpl implements MeetingroomService {
 			MeetingReservationEntity savedEntity = reservation.save(entity);
 			System.out.println("끝 : savedEntity" + savedEntity.getId());
 			
-			// 찬석(알림 - 예약시에는 예약자에게만 알림가게 하기)
+			// 찬석 - 알림
 			notify.send(memberEntity, NotificationEntity.NotificationType.MEETING, "회의실예약이 되었습니다.");
+			notify.sendToParticipants(participantsEntity, NotificationEntity.NotificationType.MEETING, memberName + "님이 회의실을 예약했습니다.");
 		}
 			
 //		//2차시도(단방향)
