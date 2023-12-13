@@ -38,7 +38,7 @@ public class ScheduleEntity {
 	private MemberEntity member;
 	
 	@Column(nullable=false, length=100)
-	private String title;
+	private String scheduleTitle;
 	
 	@Column(length=200)
 	private String content;

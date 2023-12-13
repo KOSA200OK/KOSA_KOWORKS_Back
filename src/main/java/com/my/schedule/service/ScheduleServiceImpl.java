@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.my.car.entity.CarRentEntity;
+import com.my.car.service.CarRentMapper;
 import com.my.schedule.dto.ScheduleDTO;
 import com.my.schedule.entity.ScheduleEntity;
 import com.my.schedule.repository.ScheduleRepository;
@@ -30,5 +32,12 @@ public class ScheduleServiceImpl implements ScheduleService {
 		}
 		
 		return dtoList;
+	}
+	
+	@Override
+	public void createSchedule(ScheduleDTO schedule) {
+		ScheduleMapper sm = new ScheduleMapper();
+		ScheduleEntity entity = sm.dtoToEntity(schedule);
+		sr.save(entity);
 	}
 }

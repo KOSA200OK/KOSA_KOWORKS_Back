@@ -17,4 +17,10 @@ public interface ScheduleService {
 	 * @return 개인 일정
 	 */
 	public List<ScheduleDTO> findAllSchedule(String memberId);
+	
+	/**
+	 * 일정을 추가한다
+	 * @param schedule 추가할 일정
+	 */
+	public void createSchedule(ScheduleDTO schedule);
 }
