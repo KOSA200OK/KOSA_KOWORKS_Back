@@ -60,4 +60,9 @@ public class ScheduleServiceImpl implements ScheduleService {
 		
 		sr.save(scheduleEntity);
 	}
+	
+	@Override
+	public void removeByIdSchedule(Long id) {
+		sr.deleteById(id);
+	}
 }
