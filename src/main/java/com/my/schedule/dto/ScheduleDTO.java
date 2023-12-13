@@ -2,6 +2,7 @@ package com.my.schedule.dto;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.ManyToOne;
@@ -29,13 +30,13 @@ public class ScheduleDTO {
 	
 	@NotEmpty(message="일정 제목을 입력해야 합니다")
 	@Size(max=20, message="최대 20자까지 작성할 수 있습니다")
-	private String title;
+	private String scheduleTitle;
 	
 	@Size(max=50, message="최대 50자까지 작성할 수 있습니다")
 	private String content;
 	
-	@JsonFormat(pattern = "yy/MM/dd", timezone = "Asia/Seoul")
-	private Date startDate;
-	@JsonFormat(pattern = "yy/MM/dd", timezone = "Asia/Seoul")
-	private Date endDate;
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
+	private Date startTime;
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
+	private Date endTime;
 }

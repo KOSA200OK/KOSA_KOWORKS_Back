@@ -10,14 +10,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.my.exception.FindException;
 import com.my.stuff.dto.StuffDTO;
-import com.my.stuff.service.StuffService;
+import com.my.stuff.service.StuffServiceImpl;
 
 @RestController
 @RequestMapping("/stuff")
 @CrossOrigin(origins="http://localhost:5173")
 public class StuffController {
     @Autowired
-    private StuffService service;
+    private StuffServiceImpl service;
     
     
     /**
