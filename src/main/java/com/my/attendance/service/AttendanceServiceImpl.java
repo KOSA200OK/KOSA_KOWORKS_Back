@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import com.my.attendance.dao.AttendanceRepository;
 import com.my.attendance.dto.AttendanceDTO;
 import com.my.attendance.entity.AttendanceEntity;
+import com.my.config.AttendanceConfig;
 import com.my.exception.AddException;
 import com.my.exception.FindException;
 import com.my.exception.ModifyException;
@@ -36,6 +37,9 @@ public class AttendanceServiceImpl implements AttendanceService {
 
 	@Autowired
 	private AttendanceMapper model;
+	
+	@Autowired
+	private AttendanceConfig config;
 
 	@Override
 	public List<AttendanceEntity> findAll() throws FindException {
@@ -77,31 +81,45 @@ public class AttendanceServiceImpl implements AttendanceService {
         log.warn("현재시간: " + currentTime);
         log.warn("아이디 2 : " + entity.getMemberId().getId() );
         
+        List<Integer> statusList = config.getStatus();
+        List<String> timeList = config.getTime();
+        
         // 이미 출석한 경우를 확인하기 위해 해당 날짜의 출석 데이터를 조회
         Optional<AttendanceEntity> existingAttendance = repository.findByMemberIdAndAttendanceDate(entity.getMemberId(), currentDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 
-	      // ==
-	      LocalTime onTimeStart = AttendanceTime.ON_TIME.getTime();
-	      LocalTime lateTimeEnd = AttendanceTime.LATE_TIME.getTime();
-	      LocalTime absenceTimeEnd = AttendanceTime.ABSENCE_TIME.getTime(); // 12시 이후
-	      
+        Integer onStatus = statusList.get(0); // on 상태 -> 출근
+        Integer offStatus = statusList.get(1); // off 상태 -> 퇴근	
+        Integer lateStatus = statusList.get(2);	// late 상태 -> 지각
+        Integer absenceStatus = statusList.get(3); // absence 상태 -> 결근
+        
+        // localTime으로 형변환 해주기 위해서 선언
+        String on = timeList.get(0);
+        String late = timeList.get(1);
+        String absence = timeList.get(2);
+        
+        // 형변환
+        LocalTime onTime = LocalTime.parse(on);  // on 타임 -> 09:00:00
+        LocalTime lateTime = LocalTime.parse(late); // late 타임 -> 12:00:00
+        LocalTime absenceTime = LocalTime.parse(absence);	// absenceTime -> 12:01:00
+        
+        
 	      if (existingAttendance.isPresent()) {
 	          log.warn("이미 출석했습니다");
 	          return;
 	      } else {
-	    	  if (currentTime.isBefore(onTimeStart)) {	// 9시까지 출근
+	    	  if (currentTime.isBefore(onTime)) {	// 9시까지 출근
 	    		  entity.setAttendanceDate(currentDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 	    		  entity.setStartTime(currentTime.format(DateTimeFormatter.ofPattern("HH:mm:ss")));
-	    		  entity.setStatus(AttendanceStatus.ON.getStatus());
+	    		  entity.setStatus(onStatus);
 	    		  log.error("time ${}", entity.getStartTime());
-	    	  } else if (currentTime.isBefore(lateTimeEnd)) { // 9시부터 12시까지
+	    	  } else if (currentTime.isBefore(lateTime) && currentTime.isAfter(onTime.plusMinutes(1))) { // 9시부터 12시까지
 	    		  entity.setAttendanceDate(currentDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 	    		  entity.setStartTime(currentTime.format(DateTimeFormatter.ofPattern("HH:mm:ss")));
-	    		  entity.setStatus(AttendanceStatus.LATE.getStatus());
-	    	  } else if (currentTime.isAfter(absenceTimeEnd)) { // 12시 이후
+	    		  entity.setStatus(lateStatus);
+	    	  } else if (currentTime.isAfter(absenceTime)) { // 12시 이후
 	    		  entity.setAttendanceDate(currentDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 	    		  entity.setStartTime(currentTime.format(DateTimeFormatter.ofPattern("HH:mm:ss")));
-	    		  entity.setStatus(AttendanceStatus.ABSENCE.getStatus());
+	    		  entity.setStatus(absenceStatus);
 	    	  } // if-else
 	    	  
 	    	  repository.save(entity);
@@ -124,13 +142,16 @@ public class AttendanceServiceImpl implements AttendanceService {
 //	    AttendanceEntity existingEntity = repository.findByMemberId(memberId);
 	    Optional<AttendanceEntity> existingEntity = repository.findByMemberIdAndAttendanceDate(memberId, currentDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 	    
+	    List<Integer> statusList = config.getStatus();
+	    Integer offStatus = statusList.get(1);
+	    
 	    if (existingEntity.isPresent()) {
 	    	AttendanceEntity att = existingEntity.get();
 	    	
 	        LocalTime currentTime = LocalTime.now();
 
 	        att.setEndTime(currentTime.format(DateTimeFormatter.ofPattern("HH:mm:ss")));
-	        att.setStatus(AttendanceStatus.OFF.getStatus());
+	        att.setStatus(offStatus);
 
 	        repository.save(att);
 	        
