@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -45,6 +46,12 @@ public class ScheduleController {
 	public ResponseEntity<?> createCarRent(@RequestBody ScheduleDTO schedule) throws AddException{
 		System.out.println("*****memberId: "+schedule.getMember().getId());
 		ss.createSchedule(schedule);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	@PutMapping("/modify")
+	public ResponseEntity<?> modifySchedule(@RequestBody ScheduleDTO schedule){
+		ss.modifySchedule(schedule);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }

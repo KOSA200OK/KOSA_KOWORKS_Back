@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.my.car.dto.CarDTO;
+import com.my.car.dto.CarRentDTO;
 import com.my.schedule.dto.ScheduleDTO;
 
 @Service
@@ -23,4 +24,10 @@ public interface ScheduleService {
 	 * @param schedule 추가할 일정
 	 */
 	public void createSchedule(ScheduleDTO schedule);
+	
+	/**
+	 * 일정을 수정한다
+	 * @param schedule 수정할 일정 내용
+	 */
+	public void modifySchedule(ScheduleDTO schedule);
 }
