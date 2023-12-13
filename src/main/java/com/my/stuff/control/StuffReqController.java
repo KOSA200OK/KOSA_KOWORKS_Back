@@ -23,18 +23,18 @@ import com.my.exception.FindException;
 import com.my.exception.ModifyException;
 import com.my.stuff.dto.StuffDTO;
 import com.my.stuff.dto.StuffReqDTO;
-import com.my.stuff.service.StuffReqService;
-import com.my.stuff.service.StuffService;
+import com.my.stuff.service.StuffReqServiceImpl;
+import com.my.stuff.service.StuffServiceImpl;
 
 @RestController
 @RequestMapping("/stuff")
 
 public class StuffReqController {
     @Autowired
-    private StuffReqService service;
+    private StuffReqServiceImpl service;
     
     @Autowired
-    private StuffService serviceS;
+    private StuffServiceImpl serviceS;
     
     /**
      * Json 문자열로 인계된 비품요청을 stuff_req 테이블 행으로 생성한다.
