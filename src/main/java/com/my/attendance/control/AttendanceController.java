@@ -1,6 +1,8 @@
 package com.my.attendance.control;
 
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -95,5 +97,13 @@ public class AttendanceController {
 	    //
 
 	} // findAllByAttendanceDate
+	
+	@GetMapping("/today")
+	public Optional<AttendanceDTO> findByMemberId(@RequestParam String memberId) throws FindException {
+		
+		
+		return service.findByMemberId(memberId);
+		
+	}
 	
 } // end class
