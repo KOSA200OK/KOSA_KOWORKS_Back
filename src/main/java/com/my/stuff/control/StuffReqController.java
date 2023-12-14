@@ -59,24 +59,17 @@ public class StuffReqController {
     public List<StuffReqDTO> findByMemberId(@RequestParam String memberId) throws FindException{
 		return service.findByMemberId(memberId);    	
     }
+    
     /**
-     * 파람으로 인계된 memberId, status, stuffId를 서비스레이어의 메서드에 인자로 넘긴다.
-     * @param memberId
-     * @param status
-     * @param stuffId
-     * @return List<StuffReqDTO
+     * 사용자가 선택한 조건에 따라 내역을 불러오기 위한 서비스 메서드를 호출한다
+     * @param memberId 필수
+     * @param status 0, 1, 2, 선택 안할경우 3
+     * @param stuffId stuffId = %s%, 선택 안할경우 default
+     * @param startDate 필수
+     * @param endDate 필수
+     * @return
      * @throws FindException
      */
-//    @GetMapping("/requestlist/filter")
-//    public List<StuffReqDTO> findByMemberIdAndStatusAndStuffIdLike(@RequestParam String memberId,
-//    		                                                       @RequestParam Long status,
-//    		                                                       @RequestParam String stuffId
-//    		                                                       ) throws FindException{
-//		return service.findByMemberIdStatusLikeStuffId(memberId, status, stuffId);
-//    	
-//    }
-    
-    // memberId = 필수, Date = 필수, status = 0, 1, 2, 선택 안할경우 3 , stuffId = %s%, 선택 안할경우 default
     @CrossOrigin(origins="http://localhost:5173")
     @GetMapping("/requestlist/case")
     public List<StuffReqDTO> findByUserCase(@RequestParam String memberId,
@@ -100,12 +93,21 @@ public class StuffReqController {
 
 	}
     
+    /**
+     * 
+     * @param memberId
+     * @return
+     * @throws FindException
+     */
+    @CrossOrigin(origins="http://localhost:5173")
+    @GetMapping("/waitproccess")
+    public Long findWaitProccessCnt(String memberId) throws FindException{
+		return service.findWaitProccessCnt(memberId);
+    	
+    }
+    
     // 관리자 ===============================================================================
     
-//    @GetMapping("/requestmanage")
-//    public List<StuffReqDTO> findByApprove() {
-//    	return service.findByApprove();
-//    }
     @CrossOrigin(origins="http://localhost:5173")
     @GetMapping("/requestmanage")
     public List<StuffReqDTO> findByMangeCase(@RequestParam Long departmentId,
@@ -135,13 +137,19 @@ public class StuffReqController {
     public void modifyReqReject(@RequestBody StuffReqDTO dto) throws ModifyException{
     	service.modifyReqReject(dto);
     }
-      
     
-//    @GetMapping("/requestmanage/case")
-//    public List<StuffReqDTO> findByMangeCase(@RequestParam Long departmentId
-//                                             ) throws FindException{
-//    	return service.findByDepartment(departmentId);
-//    }
+    /**
+     * 메인페이지의 미처리 요청건수를 표시하기 위한 수를 반환
+     * @return
+     * @throws FindException
+     */
+    @CrossOrigin(origins="http://localhost:5173")
+    @GetMapping("/unprocessedreq")
+    public Long findUnprocessedCnt() throws FindException{
+		return service.findUnprocessedReqCnt();
+    	
+    }
+
     
     
     
