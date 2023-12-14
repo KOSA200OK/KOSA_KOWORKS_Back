@@ -65,4 +65,17 @@ public class ScheduleServiceImpl implements ScheduleService {
 	public void removeByIdSchedule(Long id) {
 		sr.deleteById(id);
 	}
+	
+	@Override
+	public List<ScheduleDTO> findAllTodaySchedule(String memberId){
+		List<ScheduleEntity> entityList = sr.findAllTodaySchedule(memberId);
+		List<ScheduleDTO> dtoList = new ArrayList<>();
+		for(ScheduleEntity entity : entityList) {			
+			ScheduleMapper sm = new ScheduleMapper();
+			ScheduleDTO dto = sm.entityToDto(entity);
+			dtoList.add(dto);
+		}
+		
+		return dtoList;
+	}
 }
