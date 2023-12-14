@@ -31,6 +31,7 @@ public class NotificationDTO {
 					.content(notify.getContent())
 					.id(notify.getId().toString())
 					.memberId(notify.getReceiverId().getId())
+					.type(notify.getNotificationType().toString())
 					.createdAt(notify.getCreatedAt())
 					.build();
 		}
