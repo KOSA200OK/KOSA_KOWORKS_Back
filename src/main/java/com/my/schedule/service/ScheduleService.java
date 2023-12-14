@@ -40,4 +40,12 @@ public interface ScheduleService {
 	 * @param id 삭제할 일정 아이디
 	 */
 	public void removeByIdSchedule(Long id);
+	
+	/**
+	 * 개인의 오늘 일정을 모두 조회한다
+	 * @authour 나원희
+	 * @param membeId 사원아이디
+	 * @return 오늘의 개인 일정
+	 */
+	public List<ScheduleDTO> findAllTodaySchedule(String membeId);
 }

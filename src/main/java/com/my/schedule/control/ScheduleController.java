@@ -61,4 +61,9 @@ public class ScheduleController {
 		ss.removeByIdSchedule(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
+	
+	@GetMapping("/todaytodo")
+	public List<ScheduleDTO> findByMemberIdTodaySchedule(String memberId) throws FindException{
+		return ss.findAllTodaySchedule(memberId);
+	}
 }
