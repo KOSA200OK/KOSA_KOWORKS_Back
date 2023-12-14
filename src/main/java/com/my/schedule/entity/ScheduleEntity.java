@@ -47,4 +47,20 @@ public class ScheduleEntity {
 	
 	private Timestamp endTime;
 
+	public void modifyScheduleTitle(String scheduleTitle) {
+		this.scheduleTitle = scheduleTitle;
+	}
+	
+	public void modifyContent(String content) {
+		this.content = content;
+	}
+	
+	public void modifyStartTime(Timestamp startTime) {
+		this.startTime = startTime;
+	}
+	
+	public void modifyEndTime(Timestamp endTime) {
+		this.endTime = endTime;
+	}
+
 }

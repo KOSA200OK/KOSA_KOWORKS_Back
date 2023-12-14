@@ -1,10 +1,15 @@
 package com.my.meetingroom.service;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import javax.persistence.EntityManager;
 
@@ -15,8 +20,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.my.exception.AddException;
+import com.my.exception.DuplicateException;
 import com.my.exception.FindException;
 import com.my.exception.RemoveException;
+import com.my.exception.UnavailableException;
 import com.my.meetingroom.dto.MeetingReservationDTO;
 import com.my.meetingroom.dto.MeetingRoomDTO;
 import com.my.meetingroom.dto.ParticipantsDTO;
@@ -50,9 +57,11 @@ public class MeetingroomServiceImpl implements MeetingroomService {
 	ParticipantsRepository participants;
 	
 	@Autowired
+	ReservationValidator validator;
+	
+	@Autowired
 	EntityManager entityManager;
 		
-	
 	@Override
 	public List<MeetingRoomDTO> findByMeetingRoom(String meetingDate) throws FindException {
 		List<MeetingroomDetailEntity> entity = meetingroom.findAllByMeetingRoom(meetingDate);
@@ -84,55 +93,32 @@ public class MeetingroomServiceImpl implements MeetingroomService {
 	
 	@Transactional
 	@Override
-	public void createMeetingReservation(MeetingReservationDTO msdto) throws AddException {
-		
+	public void createMeetingReservation(MeetingReservationDTO msdto) 
+			throws AddException, UnavailableException, DuplicateException, ParseException {
 		//DTO->Vo
 		MeetingroomMapper mapper = new MeetingroomMapper();
 		MeetingReservationEntity entity = mapper.Reservation_DtoToVo(msdto);
 		
-		//Validation -> 따로 메소드 빼기 고민
-		//예약 가능한 시간인지 검증
-//		String date = msdto.getMeetingDate();
-//		SimpleDateFormat formatter = new SimpleDateFormat("HH시 mm분 ss초");
-//		
-//		List<MeetingroomDetailEntity> mrlist = meetingroom.findAllByMeetingRoom(date);
-//		for (MeetingroomDetailEntity mde : mrlist) {
-//			Date starttime = formatter.parse(mde.getReservation().get(0).getStartTime());
-//			Date newstarttime = formatter.parse(entity.getEndTime());
-//			Date endtime = formatter.parse(mde.getReservation().get(0).getEndTime());
-//			Date newendtime = formatter.parse(entity.getStartTime());
-//			
-//			if (starttime.after(newstarttime) && endtime.before(newendtime)) {
-//				MeetingReservationEntity savedEntity = reservation.save(entity);
-//			}
-//		}
-
-		//같은 아이디의 동시간 예약 검증
-//		String memberId = localStorage.getItem("memberId");
-//		Page<MeetingReservationEntity> mrentity = reservation.findAllByMemberId(null, memberId);
-//		if (mrentity.getContent().get(0).getMeetingDate() == entity.getMeetingDate()) {
-//			SimpleDateFormat formatter = new SimpleDateFormat("HH시 mm분 ss초");
-//			Date starttime = formatter.parse(mrentity.getContent().get(0).getStartTime());
-//			Date newstarttime = formatter.parse(entity.getEndTime());
-//			Date endtime = formatter.parse(mrentity.getContent().get(0).getEndTime());
-//			Date newendtime = formatter.parse(entity.getStartTime());
-//			
-//			if (starttime.after(newstarttime) && endtime.before(newendtime)) {
-//				MeetingReservationEntity savedEntity = reservation.save(entity);
-//			}
-//		}
-		
-		// 찬석
+		// 찬석(알림)
 		MemberEntity memberEntity = entity.getMember();
 		List<ParticipantsEntity> participantsEntity = entity.getParticipants();
-
+		
 		String memberName = entity.getMember().getName();
-
-		
+			
 		//최종
-		MeetingReservationEntity savedEntity = reservation.save(entity);
-		System.out.println("끝 : savedEntity" + savedEntity.getId());
-		
+		if (!validator.isAvailable(entity)) { //시간 가능 여부 false일 때
+			throw new UnavailableException();
+		} else if (!validator.idResDupChk(entity)) { //동일한 시간대, 같은 id 예약 가능 false일 때
+			throw new DuplicateException();
+		} else {
+			MeetingReservationEntity savedEntity = reservation.save(entity);
+			System.out.println("끝 : savedEntity" + savedEntity.getId());
+			
+			// 찬석 - 알림
+			notify.send(memberEntity, NotificationEntity.NotificationType.MEETING, "회의실예약이 되었습니다.");
+			notify.sendToParticipants(participantsEntity, NotificationEntity.NotificationType.MEETING, memberName + "님이 회의실을 예약했습니다.");
+		}
+			
 //		//2차시도(단방향)
 //		Long meetingId = savedEntity.getId();
 //		for(ParticipantsEntity p : entity.getParticipants()) {
@@ -142,11 +128,6 @@ public class MeetingroomServiceImpl implements MeetingroomService {
 //		}
 		
 //		reservation.deleteById(159L);
-		
-		// 찬석
-	    notify.send(memberEntity, NotificationEntity.NotificationType.MEETING, "회의실예약이 되었습니다.");
-	    notify.sendToParticipants(participantsEntity, NotificationEntity.NotificationType.MEETING, memberName + "님이 회의실을 예약했습니다.");
-		
 	}
 
 	
@@ -193,8 +174,7 @@ public class MeetingroomServiceImpl implements MeetingroomService {
 			reservation.save(entity);
 		} catch (Exception e) {
 			throw new RemoveException();
-		}
-		
+		}	
 	}
 
 }

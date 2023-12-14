@@ -21,6 +21,7 @@ public interface CarRepository extends JpaRepository<CarEntity, String> {
 	
 	/**
 	 * status값이 0 혹은 2이고, 설정한 대여시작날짜, 설정한 대여마감날짜가 기존에 겹치지 않는 행을 조회한다.
+	 * @author 나원희
 	 * @param pageable 페이징 요청 객체
 	 * @param start 설정한 대여시작날짜
 	 * @param end 설정한 대여마감날짜

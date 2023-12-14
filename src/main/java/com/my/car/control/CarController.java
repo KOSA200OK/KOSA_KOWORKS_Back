@@ -45,6 +45,18 @@ public class CarController {
 	@Autowired
 	private CarService cs;
 	
+	//***************** 메인 ***********************
+	
+	@GetMapping("/maincarrent")
+	public Map countMainCarRentCount() {
+		return cs.countMainCarRentCount();
+	}
+	
+	@GetMapping("/mainmycarrent")
+	public Map countMainMyCarRentCount(String memberId) {
+		return cs.countMainMyCarRentCount(memberId);
+	}
+	
 
 	//****************** 챠량 목록 ******************
 
