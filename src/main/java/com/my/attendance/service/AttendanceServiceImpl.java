@@ -1,6 +1,7 @@
 package com.my.attendance.service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -48,6 +49,7 @@ public class AttendanceServiceImpl implements AttendanceService {
 		
 	} // findAll
 
+	// 근태 내역 조회
 	@Override
 	public Page<AttendanceDTO> findAllByMemberId(String memberId, Pageable pageable) throws FindException {
 	    log.warn("1. findByMemberId의 memberid ===> {} ", memberId);
@@ -66,6 +68,7 @@ public class AttendanceServiceImpl implements AttendanceService {
 
 	} // findAllByMemberId
 
+	// 출근
 	@Override
 	public void createAttendance(AttendanceDTO dto) throws AddException {
 
@@ -128,7 +131,7 @@ public class AttendanceServiceImpl implements AttendanceService {
 
 	} // create
 
-
+	// 퇴근
 	@Override
 	public void modifyAttendance(AttendanceDTO dto) throws ModifyException {
 
@@ -178,9 +181,32 @@ public class AttendanceServiceImpl implements AttendanceService {
 	    
 	    model = new AttendanceMapper();
 	    return entityList.map(model::VoToDTO);
-	}
+	    
+	} // findAllByAttendanceDate 
 
+	@Override
+	public Optional<AttendanceDTO> findByMemberId(String memberId) throws FindException {
+		
+		log.warn("1. findByMemberId Service : {}", memberId);
+		
+		// 현재 날짜 구하기
+		LocalDateTime currentDate = LocalDateTime.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		String formattedDate = currentDate.format(formatter);
+		
+		// 멤버 아이디가 0003인 경우
+//		MemberEntity memberEntity = new MemberEntity();
+//		memberEntity.setId(memberId);
+		
+		Optional<AttendanceEntity> entity = repository.findByMemberIdAndAttendanceDate(memberId, formattedDate);
+		
+		model = new AttendanceMapper();
+		
+		return entity.map(model::VoToDTO);
+	
+	} // findByMemberId
 
+	
 	
 	
 } // end class
