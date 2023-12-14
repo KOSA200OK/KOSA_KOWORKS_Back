@@ -124,6 +124,15 @@ public class StuffReqServiceImpl implements StuffReqService{
 		sr.deleteById(id);
 	}
 	
+	@Override
+	public Long findWaitProccessCnt(String memberId) throws FindException {
+		MemberEntity me = MemberEntity.builder().id(memberId).build();
+		Long status = 0L;
+		Long waitProccessReqSize = (long) sr.findByMemberAndStatus(me, status).size();
+		return waitProccessReqSize;
+	}
+	
+	//==============================관리자용===================================================
 	
 	public List<StuffReqDTO> findByApprove(){
 		// 전달할 리스트 세팅
@@ -297,4 +306,12 @@ public class StuffReqServiceImpl implements StuffReqService{
 //        } // if
         
 	}
+
+	@Override
+	public Long findUnprocessedReqCnt() throws FindException {
+		Long status = 0L;
+		Long unprocessedReqSize = (long) sr.findByStatus(status).size();
+		return unprocessedReqSize;
+	}
+
 }

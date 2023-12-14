@@ -51,6 +51,15 @@ public interface StuffReqService {
 	public void removeById(Long id) throws RemoveException;
 	
 	/**
+	 * 비품요청테이블에서 해당 멤버의 승인 대기중인 요청을 찾아 갯수를 반환한다
+	 * @return
+	 * @throws FindException
+	 */
+	public Long findWaitProccessCnt(String memberId) throws FindException;
+	
+	//===================================관리자용==========================================
+	
+	/**
 	 * 승인 상태인 비품요청행들을 찾아 반환한다.
 	 * @return
 	 * @throws FindException
@@ -94,4 +103,11 @@ public interface StuffReqService {
 	 * @throws ModifyException
 	 */
 	public void modifyReqReject(StuffReqDTO dto) throws ModifyException;
+	
+	/**
+	 * 비품요청 테이블에서 승인 대기중인 행의 갯수를 반환한다 
+	 * @return Long
+	 * @throws FindException
+	 */
+	public Long findUnprocessedReqCnt() throws FindException;
 }
