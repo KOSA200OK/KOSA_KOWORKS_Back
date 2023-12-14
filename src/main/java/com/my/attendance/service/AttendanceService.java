@@ -1,6 +1,7 @@
 package com.my.attendance.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,5 +27,9 @@ public interface AttendanceService {
 	
 	// 월별 조회
 	public Page<AttendanceDTO> findAllByAttendanceDate(String memberId, String attendanceDate, Pageable pageable) throws FindException;
+	
+	// 출퇴근 조회
+	public Optional<AttendanceDTO> findByMemberId(String memberId) throws FindException;
+	
 	
 } // end class

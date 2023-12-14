@@ -28,4 +28,11 @@ public interface AttendanceRepository extends JpaRepository<AttendanceEntity, In
 	// 월별 조회
 	Page<AttendanceEntity> findByAttendanceDateStartingWithAndMemberId(String attendanceDate, MemberEntity memberEntity, Pageable pageable);
 
+	// 출퇴근시간 조회
+    @Query(value = "SELECT * "
+    		+ "FROM attendance a JOIN member m ON a.member_id = m.id "
+    		+ "WHERE m.id = :memberId AND a.attendace_date = :currentDate", nativeQuery = true)
+    Optional<AttendanceEntity> findByMemberIdAndAttendanceDate(@Param("memberId") String memberId,
+                                                               @Param("currentDate") String currentDate);
+	
 }
