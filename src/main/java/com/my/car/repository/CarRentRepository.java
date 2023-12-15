@@ -14,6 +14,7 @@ public interface CarRentRepository extends JpaRepository<CarRentEntity, Long>{
 //	@Query(value = "SELECT * FROM car_rent WHERE member_id = :memberId", nativeQuery=true)
 	/**
 	 * 사원아이디에 해당되는 행들을 신청날짜 순서대로 반환한다
+	 * @author 나원희
 	 * @param pageable 페이징 요청 객체
 	 * @param memberId 사원아이디
 	 * @return 사원아이디에 해당되는 신청 내역
@@ -38,6 +39,22 @@ public interface CarRentRepository extends JpaRepository<CarRentEntity, Long>{
 	List<CarRentEntity> findAllByStatusOrderByReqDate(Long status);
 	
 	/**
+	 * status값에 따른 신청 개수를 반환한다.
+	 * @author 나원희
+	 * @param status 신청상태
+	 * @return status값에 따른 신청 개수 
+	 */
+	int countByStatus(Long status);
+	
+	/**
+	 * memberId에 해당하고, status값에 따른 신청 개수를 반환한다.
+	 * @author 나원희
+	 * @param status 신청상태
+	 * @return memberId에 해당하고, status값에 따른 신청 개수
+	 */
+	int countByMemberIdAndStatus(String memberId, Long status);
+	
+	/**
 	 * 대여기간에 속하고, status값이 2인 대여 리스트를 신청날짜 순서대로 페이징하여 조회한다.
 	 * @author 나원희
 	 * @param pageable 페이징 요청 객체
@@ -60,6 +77,24 @@ public interface CarRentRepository extends JpaRepository<CarRentEntity, Long>{
 	List<CarRentEntity> findAllRentList();
 	
 	/**
+	 * 대여기간에 속하고, status값이 2인 신청 개수를 반환한다.
+	 * @author 나원희
+	 * @return 대여기간에 속하고, status값이 2인 신청 개수
+	 */
+	@Query("SELECT COUNT(cr) FROM CarRentEntity cr LEFT JOIN cr.car c " +
+	           " WHERE cr.status = 2 AND TO_CHAR(SYSDATE, 'YYYY-MM-DD') BETWEEN cr.startDate AND cr.endDate")
+	int countRentList();
+	
+	/**
+	 * memberId에 해당하고, 대여기간에 속하고, status값이 2인 신청 개수를 반환한다.
+	 * @author 나원희
+	 * @return memberId에 해당하고, 대여기간에 속하고, status값이 2인 신청 개수
+	 */
+	@Query("SELECT COUNT(cr) FROM CarRentEntity cr LEFT JOIN cr.car c " +
+	           " WHERE cr.member.id = :memberId AND cr.status = 2 AND TO_CHAR(SYSDATE, 'YYYY-MM-DD') BETWEEN cr.startDate AND cr.endDate")
+	int countMyRentList(String memberId);
+	
+	/**
 	 * 대여기간이 지났고, status값이 2인 대여 리스트를 신청날짜 순서대로 페이징하여 조회한다.
 	 * @author 나원희
 	 * @param pageable 페이징 요청 객체
@@ -79,6 +114,25 @@ public interface CarRentRepository extends JpaRepository<CarRentEntity, Long>{
 	           " WHERE cr.status = 2 AND TO_CHAR(SYSDATE, 'YYYY-MM-DD') > cr.endDate"+
 				" ORDER BY cr.reqDate DESC")
 	List<CarRentEntity> findAllNoReturnList();
+	
+	/**
+	 * 대여기간이 지났고, status값이 2인 신청 개수를 반환한다.
+	 * @author 나원희
+	 * @return 대여기간이 지났고, status값이 2인 신청 개수
+	 */
+	@Query("SELECT COUNT(cr) FROM CarRentEntity cr LEFT JOIN cr.car c " +
+	           " WHERE cr.status = 2 AND TO_CHAR(SYSDATE, 'YYYY-MM-DD') > cr.endDate")
+	int countNoReturnList();
+	
+	/**
+	 * memberId에 해당하고, 대여기간이 지났고, status값이 2인 신청 개수를 반환한다.
+	 * @author 나원희
+	 * @param memberId 사원아이디
+	 * @return memberId에 해당하고, 대여기간이 지났고, status값이 2인 신청 개수
+	 */
+	@Query("SELECT COUNT(cr) FROM CarRentEntity cr LEFT JOIN cr.car c " +
+	           " WHERE cr.member.id = :memberId AND cr.status = 2 AND TO_CHAR(SYSDATE, 'YYYY-MM-DD') > cr.endDate")
+	int countMyNoReturnList(String memberId);
 	
 	/**
 	 * 신청내역을 신청날짜 순서대로 조회한다

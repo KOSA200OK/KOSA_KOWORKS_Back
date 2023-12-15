@@ -42,11 +42,11 @@ public class ScheduleEntity {
 	
 	@Column(length=200)
 	private String content;
-	
+
 	private Timestamp startTime;
 	
 	private Timestamp endTime;
-	
+
 	public void modifyScheduleTitle(String scheduleTitle) {
 		this.scheduleTitle = scheduleTitle;
 	}
@@ -62,4 +62,5 @@ public class ScheduleEntity {
 	public void modifyEndTime(Timestamp endTime) {
 		this.endTime = endTime;
 	}
+
 }

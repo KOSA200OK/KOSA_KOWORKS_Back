@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,6 +44,19 @@ import lombok.extern.slf4j.Slf4j;
 public class CarController {
 	@Autowired
 	private CarService cs;
+	
+	//***************** 메인 ***********************
+	
+	@GetMapping("/maincarrent")
+	public Map countMainCarRentCount() {
+		return cs.countMainCarRentCount();
+	}
+	
+	@GetMapping("/mainmycarrent")
+	public Map countMainMyCarRentCount(String memberId) {
+		return cs.countMainMyCarRentCount(memberId);
+		System.out.println("****************** 멤버 아이디 : "+memberId);
+	}
 	
 
 	//****************** 챠량 목록 ******************
@@ -122,7 +136,13 @@ public class CarController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
-	@PostMapping("/reject")
+//	@PostMapping("/reject")
+//	public ResponseEntity<?> modifyCarRentStatusReject(@RequestBody CarRentDTO carRent){
+//		cs.saveCarRentReject(carRent,(long)1);
+//		return new ResponseEntity<>(HttpStatus.OK);
+//	}
+	
+	@PutMapping("/reject")
 	public ResponseEntity<?> modifyCarRentStatusReject(@RequestBody CarRentDTO carRent){
 		cs.saveCarRentReject(carRent,(long)1);
 		return new ResponseEntity<>(HttpStatus.OK);

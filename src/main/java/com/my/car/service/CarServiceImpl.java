@@ -61,6 +61,32 @@ public class CarServiceImpl implements CarService {
 		cr.saveEndCarStatus(today);
 	}
 	
+	//*************** 메인 신청내역 수 ***********************
+	
+
+	@Override
+	public Map countMainCarRentCount() {
+		Map map = new HashMap<>();
+		map.put("waitingCnt", crr.countByStatus((long)0));
+		map.put("rentCnt", crr.countRentList());
+		map.put("noReturnCnt", crr.countNoReturnList());
+		
+		return map;
+	}
+	
+	@Override
+	public Map countMainMyCarRentCount(String memberId) {
+		Map map = new HashMap<>();
+		System.out.println("************************* 내 대기중 개수 *****************************************");
+		map.put("myWaitingCnt", crr.countByMemberIdAndStatus(memberId,(long)0));
+		System.out.println("************************* 내 대여중 개수 *****************************************");
+		map.put("myRentCnt", crr.countMyRentList(memberId));
+		System.out.println("************************* 내 미반납 개수 *****************************************");
+		map.put("myNoReturnCnt", crr.countMyNoReturnList(memberId));
+		
+		return map;
+	}
+	
 	//*************** 차량 목록 **************************
 	
 	@Override

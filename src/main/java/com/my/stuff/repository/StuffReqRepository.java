@@ -137,6 +137,13 @@ public interface StuffReqRepository extends JpaRepository<StuffReqEntity, Long> 
 	 * @param status
 	 * @return
 	 */
+	List<StuffReqEntity> findByStatus(Long status);
+	
+	/**
+	 * stuff_req 테이블에서 status 값에 따라 조회하고 내림차순 정렬한다
+	 * @param status
+	 * @return
+	 */
 	List<StuffReqEntity> findByStatusOrderByReqDateDesc(Long status);
 	
 	
