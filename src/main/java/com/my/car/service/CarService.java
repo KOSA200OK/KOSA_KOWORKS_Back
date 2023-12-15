@@ -113,4 +113,18 @@ public interface CarService {
 	 * @return 역대 신청내역
 	 */
 	public Page<CarRentDTO> findAllRentListAll(Pageable pageable);
+	
+	/**
+	 * 승인대기중/대여중/미반납 신청 개수를 조회한다
+	 * @author 나원희
+	 * @return 승인대기중/대여중/미반납 차량 수
+	 */
+	public Map<String, Object> countMainCarRentCount();
+	
+	/**
+	 * 내 승인대기중/대여중/미반납 신청 개수를 조회한다
+	 * @author 나원희
+	 * @return 승인대기중/대여중/미반납 신청 개수
+	 */
+	public Map<String, Object> countMainMyCarRentCount(String memberId);
 }
