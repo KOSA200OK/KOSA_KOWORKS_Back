@@ -78,7 +78,7 @@ public class StuffReqServiceImpl implements StuffReqService{
 			if(stuffId.equals("default")) {
 				Long startS = 0L;
 				Long endS = 2L;
-				List<StuffReqEntity> srEntityList = sr.findByMemberAndReqDateBetweenAndStatusBetween(me, startDate, endDate,
+				List<StuffReqEntity> srEntityList = sr.findByMemberAndReqDateBetweenAndStatusBetweenOrderByReqDateDesc(me, startDate, endDate,
 						startS, endS);
 				for (StuffReqEntity stuffReqEntity : srEntityList) {
 					StuffReqDTO srDTO = StuffReqMapper.entityToDto(stuffReqEntity);
@@ -91,7 +91,7 @@ public class StuffReqServiceImpl implements StuffReqService{
 				log.error("case = 3");
 				Long startS = 0L;
 				Long endS = 2L;
-				List<StuffReqEntity> srEntityList = sr.findByMemberAndReqDateBetweenAndStatusBetweenAndStuffLike(me, startDate, endDate, startS, endS, se);
+				List<StuffReqEntity> srEntityList = sr.findByMemberAndReqDateBetweenAndStatusBetweenAndStuffLikeOrderByReqDateDesc(me, startDate, endDate, startS, endS, se);
 				for (StuffReqEntity stuffReqEntity : srEntityList) {
 					StuffReqDTO srDTO = StuffReqMapper.entityToDto(stuffReqEntity);
 					srDTOList.add(srDTO);
@@ -100,7 +100,7 @@ public class StuffReqServiceImpl implements StuffReqService{
 			}
 		}else {
 			if(stuffId.equals("default")) { // 날짜, 요청상태만 선택할 경우
-				List<StuffReqEntity> srEntityList = sr.findByMemberAndReqDateBetweenAndStatus(me, startDate, endDate,
+				List<StuffReqEntity> srEntityList = sr.findByMemberAndReqDateBetweenAndStatusOrderByReqDateDesc(me, startDate, endDate,
 						status);
 				for (StuffReqEntity stuffReqEntity : srEntityList) {
 					StuffReqDTO srDTO = StuffReqMapper.entityToDto(stuffReqEntity);
@@ -109,7 +109,7 @@ public class StuffReqServiceImpl implements StuffReqService{
 				return srDTOList;
 			}else { //날짜, 요청상태, 비품분류 전부를 선택했을 경우
 				log.error("case = 4");
-				List<StuffReqEntity> srEntityList = sr.findByMemberAndReqDateBetweenAndStatusAndStuffLike(me, startDate, endDate, status, se);
+				List<StuffReqEntity> srEntityList = sr.findByMemberAndReqDateBetweenAndStatusAndStuffLikeOrderByReqDateDesc(me, startDate, endDate, status, se);
 				for (StuffReqEntity stuffReqEntity : srEntityList) {
 					StuffReqDTO srDTO = StuffReqMapper.entityToDto(stuffReqEntity);
 					srDTOList.add(srDTO);
@@ -172,7 +172,7 @@ public class StuffReqServiceImpl implements StuffReqService{
 		
 		if ( (status ==3) && (stuffId.equals("default")) && (departmentId == 0) ) { //날짜만 선택
 			log.error("case = 1");
-			List<StuffReqEntity> srEntityList = sr.findByReqDateBetween(startDate, endDate);
+			List<StuffReqEntity> srEntityList = sr.findByReqDateBetweenOrderByReqDateDesc(startDate, endDate);
 			for (StuffReqEntity stuffReqEntity : srEntityList) {
 				StuffReqDTO srDTO = StuffReqMapper.entityToDto(stuffReqEntity);
 				srDTOList.add(srDTO);
@@ -182,7 +182,7 @@ public class StuffReqServiceImpl implements StuffReqService{
 			
 		} else if ( (stuffId.equals("default")) && (departmentId == 0) ) { // 날짜. 요청상태 선택
 			log.error("case = 2");
-			List<StuffReqEntity> srEntityList = sr.findByStatusAndReqDateBetween(status, startDate, endDate);
+			List<StuffReqEntity> srEntityList = sr.findByStatusAndReqDateBetweenOrderByReqDateDesc(status, startDate, endDate);
 			for (StuffReqEntity stuffReqEntity : srEntityList) {
 				StuffReqDTO srDTO = StuffReqMapper.entityToDto(stuffReqEntity);
 				srDTOList.add(srDTO);
@@ -192,7 +192,7 @@ public class StuffReqServiceImpl implements StuffReqService{
 			
 		} else if ( (status ==3) && (stuffId.equals("default")) ){ //날짜. 부서 선택
 			log.error("case = 3");
-			List<StuffReqEntity> srEntityList = sr.findByMember_DepartmentAndReqDateBetween(de, startDate, endDate);
+			List<StuffReqEntity> srEntityList = sr.findByMember_DepartmentAndReqDateBetweenOrderByReqDateDesc(de, startDate, endDate);
 			for (StuffReqEntity stuffReqEntity : srEntityList) {
 				StuffReqDTO srDTO = StuffReqMapper.entityToDto(stuffReqEntity);
 				srDTOList.add(srDTO);
@@ -202,7 +202,7 @@ public class StuffReqServiceImpl implements StuffReqService{
 			
 		} else if ( (status ==3) && (departmentId == 0) ) { //날짜. 비품 선택
 			log.error("case = 4");
-			List<StuffReqEntity> srEntityList = sr.findByStuffLikeAndReqDateBetween(se, startDate, endDate);
+			List<StuffReqEntity> srEntityList = sr.findByStuffLikeAndReqDateBetweenOrderByReqDateDesc(se, startDate, endDate);
 			for (StuffReqEntity stuffReqEntity : srEntityList) {
 				StuffReqDTO srDTO = StuffReqMapper.entityToDto(stuffReqEntity);
 				srDTOList.add(srDTO);
@@ -213,7 +213,7 @@ public class StuffReqServiceImpl implements StuffReqService{
 		} else if ( stuffId.equals("default") ) { //날짜. 요청. 부서
 			log.error("case = 5");
 			List<StuffReqEntity> srEntityList = 
-					sr.findByStatusAndMember_DepartmentAndReqDateBetween(status, de, startDate, endDate);
+					sr.findByStatusAndMember_DepartmentAndReqDateBetweenOrderByReqDateDesc(status, de, startDate, endDate);
 			for (StuffReqEntity stuffReqEntity : srEntityList) {
 				StuffReqDTO srDTO = StuffReqMapper.entityToDto(stuffReqEntity);
 				srDTOList.add(srDTO);
@@ -224,7 +224,7 @@ public class StuffReqServiceImpl implements StuffReqService{
 		} else if ( departmentId == 0 ) { //날짜.요청.비품
 			log.error("case = 6");
 			List<StuffReqEntity> srEntityList = 
-					sr.findByStatusAndStuffLikeAndReqDateBetween(status, se, startDate, endDate);
+					sr.findByStatusAndStuffLikeAndReqDateBetweenOrderByReqDateDesc(status, se, startDate, endDate);
 			for (StuffReqEntity stuffReqEntity : srEntityList) {
 				StuffReqDTO srDTO = StuffReqMapper.entityToDto(stuffReqEntity);
 				srDTOList.add(srDTO);
@@ -235,7 +235,7 @@ public class StuffReqServiceImpl implements StuffReqService{
 		} else if ( status == 3 ) { //날짜.부서.비품
 			log.error("case = 7");
 			List<StuffReqEntity> srEntityList = 
-					sr.findByMember_DepartmentAndStuffLikeAndReqDateBetween(de, se, startDate, endDate);
+					sr.findByMember_DepartmentAndStuffLikeAndReqDateBetweenOrderByReqDateDesc(de, se, startDate, endDate);
 			for (StuffReqEntity stuffReqEntity : srEntityList) {
 				StuffReqDTO srDTO = StuffReqMapper.entityToDto(stuffReqEntity);
 				srDTOList.add(srDTO);
@@ -246,7 +246,7 @@ public class StuffReqServiceImpl implements StuffReqService{
 		} else { //날짜. 요청. 부서. 비품
 			log.error("case = 8");
 			List<StuffReqEntity> srEntityList = 
-					sr.findByMember_DepartmentAndStuffLikeAndStatusAndReqDateBetween(de, se, status, startDate, endDate);
+					sr.findByMember_DepartmentAndStuffLikeAndStatusAndReqDateBetweenOrderByReqDateDesc(de, se, status, startDate, endDate);
 			for (StuffReqEntity stuffReqEntity : srEntityList) {
 				StuffReqDTO srDTO = StuffReqMapper.entityToDto(stuffReqEntity);
 				srDTOList.add(srDTO);

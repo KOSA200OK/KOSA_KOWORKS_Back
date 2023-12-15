@@ -68,7 +68,7 @@ public interface StuffReqRepository extends JpaRepository<StuffReqEntity, Long> 
 	 * @param endDate
 	 * @return <StuffReqEntity>
 	 */
-	List<StuffReqEntity> findByMemberAndReqDateBetweenAndStatus(MemberEntity member, Date startDate, Date endDate, Long status);
+	List<StuffReqEntity> findByMemberAndReqDateBetweenAndStatusOrderByReqDateDesc(MemberEntity member, Date startDate, Date endDate, Long status);
 	
 	/**
 	 * 멤버, 날짜, 요청상태구간
@@ -78,7 +78,7 @@ public interface StuffReqRepository extends JpaRepository<StuffReqEntity, Long> 
 	 * @param endDate
 	 * @return <StuffReqEntity>
 	 */
-	List<StuffReqEntity> findByMemberAndReqDateBetweenAndStatusBetween(MemberEntity member, Date startDate, Date endDate, Long startS, Long endS);
+	List<StuffReqEntity> findByMemberAndReqDateBetweenAndStatusBetweenOrderByReqDateDesc(MemberEntity member, Date startDate, Date endDate, Long startS, Long endS);
 	
     /**
      * 멤버, 날짜, 비품분류
@@ -99,7 +99,7 @@ public interface StuffReqRepository extends JpaRepository<StuffReqEntity, Long> 
      * @param stuff
      * @return
      */
-	List<StuffReqEntity> findByMemberAndReqDateBetweenAndStatusAndStuffLike(MemberEntity member, Date startDate, Date endDate, Long status, StuffEntity stuff);
+	List<StuffReqEntity> findByMemberAndReqDateBetweenAndStatusAndStuffLikeOrderByReqDateDesc(MemberEntity member, Date startDate, Date endDate, Long status, StuffEntity stuff);
 	
     /**
      * 멤버, 날짜, 요청상태구간, 비품분류
@@ -111,7 +111,7 @@ public interface StuffReqRepository extends JpaRepository<StuffReqEntity, Long> 
      * @param stuff
      * @return
      */
-	List<StuffReqEntity> findByMemberAndReqDateBetweenAndStatusBetweenAndStuffLike(MemberEntity member, Date startDate, Date endDate, Long startS, Long endS, StuffEntity stuff);
+	List<StuffReqEntity> findByMemberAndReqDateBetweenAndStatusBetweenAndStuffLikeOrderByReqDateDesc(MemberEntity member, Date startDate, Date endDate, Long startS, Long endS, StuffEntity stuff);
 	
 	/**
 	 * stuff_req 테이블에서 사용자가 작성한 비품 요청 행 중 stuffId에 압력한 문자열이포함되는 경우, 모든 status 경우를 반환한다
@@ -162,7 +162,7 @@ public interface StuffReqRepository extends JpaRepository<StuffReqEntity, Long> 
 	 * @param endDate
 	 * @return
 	 */
-	List<StuffReqEntity> findByReqDateBetween (Date startDate, Date endDate);
+	List<StuffReqEntity> findByReqDateBetweenOrderByReqDateDesc (Date startDate, Date endDate);
 
     /**
      * 날짜. 요청상태
@@ -171,7 +171,7 @@ public interface StuffReqRepository extends JpaRepository<StuffReqEntity, Long> 
      * @param status
      * @return
      */
-	List<StuffReqEntity> findByStatusAndReqDateBetween (Long status, Date startDate, Date endDate);
+	List<StuffReqEntity> findByStatusAndReqDateBetweenOrderByReqDateDesc (Long status, Date startDate, Date endDate);
 	
     /**
      * 날짜. 요청상태구간
@@ -189,7 +189,7 @@ public interface StuffReqRepository extends JpaRepository<StuffReqEntity, Long> 
 	 * @param endDate
 	 * @return
 	 */
-	List<StuffReqEntity> findByMember_DepartmentAndReqDateBetween (DepartmentEntity department, Date startDate, Date endDate);
+	List<StuffReqEntity> findByMember_DepartmentAndReqDateBetweenOrderByReqDateDesc (DepartmentEntity department, Date startDate, Date endDate);
 	
 	/**
 	 * 날짜. 비품
@@ -197,7 +197,7 @@ public interface StuffReqRepository extends JpaRepository<StuffReqEntity, Long> 
 	 * @param endDate
 	 * @return
 	 */
-	List<StuffReqEntity> findByStuffLikeAndReqDateBetween (StuffEntity stuff, Date startDate, Date endDate);
+	List<StuffReqEntity> findByStuffLikeAndReqDateBetweenOrderByReqDateDesc (StuffEntity stuff, Date startDate, Date endDate);
 	
 	/**
 	 * 날짜.요청.부서
@@ -207,7 +207,7 @@ public interface StuffReqRepository extends JpaRepository<StuffReqEntity, Long> 
 	 * @param status
 	 * @return
 	 */
-	List<StuffReqEntity> findByStatusAndMember_DepartmentAndReqDateBetween(Long status, DepartmentEntity department, Date startDate, Date endDate);
+	List<StuffReqEntity> findByStatusAndMember_DepartmentAndReqDateBetweenOrderByReqDateDesc(Long status, DepartmentEntity department, Date startDate, Date endDate);
 	
 	/**
 	 * 날짜.요청구간.부서
@@ -228,7 +228,7 @@ public interface StuffReqRepository extends JpaRepository<StuffReqEntity, Long> 
 	 * @param status
 	 * @return
 	 */
-	List<StuffReqEntity> findByStatusAndStuffLikeAndReqDateBetween(Long status, StuffEntity stuff, Date startDate, Date endDate);
+	List<StuffReqEntity> findByStatusAndStuffLikeAndReqDateBetweenOrderByReqDateDesc(Long status, StuffEntity stuff, Date startDate, Date endDate);
 	
 	/**
 	 * 날짜.요청구간.비품
@@ -249,7 +249,7 @@ public interface StuffReqRepository extends JpaRepository<StuffReqEntity, Long> 
 	 * @param status
 	 * @return
 	 */
-	List<StuffReqEntity> findByMember_DepartmentAndStuffLikeAndReqDateBetween(DepartmentEntity department, StuffEntity stuff, Date startDate, Date endDate);
+	List<StuffReqEntity> findByMember_DepartmentAndStuffLikeAndReqDateBetweenOrderByReqDateDesc(DepartmentEntity department, StuffEntity stuff, Date startDate, Date endDate);
 	
 	/**
 	 * 날짜.요청. 부서.비품
@@ -259,7 +259,7 @@ public interface StuffReqRepository extends JpaRepository<StuffReqEntity, Long> 
 	 * @param status
 	 * @return
 	 */
-	List<StuffReqEntity> findByMember_DepartmentAndStuffLikeAndStatusAndReqDateBetween(
+	List<StuffReqEntity> findByMember_DepartmentAndStuffLikeAndStatusAndReqDateBetweenOrderByReqDateDesc(
 			DepartmentEntity department, StuffEntity stuff, Long status, Date startDate, Date endDate);
 	
 	/**
