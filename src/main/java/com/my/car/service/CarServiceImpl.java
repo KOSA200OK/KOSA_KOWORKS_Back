@@ -3,6 +3,7 @@ package com.my.car.service;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -14,8 +15,17 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.my.car.dto.CarDTO;
 import com.my.car.dto.CarRentDTO;
 import com.my.car.entity.CarEntity;
@@ -260,5 +270,51 @@ public class CarServiceImpl implements CarService {
 		Page<CarRentEntity> entityList = crr.findAllByOrderByReqDateDesc(pageable);
 		CarRentMapper crm = new CarRentMapper();
 		return entityList.map(crm::entityToDto);
+	}
+	
+	@Override
+	public void saveLocationInfo(String id) {
+//		String apiUrl= "https://demo.traccar.org/api/positions";
+//		
+//		
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.setBasicAuth("98dnjsgml@gmail.com", "kosa"); // Basic Auth
+//
+//        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+//        headers.setContentType(MediaType.APPLICATION_JSON);
+//
+//        HttpEntity<String> entity = new HttpEntity<>(headers);
+//
+//        Map<String, String> queryParams = new HashMap<>();
+//        queryParams.put("deviceId", id);
+//
+//        ResponseEntity<String> response = new RestTemplate().exchange(
+//                apiUrl,
+//                HttpMethod.GET,
+//                entity,
+//                String.class,
+//                queryParams
+//        );
+//        
+//
+//
+//        if (response.getStatusCode() == HttpStatus.OK) {
+//            System.out.println("Response Body: " + response.getBody());
+//
+//            String responseBody = response.getBody();
+//
+//         // Jackson ObjectMapper를 사용하여 JSON 문자열을 Map으로 변환
+//         
+//         
+//            Optional<CarEntity> optC = cr.findById(id);
+//    		CarEntity carEntity = optC.get();
+//    		carEntity.modifyCarLatitude();
+//    		carEntity.modifyCarRentReject();
+//    		cr.save(carEntity);
+//            
+//        } else {
+//            System.out.println("Request failed with status code: " + response.getStatusCode());
+//            
+//        }
 	}
 }

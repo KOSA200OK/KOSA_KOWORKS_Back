@@ -127,4 +127,10 @@ public interface CarService {
 	 * @return 승인대기중/대여중/미반납 신청 개수
 	 */
 	public Map<String, Object> countMainMyCarRentCount(String memberId);
+	
+	/**
+	 * 요청할 때마다 위치 정보를 업데이트한다
+	 * @param id 차대번호
+	 */
+	public void saveLocationInfo(String id);
 }
