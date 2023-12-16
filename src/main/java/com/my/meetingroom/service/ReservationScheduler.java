@@ -51,6 +51,7 @@ public class ReservationScheduler {
 		return minutesUntilNextMidnight;
 	}
 	
+	
 	private void checkReservations() throws Exception{
 		Date currentTime = new Date();
 		
