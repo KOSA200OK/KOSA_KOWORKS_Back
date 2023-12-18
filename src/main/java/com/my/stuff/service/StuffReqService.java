@@ -42,7 +42,7 @@ public interface StuffReqService {
      */
 	public List<StuffReqDTO> findByCase(String memberId, Long status, String stuffId, Date startDate, Date endDate)
 			throws FindException;
-	
+
 	/**
 	 * 인계된 id에 해당하는 비품요청 행을 삭제한다.
 	 * 
@@ -58,13 +58,6 @@ public interface StuffReqService {
 	public Long findWaitProccessCnt(String memberId) throws FindException;
 	
 	//===================================관리자용==========================================
-	
-	/**
-	 * 승인 상태인 비품요청행들을 찾아 반환한다.
-	 * @return
-	 * @throws FindException
-	 */
-	public List<StuffReqDTO> findByApprove() throws FindException;
 	
 	/**
      * 컨트롤 레이어에서 인계받은 멤버변수의 경우에 따라 변수를 가공한다.
