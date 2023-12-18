@@ -127,6 +127,11 @@ public class CarController {
 		return map;
 	}
 	
+	@GetMapping("/updatelive")
+	public CarDTO findByIdLive() {
+		return cs.findByIdLive();
+	} 
+	
 	@GetMapping("/managelist/{currentPage}")
 	public Page<CarDTO> findAllCarManageList(@PathVariable int currentPage) throws FindException{
 		System.out.println("currentPage: "+currentPage);
@@ -198,63 +203,63 @@ public class CarController {
 		return cs.findAllRentListAll(pageable);
 	}
 	
-	@GetMapping("/test")
-	public void test(String id){
-		String apiUrl= "https://demo.traccar.org/api/positions";
-		
-		
-        HttpHeaders headers = new HttpHeaders();
-        headers.setBasicAuth("98dnjsgml@gmail.com", "kosa"); // Basic Auth
-
-        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-        headers.setContentType(MediaType.APPLICATION_JSON);
-
-        HttpEntity<String> entity = new HttpEntity<>(headers);
-
-        Map<String, String> queryParams = new HashMap<>();
-        queryParams.put("deviceId", id);
-
-        ResponseEntity<String> response = new RestTemplate().exchange(
-                apiUrl,
-                HttpMethod.GET,
-                entity,
-                String.class,
-                queryParams
-        );
-        
-        
-
-        if (response.getStatusCode() == HttpStatus.OK) {
-            System.out.println("Response Body: " + response.getBody());
-
-            // Parse and process the response JSON as needed
-        } else {
-            System.out.println("Request failed with status code: " + response.getStatusCode());
-
-        }
-        
-        ObjectMapper objectMapper = new ObjectMapper();
-        JsonNode jsonNode;
-        
-		try {
-			jsonNode = objectMapper.readTree(response.getBody());
-			for (JsonNode element : jsonNode) {
-	            BigDecimal latitude = element.get("latitude").decimalValue();
-	            BigDecimal longitude = element.get("longitude").decimalValue();
-
-	            // 필요한 필드만 선택적으로 가져와서 사용
-	            System.out.println("Latitude: " + latitude + ", Longitude: " + longitude);
-	        }
-		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        
-     
-	}
+//	@GetMapping("/test")
+//	public void test(String id){
+//		String apiUrl= "https://demo.traccar.org/api/positions";
+//		
+//		
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.setBasicAuth("98dnjsgml@gmail.com", "kosa"); // Basic Auth
+//
+//        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+//        headers.setContentType(MediaType.APPLICATION_JSON);
+//
+//        HttpEntity<String> entity = new HttpEntity<>(headers);
+//
+//        Map<String, String> queryParams = new HashMap<>();
+//        queryParams.put("deviceId", id);
+//
+//        ResponseEntity<String> response = new RestTemplate().exchange(
+//                apiUrl,
+//                HttpMethod.GET,
+//                entity,
+//                String.class,
+//                queryParams
+//        );
+//        
+//        
+//
+//        if (response.getStatusCode() == HttpStatus.OK) {
+//            System.out.println("Response Body: " + response.getBody());
+//
+//            // Parse and process the response JSON as needed
+//        } else {
+//            System.out.println("Request failed with status code: " + response.getStatusCode());
+//
+//        }
+//        
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        JsonNode jsonNode;
+//        
+//		try {
+//			jsonNode = objectMapper.readTree(response.getBody());
+//			for (JsonNode element : jsonNode) {
+//	            BigDecimal latitude = element.get("latitude").decimalValue();
+//	            BigDecimal longitude = element.get("longitude").decimalValue();
+//
+//	            // 필요한 필드만 선택적으로 가져와서 사용
+//	            System.out.println("Latitude: " + latitude + ", Longitude: " + longitude);
+//	        }
+//		} catch (JsonMappingException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (JsonProcessingException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//        
+//     
+//	}
 	
 	
 	

@@ -64,6 +64,20 @@ public interface CarService {
 	 * @param pageable
 	 * @return 페이징된 차량리스트
 	 */
+	
+	/**
+	 * 실시간 업데이트 될 차량 정보를 조회하고, 받아온 위도/경도 값을 세팅한다.
+	 * @author 나원희
+	 * @return 정보 업데이트 된 차량 정보
+	 */
+	public CarDTO findByIdLive();
+	
+	/**
+	 * 차량관리 메인페이지에 보여질 차량 목록을 페이징하여 조회한다.
+	 * @author 나원희
+	 * @param pageable 페이징 객체
+	 * @return 페이징된 차량 목록
+	 */
 	public Page<CarDTO> findAllCarManageList(Pageable pageable);
 	
 	/**
@@ -130,7 +144,8 @@ public interface CarService {
 	
 	/**
 	 * 요청할 때마다 위치 정보를 업데이트한다
-	 * @param id 차대번호
+	 * @author 나원희
+	 * @return 위도, 경도
 	 */
-	public void saveLocationInfo(String id);
+	public Map saveLocationInfo();
 }
