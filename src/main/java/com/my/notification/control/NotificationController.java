@@ -61,6 +61,20 @@ public class NotificationController {
 	       
 	    } // findAllByMemberId
 	    
+		//***************** 메인 ***********************
+	    /**
+	     * 최근 9개의 알림 목록을 반환한다
+	     * @param memberId
+	     * @return
+	     */
+	    @GetMapping("/recent")
+	    public List<NotificationDTO.Response> findRecentByMemberId(@RequestParam String memberId) {
+	        log.warn("Controller memberId ==> {}", memberId);
+	        
+	        return notifyService.findRecntByMemberId(memberId);
+	       
+	    }
+	    
 	    // 알림 삭제
 	    @DeleteMapping(value= "{id}", produces = "application/json;charset=UTF-8")
 	    public ResponseEntity<?> deleteNotification(@PathVariable int id) throws RemoveException {
