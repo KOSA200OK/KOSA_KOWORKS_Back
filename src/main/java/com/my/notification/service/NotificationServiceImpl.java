@@ -19,6 +19,7 @@ import com.my.member.entity.MemberEntity;
 import com.my.notification.dao.EmitterRepository;
 import com.my.notification.dao.NotificationRepository;
 import com.my.notification.dto.NotificationDTO;
+import com.my.notification.dto.NotificationDTO.Response;
 import com.my.notification.entity.NotificationEntity;
 import com.my.notification.entity.NotificationEntity.NotificationType;
 
@@ -189,11 +190,35 @@ public class NotificationServiceImpl implements NotificationService {
         return notificationDTOs;
     } // findAllByMemberId
 
+    
+	@Override
+	public List<NotificationDTO.Response> findRecntByMemberId(String memberId) {
+        List<NotificationEntity> notificationEntities = notificationRepository.findAllByMemberEntity(memberId);
+        List<NotificationDTO.Response> notificationDTOs = new ArrayList<>();
+
+        for (NotificationEntity entity : notificationEntities) {
+            notificationDTOs.add(NotificationDTO.Response.createResponse(entity));
+        }
+        
+        // id 필드를 기준으로 내림차순 정렬
+        Collections.sort(notificationDTOs, Comparator.comparing(NotificationDTO.Response::getId).reversed());
+        
+        // 처음부터 10개의 항목만 추출
+        int endIndex = Math.min(9, notificationDTOs.size());
+        List<NotificationDTO.Response> firstTenNotifications = notificationDTOs.subList(0, endIndex);
+
+
+        return firstTenNotifications;
+	}
+    
+
 	@Override
 	public void deleteNotification(int id) throws RemoveException {
 		
 		notificationRepository.deleteById(id);
 		
 	} // deleteNotification
+
+
 
 } // end class

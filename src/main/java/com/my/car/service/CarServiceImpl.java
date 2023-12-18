@@ -1,8 +1,10 @@
 package com.my.car.service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -14,8 +16,20 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.my.car.dto.CarDTO;
 import com.my.car.dto.CarRentDTO;
 import com.my.car.entity.CarEntity;
@@ -143,6 +157,9 @@ public class CarServiceImpl implements CarService {
 	@Override
 	public Map findAllCarManage(){
 		Map map = new HashMap<>();
+		Map locationMap = saveLocationInfo();
+		
+		System.out.println("findAllCarManage: "+locationMap.get("latitude")+", "+locationMap.get("longitude"));
 		
 		List<CarEntity> carEntityList = cr.findAll();
 		List<CarDTO> carDtoList = new ArrayList<>();
@@ -176,12 +193,34 @@ public class CarServiceImpl implements CarService {
 			noReturnDtoList.add(dto);
 		}
 		
+		for(int i=0;i<carDtoList.size();i++) {
+			if(carDtoList.get(i).getId().equals("740293")) {
+				System.out.println("찾았따");
+				carDtoList.get(i).setLatitude((BigDecimal)locationMap.get("latitude"));
+				carDtoList.get(i).setLongitude((BigDecimal)locationMap.get("longitude"));
+				System.out.println("carDtoList: "+carDtoList.get(i).getLatitude()+", "+carDtoList.get(i).getLongitude());
+			}
+		}
+		
 		map.put("carlist", carDtoList);
 		map.put("waitinglist", waitingDtoList);
 		map.put("rentlist", rentDtoList);
 		map.put("noreturnlist", noReturnDtoList);
 		
 		return map;
+	}
+	
+	public CarDTO findByIdLive(){
+		Map locationMap = saveLocationInfo();
+		
+		Optional<CarEntity> entity = cr.findById("740293");
+		CarMapper cm = new CarMapper();
+		CarDTO dto = cm.entityToDtoOptional(entity);
+		
+		dto.setLatitude((BigDecimal)locationMap.get("latitude"));
+		dto.setLongitude((BigDecimal)locationMap.get("longitude"));
+		
+		return dto;
 	}
 	
 	public Page<CarDTO> findAllCarManageList(Pageable pageable){
@@ -260,5 +299,69 @@ public class CarServiceImpl implements CarService {
 		Page<CarRentEntity> entityList = crr.findAllByOrderByReqDateDesc(pageable);
 		CarRentMapper crm = new CarRentMapper();
 		return entityList.map(crm::entityToDto);
+	}
+	
+	@Override
+	public Map saveLocationInfo() {
+		Map map = new HashMap<>();
+		String id = "740293";
+		String apiUrl= "https://demo.traccar.org/api/positions";
+		
+		
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBasicAuth("98dnjsgml@gmail.com", "kosa"); // Basic Auth
+
+        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+
+        Map<String, String> queryParams = new HashMap<>();
+        queryParams.put("deviceId", id);
+
+        ResponseEntity<String> response = new RestTemplate().exchange(
+                apiUrl,
+                HttpMethod.GET,
+                entity,
+                String.class,
+                queryParams
+        );
+        
+        
+
+        if (response.getStatusCode() == HttpStatus.OK) {
+            System.out.println("Response Body: " + response.getBody());
+
+            // Parse and process the response JSON as needed
+        } else {
+            System.out.println("Request failed with status code: " + response.getStatusCode());
+
+        }
+        
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode jsonNode;
+        
+		try {
+			jsonNode = objectMapper.readTree(response.getBody());
+			for (JsonNode element : jsonNode) {
+	            BigDecimal latitude = element.get("latitude").decimalValue();
+	            BigDecimal longitude = element.get("longitude").decimalValue();
+	            
+	            map.put("latitude", latitude);
+	            map.put("longitude", longitude);
+	            
+
+	            // 필요한 필드만 선택적으로 가져와서 사용
+	            System.out.println("Latitude: " + map.get("latitude") + ", Longitude: " + map.get("longitude"));
+	        }
+		} catch (JsonMappingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return map;
 	}
 }

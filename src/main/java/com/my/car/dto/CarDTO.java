@@ -19,6 +19,7 @@ public class CarDTO {
 	private String id;
 	private String carNo;
 	private String carType;
+	private String maxNum;
 	private BigDecimal latitude;
 	private BigDecimal longitude;
 }
