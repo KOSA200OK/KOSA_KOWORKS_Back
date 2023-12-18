@@ -1,6 +1,10 @@
 package com.my.car.control;
 
+import java.math.BigDecimal;
+import java.net.URI;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -9,6 +13,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.tomcat.util.json.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +21,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -28,7 +38,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.my.car.dto.CarDTO;
 import com.my.car.dto.CarRentDTO;
 import com.my.car.service.CarService;
@@ -109,6 +127,11 @@ public class CarController {
 		return map;
 	}
 	
+	@GetMapping("/updatelive")
+	public CarDTO findByIdLive() {
+		return cs.findByIdLive();
+	} 
+	
 	@GetMapping("/managelist/{currentPage}")
 	public Page<CarDTO> findAllCarManageList(@PathVariable int currentPage) throws FindException{
 		System.out.println("currentPage: "+currentPage);
@@ -179,6 +202,64 @@ public class CarController {
 		Pageable pageable = PageRequest.of(currentPage, 10);
 		return cs.findAllRentListAll(pageable);
 	}
+	
+//	@GetMapping("/test")
+//	public void test(String id){
+//		String apiUrl= "https://demo.traccar.org/api/positions";
+//		
+//		
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.setBasicAuth("98dnjsgml@gmail.com", "kosa"); // Basic Auth
+//
+//        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+//        headers.setContentType(MediaType.APPLICATION_JSON);
+//
+//        HttpEntity<String> entity = new HttpEntity<>(headers);
+//
+//        Map<String, String> queryParams = new HashMap<>();
+//        queryParams.put("deviceId", id);
+//
+//        ResponseEntity<String> response = new RestTemplate().exchange(
+//                apiUrl,
+//                HttpMethod.GET,
+//                entity,
+//                String.class,
+//                queryParams
+//        );
+//        
+//        
+//
+//        if (response.getStatusCode() == HttpStatus.OK) {
+//            System.out.println("Response Body: " + response.getBody());
+//
+//            // Parse and process the response JSON as needed
+//        } else {
+//            System.out.println("Request failed with status code: " + response.getStatusCode());
+//
+//        }
+//        
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        JsonNode jsonNode;
+//        
+//		try {
+//			jsonNode = objectMapper.readTree(response.getBody());
+//			for (JsonNode element : jsonNode) {
+//	            BigDecimal latitude = element.get("latitude").decimalValue();
+//	            BigDecimal longitude = element.get("longitude").decimalValue();
+//
+//	            // 필요한 필드만 선택적으로 가져와서 사용
+//	            System.out.println("Latitude: " + latitude + ", Longitude: " + longitude);
+//	        }
+//		} catch (JsonMappingException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (JsonProcessingException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//        
+//     
+//	}
 	
 	
 	
