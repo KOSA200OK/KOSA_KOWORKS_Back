@@ -57,7 +57,6 @@ public class ReservationScheduler {
 	
 	private void checkReservations() throws Exception{
 		System.out.println("*********scheduler test********");
-//		Date currentTime = new Date();
 		
 		//예약내역 불러오기
 		List<MeetingReservationEntity> reservations = reservation.findAll();
@@ -81,8 +80,9 @@ public class ReservationScheduler {
 					MemberEntity memberEntity = mre.getMember();
 					List<ParticipantsEntity> participantsEntity = mre.getParticipants();
 					String memberName = mre.getMember().getName();
+					log.warn("-----이름 {}---", memberName);
 					
-					notify.send(memberEntity, NotificationEntity.NotificationType.MEETING, "30분 이내에 진행 예정인 회의가 있습니다");
+					notify.send(memberEntity, NotificationEntity.NotificationType.MEETING, "30분 후 진행 예정인 회의가 있습니다");
 					notify.sendToParticipants(participantsEntity, NotificationEntity.NotificationType.MEETING, "30분 이내에 진행 예정인 회의가 있습니다");
 					log.warn("------알림 완료-----");
 				}
