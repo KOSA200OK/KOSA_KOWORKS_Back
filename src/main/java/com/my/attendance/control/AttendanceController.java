@@ -67,7 +67,7 @@ public class AttendanceController {
 			
 			return new ResponseEntity<>(HttpStatus.OK);
 		} catch(AddException e) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 		
 	} // createAttendance
