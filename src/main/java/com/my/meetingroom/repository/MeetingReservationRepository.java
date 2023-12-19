@@ -17,7 +17,7 @@ public interface MeetingReservationRepository extends JpaRepository<MeetingReser
 	public Optional<MeetingReservationEntity> findById(Long id);
 	
 	// 내 예약 전체 조회
-	public Page<MeetingReservationEntity> findAllByMemberId(Pageable pageable, String memberId);
+	public Page<MeetingReservationEntity> findAllByMemberIdOrderByMeetingDateDesc(Pageable pageable, String memberId);
 	
 	
 	// Validator

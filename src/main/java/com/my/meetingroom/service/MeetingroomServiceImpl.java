@@ -133,7 +133,7 @@ public class MeetingroomServiceImpl implements MeetingroomService {
 	
 	@Override
 	public Page<MeetingReservationDTO> findAllByMemberId(Pageable pageable, String memberId) throws FindException {
-		Page<MeetingReservationEntity> entity = reservation.findAllByMemberId(pageable, memberId);
+		Page<MeetingReservationEntity> entity = reservation.findAllByMemberIdOrderByMeetingDateDesc(pageable, memberId);
 		MeetingroomMapper mapper = new MeetingroomMapper();
 		return entity.map(mapper::Reservation_VoToDto);
 	}
@@ -169,9 +169,9 @@ public class MeetingroomServiceImpl implements MeetingroomService {
 			entity.getParticipants().clear();
 			entityManager.clear();
 			
-//			reservation.delete(entity);		
-			reservation.deleteById(id); //delete, deleteById 둘다 가능
-			reservation.save(entity);
+			reservation.delete(entity);		
+//			reservation.deleteById(id); //delete, deleteById 둘다 가능
+//			reservation.save(entity);
 		} catch (Exception e) {
 			throw new RemoveException();
 		}	

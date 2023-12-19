@@ -23,9 +23,7 @@ import com.my.notice.service.NoticeServiceImpl;
 @RequestMapping("/notice")
 @CrossOrigin(origins="http://localhost:5173")
 public class NoticeController {
-	
-	private Logger log = LoggerFactory.getLogger(this.getClass());
-	
+		
 	@Autowired
 	NoticeServiceImpl service;
 	
