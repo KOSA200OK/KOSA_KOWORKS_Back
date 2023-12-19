@@ -2,14 +2,16 @@ package com.my.meetingroom.service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import com.my.meetingroom.entity.MeetingReservationEntity;
@@ -25,13 +27,26 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ReservationScheduler {
 	
-	@Autowired
-	NotificationServiceImpl notify;
+//	@Autowired
+//	NotificationServiceImpl notify;
+//	
+//	@Autowired
+//	MeetingReservationRepository reservation;
+
+    private final NotificationServiceImpl notify;
+    private final MeetingReservationRepository reservation;
+
+    private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(Runtime.getRuntime().availableProcessors());
+
+    @Autowired
+    public ReservationScheduler(NotificationServiceImpl notify, MeetingReservationRepository reservation) {
+        this.notify = notify;
+        this.reservation = reservation;
+    }
 	
-	@Autowired
-	MeetingReservationRepository reservation;
+//	private ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(Runtime.getRuntime().availableProcessors());
 	
-	private ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+    @Autowired
 	
 	//스케쥴러로 12시 정각마다 시작하고, 30분 단위로 검사
 	public void startScheduler() {
@@ -41,7 +56,7 @@ public class ReservationScheduler {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}, calculateInitialDelay(), 30, TimeUnit.MINUTES);
+		}, 0, 1, TimeUnit.MINUTES);
 				//0, 1, TimeUnit.MINUTES);
 				//calculateInitialDelay(), 30, TimeUnit.MINUTES);
 	}
@@ -61,6 +76,11 @@ public class ReservationScheduler {
 		//예약내역 불러오기
 		List<MeetingReservationEntity> reservations = reservation.findAll();
 		System.out.println("찾았음" + reservations.get(0).getId());
+		
+		// 알림을 보낼 대상을 저장할 리스트
+		List<MemberEntity> membersToNotify = new ArrayList<>();
+		List<ParticipantsEntity> participantsEntity = null;
+		
 		for (MeetingReservationEntity mre : reservations) {
 			try {
 				String timestring = mre.getMeetingDate() + " " + mre.getStartTime();
@@ -78,18 +98,23 @@ public class ReservationScheduler {
 					System.out.println("현재시간  " + currentTime);
 					System.out.println("---여기까지 완료---");
 					MemberEntity memberEntity = mre.getMember();
-					List<ParticipantsEntity> participantsEntity = mre.getParticipants();
+					participantsEntity = mre.getParticipants();
 					String memberName = mre.getMember().getName();
 					log.warn("-----이름 {}---", memberName);
 					
-					notify.send(memberEntity, NotificationEntity.NotificationType.MEETING, "30분 후 진행 예정인 회의가 있습니다");
-					notify.sendToParticipants(participantsEntity, NotificationEntity.NotificationType.MEETING, "30분 이내에 진행 예정인 회의가 있습니다");
-					log.warn("------알림 완료-----");
+					//알림 보낼 대상을 리스트에 추가하기
+	                membersToNotify.add(memberEntity);
 				}
 			} catch (Exception e) {
-				throw new Exception();
+		        log.error("예약 확인 중 오류 발생: {}", e.getMessage());
 			}
 		}
+		
+		for (MemberEntity member : membersToNotify) {
+	         notify.send(member, NotificationEntity.NotificationType.MEETING, "30분 후 진행 예정인 회의가 있습니다");         
+	    }
+	    notify.sendToParticipants(participantsEntity, NotificationEntity.NotificationType.MEETING, "30분 이내에 진행 예정인 회의가 있습니다");
+	    log.warn("------알림 완료-----");
 	}
 	
 }
