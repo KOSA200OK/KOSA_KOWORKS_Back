@@ -19,14 +19,6 @@ public interface StuffReqService {
 	 * @throws AddException
 	 */
 	public void createStuffReq(StuffReqDTO dto) throws AddException;
-    
-	/**
-	 * DB에서 해당 멤버의 비품요청목록을 가져와 DTO타입으로 변환해 반환한다.
-	 * 
-	 * @return List<StuffReqDTO>
-	 * @throws FindException
-	 */
-	public List<StuffReqDTO> findByMemberId(String memberId) throws FindException;
 	
     /**
      * 컨트롤 레이어에서 인계받은 멤버변수의 경우에 따라 변수를 가공한다.
