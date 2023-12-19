@@ -108,7 +108,7 @@ public class AttendanceServiceImpl implements AttendanceService {
         
 	      if (existingAttendance.isPresent()) {
 	          log.warn("이미 출석했습니다");
-	          return;
+	          throw new AddException("이미 출석된 아이디입니다");
 	      } else {
 	    	  if (currentTime.isBefore(onTime)) {	// 9시까지 출근
 	    		  entity.setAttendanceDate(currentDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
@@ -146,15 +146,30 @@ public class AttendanceServiceImpl implements AttendanceService {
 	    Optional<AttendanceEntity> existingEntity = repository.findByMemberIdAndAttendanceDate(memberId, currentDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 	    
 	    List<Integer> statusList = config.getStatus();
-	    Integer offStatus = statusList.get(1);
+	    List<String> timeList = config.getTime();
 	    
 	    if (existingEntity.isPresent()) {
+	    	
+	    	
 	    	AttendanceEntity att = existingEntity.get();
 	    	
+	    	Integer earlyStatus = statusList.get(6); // early 상태 -> 조퇴
+	    	Integer offStatus = statusList.get(1); // off 상태 -> 퇴근	
+	    	String off = timeList.get(3);
+	    	
 	        LocalTime currentTime = LocalTime.now();
+	        LocalTime offTime = LocalTime.parse(off);	// absenceTime -> 12:01:00
+	        
+	        if(currentTime.isBefore(offTime)) { // 조퇴
+	        	att.setEndTime(currentTime.format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+		        att.setStatus(earlyStatus);
+	        } else if (currentTime.isAfter(offTime)) { // 퇴근
+	        	att.setEndTime(currentTime.format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+		        att.setStatus(offStatus);
+	        }
 
-	        att.setEndTime(currentTime.format(DateTimeFormatter.ofPattern("HH:mm:ss")));
-	        att.setStatus(offStatus);
+//	        att.setEndTime(currentTime.format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+//	        att.setStatus(offStatus);
 
 	        repository.save(att);
 	        

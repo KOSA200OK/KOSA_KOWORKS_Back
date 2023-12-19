@@ -78,8 +78,14 @@ public class ReservationScheduler {
 		System.out.println("찾았음" + reservations.get(0).getId());
 		
 		// 알림을 보낼 대상을 저장할 리스트
+<<<<<<< HEAD
+        List<MemberEntity> membersToNotify = new ArrayList<>();
+//        List<ParticipantsEntity> participantsToNotify = new ArrayList<>();
+        List<ParticipantsEntity> participantsEntity = null;
+=======
 		List<MemberEntity> membersToNotify = new ArrayList<>();
 		List<ParticipantsEntity> participantsEntity = null;
+>>>>>>> 4f11999ff3b8aaf6f668475fbd4256764eae47d3
 		
 		for (MeetingReservationEntity mre : reservations) {
 			try {
@@ -103,7 +109,12 @@ public class ReservationScheduler {
 					log.warn("-----이름 {}---", memberName);
 					
 					//알림 보낼 대상을 리스트에 추가하기
+<<<<<<< HEAD
+//					membersToNotify.add(memberEntity);
+//                    participantsToNotify.addAll(participantsEntity);
+=======
 	                membersToNotify.add(memberEntity);
+>>>>>>> 4f11999ff3b8aaf6f668475fbd4256764eae47d3
 				}
 			} catch (Exception e) {
 		        log.error("예약 확인 중 오류 발생: {}", e.getMessage());
@@ -111,10 +122,17 @@ public class ReservationScheduler {
 		}
 		
 		for (MemberEntity member : membersToNotify) {
+<<<<<<< HEAD
+			notify.send(member, NotificationEntity.NotificationType.MEETING, "30분 후 진행 예정인 회의가 있습니다");			
+		}
+		notify.sendToParticipants(participantsEntity, NotificationEntity.NotificationType.MEETING, "30분 이내에 진행 예정인 회의가 있습니다");
+		log.warn("------알림 완료-----");
+=======
 	         notify.send(member, NotificationEntity.NotificationType.MEETING, "30분 후 진행 예정인 회의가 있습니다");         
 	    }
 	    notify.sendToParticipants(participantsEntity, NotificationEntity.NotificationType.MEETING, "30분 이내에 진행 예정인 회의가 있습니다");
 	    log.warn("------알림 완료-----");
+>>>>>>> 4f11999ff3b8aaf6f668475fbd4256764eae47d3
 	}
 	
 }
