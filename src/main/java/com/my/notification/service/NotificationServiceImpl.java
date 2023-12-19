@@ -162,6 +162,7 @@ public class NotificationServiceImpl implements NotificationService {
     	 
 	} // sendToParticipants
 
+    // 알림 생성
 	private NotificationEntity createNotification(MemberEntity receiver, NotificationEntity.NotificationType notificationType, String content) { // (7)
         
 		LocalDate currentDate = LocalDate.now();
