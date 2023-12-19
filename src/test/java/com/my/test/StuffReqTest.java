@@ -58,8 +58,7 @@ class StuffReqTest {
 //		assertTrue(lisrSize==8);
 //	}
 	
-//    @Test
-//    void testFindByMemberIdLike() {
+
 //    	String memberId = "1";
 //    	MemberEntity me = new MemberEntity();
 //		me.setId(memberId);
