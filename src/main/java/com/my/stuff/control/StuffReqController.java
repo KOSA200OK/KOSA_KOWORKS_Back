@@ -5,8 +5,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.my.exception.AddException;
 import com.my.exception.FindException;
 import com.my.exception.ModifyException;
-import com.my.stuff.dto.StuffDTO;
 import com.my.stuff.dto.StuffReqDTO;
 import com.my.stuff.service.StuffReqServiceImpl;
 import com.my.stuff.service.StuffServiceImpl;
@@ -82,9 +79,10 @@ public class StuffReqController {
     	
     }
     
+    
     /**
      * PathVariable로 주어진 id에 해당하는 비품요청을 삭제한다
-     * @param id
+     * @param id 
      */
     @CrossOrigin(origins="http://localhost:5173")
     @DeleteMapping("/request")
@@ -94,7 +92,7 @@ public class StuffReqController {
 	}
     
     /**
-     * 
+     * 메인페이지의 승인대기 요청건수를 표시하기 위한 수를 반환
      * @param memberId
      * @return
      * @throws FindException
@@ -118,6 +116,7 @@ public class StuffReqController {
                                              ) throws FindException{
     	return service.findByManageCase(departmentId, status, stuffId, startDate, endDate);
     }
+    
     @CrossOrigin(origins="http://localhost:5173")
     @GetMapping("/requestmanage/{id}")
     public StuffReqDTO findById(@PathVariable Long id) throws FindException{

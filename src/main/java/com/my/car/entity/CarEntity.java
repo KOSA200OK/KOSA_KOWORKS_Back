@@ -50,7 +50,10 @@ public class CarEntity {
 //	@ColumnDefault("0") 
 //	private Long status;
 	
-//	public void modifyCarStatus(Long status) {
-//		this.status = status;
-//	}	
+	public void modifyCarLatitude(BigDecimal latitude) {
+		this.latitude = latitude;
+	}	
+	public void modifyCarLongitude(BigDecimal longitude) {
+		this.longitude = longitude;
+	}	
 }
