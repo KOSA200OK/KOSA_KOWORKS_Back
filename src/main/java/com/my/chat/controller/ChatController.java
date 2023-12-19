@@ -25,13 +25,12 @@ public class ChatController {
 		// 등록이 안되어있다면 등록
 		if (!chatService.isRegisteredChannelTopic(chatMessage.getRoomId())) {
 			chatService.registerChannelTopic(chatMessage.getRoomId());
-			System.out.println("등록");
+			System.out.println("message 등록");
 		}
 		if (ChatMessage.MessageType.ENTER.equals(chatMessage.getType())) {
 			chatMessage.setMessage(chatMessage.getSender() + "님이 입장하셨습니다.");
-			System.out.println("입장");
+			System.out.println("message 입장");
 		}
-		System.out.println("전달+저장");
 		chatService.publish(chatMessage);
 	}
 }

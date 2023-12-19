@@ -34,7 +34,7 @@ public class ChatRoomController {
 	@CrossOrigin(origins = "http://localhost:5173")
 	@GetMapping("/roomlist")
 	public List<ChatRoom> rooms(Model model) throws FindException {
-		System.out.println("roomlist");
+		System.out.println("rooms " + chatRoomService.findAll());
 		return chatRoomService.findAll();
 	}
 
@@ -43,7 +43,7 @@ public class ChatRoomController {
 	@GetMapping("/rooms")
 	@ResponseBody
 	public List<ChatRoom> room() {
-		System.out.println("rooms");
+		System.out.println("room " + chatRoomRepository.findAllRoom());
 		return chatRoomRepository.findAllRoom();
 	}
 
@@ -52,7 +52,7 @@ public class ChatRoomController {
 	@PostMapping("/room")
 	@ResponseBody
 	public ChatRoom createRoom(@RequestParam String name) {
-		System.out.println("room");
+		System.out.println("createRoom " + chatRoomRepository.createChatRoom(name));
 		return chatRoomRepository.createChatRoom(name);
 	}
 
@@ -61,7 +61,7 @@ public class ChatRoomController {
 	@GetMapping("/room/{roomId}")
 	@ResponseBody
 	public ChatRoom roomInfo(@PathVariable String roomId) {
-		System.out.println("room/{roomId}");
+		System.out.println("roomInfo " + chatRoomRepository.findRoomById(roomId));
 		return chatRoomRepository.findRoomById(roomId);
 	}
 }

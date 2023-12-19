@@ -55,7 +55,6 @@ public class CarController {
 	@GetMapping("/mainmycarrent")
 	public Map countMainMyCarRentCount(String memberId) {
 		return cs.countMainMyCarRentCount(memberId);
-		System.out.println("****************** 멤버 아이디 : "+memberId);
 	}
 	
 

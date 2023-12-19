@@ -35,7 +35,7 @@ public class ChatServiceImpl implements ChatService {
 	private final RedisTemplate<String, Object> redisTemplate;
 
 	public boolean isRegisteredChannelTopic(String roomId) {
-		System.out.println("isRegisteredChannelTopic");
+		System.out.println("ChatServiceImpl-isRegisteredChannelTopic " + channelTopicMap.get(roomId));
 		return channelTopicMap.get(roomId) != null; // 처음왔으면 false
 	}
 
@@ -47,6 +47,7 @@ public class ChatServiceImpl implements ChatService {
 			redisMessageListener.addMessageListener(redisSubscriber, channelTopic);
 			channelTopicMap.put(roomId, channelTopic);
 		}
+		System.out.println("ChatServiceImpl-registerChannelTopic " + channelTopic);
 	}
 
 	public void publish(ChatMessage chatMessage) {
@@ -61,5 +62,6 @@ public class ChatServiceImpl implements ChatService {
 
 		// 방에다가 publish 하는 메소드 이 후sucscriber의 onMessage가 실행됨 자동으로.
 		redisTemplate.convertAndSend(channelTopic.getTopic(), chatMessage);
+		System.out.println("ChatServiceImpl-publish " + channelTopic);
 	}
 }

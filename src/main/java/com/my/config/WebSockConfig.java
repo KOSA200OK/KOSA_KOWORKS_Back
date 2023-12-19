@@ -17,11 +17,12 @@ public class WebSockConfig implements WebSocketMessageBrokerConfigurer {
 		config.enableSimpleBroker("/sub");
 		// ws.send()의 uri 시작이 /pub로 시작되어야 함
 		config.setApplicationDestinationPrefixes("/pub");
+		System.out.println("configureMessageBroker");
 	}
 
 	@Override
 	public void registerStompEndpoints(StompEndpointRegistry registry) {
-		// setAllow 메소드이름이 바뀌었다.
 		registry.addEndpoint("/ws-stomp").setAllowedOriginPatterns("*").withSockJS();
+		System.out.println("registerStompEndpoints");
 	}
 }
