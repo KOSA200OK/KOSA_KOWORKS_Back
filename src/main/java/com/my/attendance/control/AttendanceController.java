@@ -104,6 +104,6 @@ public class AttendanceController {
 		
 		return service.findByMemberId(memberId);
 		
-	}
+	} // findByMemberId
 	
 } // end class
