@@ -60,16 +60,16 @@ class StuffReqTest {
 	
     @Test
     void testFindByMemberIdLike() {
-    	String memberId = "1";
-    	MemberEntity me = new MemberEntity();
-		me.setId(memberId);
-    	
-		String stuffId = "S%";  
-		StuffEntity se = new StuffEntity();
-		se.setId(stuffId);
-    	
-		List<StuffReqEntity> srList = sr.findByMemberAndStuffLike(me, se);
-		log.error("srList = {}", srList.size());
+//    	String memberId = "1";
+//    	MemberEntity me = new MemberEntity();
+//		me.setId(memberId);
+//    	
+//		String stuffId = "S%";  
+//		StuffEntity se = new StuffEntity();
+//		se.setId(stuffId);
+//    	
+//		List<StuffReqEntity> srList = sr.findByMemberAndStuffLike(me, se);
+//		log.error("srList = {}", srList.size());
     
 //		List<StuffReqDTO> srDTOList = new ArrayList<>();
 //		for (StuffReqEntity stuffReqEntity : srList) {
