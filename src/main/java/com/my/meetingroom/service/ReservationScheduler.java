@@ -56,7 +56,7 @@ public class ReservationScheduler {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}, 0, 1, TimeUnit.MINUTES);
+		}, calculateInitialDelay(), 30, TimeUnit.MINUTES);
 				//0, 1, TimeUnit.MINUTES);
 				//calculateInitialDelay(), 30, TimeUnit.MINUTES);
 	}
