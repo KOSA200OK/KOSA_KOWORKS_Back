@@ -58,45 +58,45 @@ class StuffReqTest {
 //		assertTrue(lisrSize==8);
 //	}
 	
-    @Test
-    void testFindByMemberIdLike() {
-    	String memberId = "1";
-    	MemberEntity me = new MemberEntity();
-		me.setId(memberId);
-    	
-		String stuffId = "S%";  
-		StuffEntity se = new StuffEntity();
-		se.setId(stuffId);
-    	
-		List<StuffReqEntity> srList = sr.findByMemberAndStuffLike(me, se);
-		log.error("srList = {}", srList.size());
+//    @Test
+//    void testFindByMemberIdLike() {
+//    	String memberId = "1";
+//    	MemberEntity me = new MemberEntity();
+//		me.setId(memberId);
+//    	
+//		String stuffId = "S%";  
+//		StuffEntity se = new StuffEntity();
+//		se.setId(stuffId);
+//    	
+//		List<StuffReqEntity> srList = sr.findByMemberAndStuffLike(me, se);
+//		log.error("srList = {}", srList.size());
     
 //		List<StuffReqDTO> srDTOList = new ArrayList<>();
 //		for (StuffReqEntity stuffReqEntity : srList) {
 //			StuffReqDTO srDTO = StuffReqMapper.entityToDto(stuffReqEntity);
 //			srDTOList.add(srDTO);
 //		}
+////		log.error("findByMember(1L) = {}", srDTOList);
+//    }
+//	
+//	
+//	
+//	@Test
+//	void testFindByMemberId() {
+//		MemberEntity me = new MemberEntity();
+//		me.setId("1");
+////		String memberId = "1";
+////		List<StuffReqEntity> srList = sr.findByMember(memberId);
+//		List<StuffReqEntity> srList = sr.findByMember(me);
+//		List<StuffReqDTO> srDTOList = new ArrayList<>();
+//		for (StuffReqEntity stuffReqEntity : srList) {
+//			StuffReqDTO srDTO = StuffReqMapper.entityToDto(stuffReqEntity);
+//			srDTOList.add(srDTO);
+//		}
 //		log.error("findByMember(1L) = {}", srDTOList);
-    }
-	
-	
-	
-	@Test
-	void testFindByMemberId() {
-		MemberEntity me = new MemberEntity();
-		me.setId("1");
-//		String memberId = "1";
-//		List<StuffReqEntity> srList = sr.findByMember(memberId);
-		List<StuffReqEntity> srList = sr.findByMember(me);
-		List<StuffReqDTO> srDTOList = new ArrayList<>();
-		for (StuffReqEntity stuffReqEntity : srList) {
-			StuffReqDTO srDTO = StuffReqMapper.entityToDto(stuffReqEntity);
-			srDTOList.add(srDTO);
-		}
-		log.error("findByMember(1L) = {}", srDTOList);
-		int lisrSize = srDTOList.size();
-		assertTrue(lisrSize==12);
-	}
+//		int lisrSize = srDTOList.size();
+//		assertTrue(lisrSize==12);
+//	}
 	
 	@Test
 //	@Transactional

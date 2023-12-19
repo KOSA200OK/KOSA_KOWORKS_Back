@@ -16,13 +16,13 @@ public interface StuffReqRepository extends JpaRepository<StuffReqEntity, Long> 
 	
 	// 비품요청내역 조회 ===========================================================================================================
 	
-	/**
-	 * 멤버
-	 * stuff_req 테이블에서 memberId에 해당하는 행을 조회하여 반환한다
-	 * @param member
-	 * @return List<StuffReqEntity>
-	 */
-	List<StuffReqEntity> findByMember(MemberEntity member);
+//	/**
+//	 * 멤버
+//	 * stuff_req 테이블에서 memberId에 해당하는 행을 조회하여 반환한다
+//	 * @param member
+//	 * @return List<StuffReqEntity>
+//	 */
+//	List<StuffReqEntity> findByMember(MemberEntity member);
 	
 	/**
 	 * 멤버, 요청상태
