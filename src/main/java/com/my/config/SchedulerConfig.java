@@ -6,13 +6,13 @@ import org.springframework.context.annotation.Configuration;
 
 import com.my.meetingroom.service.ReservationScheduler;
 
-//@Configuration
-//public class SchedulerConfig {
-//	@Autowired
-//    private ReservationScheduler reservationScheduler;
-//
-//    @Bean
-//    public void scheduleFixedRateTask() {
-//        reservationScheduler.startScheduler();
-//    }
-//}
+@Configuration
+public class SchedulerConfig {
+	@Autowired
+    private ReservationScheduler reservationScheduler;
+
+    @Bean
+    public void scheduleFixedRateTask() {
+        reservationScheduler.startScheduler();
+    }
+}

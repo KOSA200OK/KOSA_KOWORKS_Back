@@ -68,8 +68,8 @@ class StuffReqTest {
 		StuffEntity se = new StuffEntity();
 		se.setId(stuffId);
     	
-		List<StuffReqEntity> srList = sr.findByMemberAndStuffLike(me, se);
-		log.error("srList = {}", srList.size());
+//		List<StuffReqEntity> srList = sr.findByMemberAndStuffLike(me, se);
+//		log.error("srList = {}", srList.size());
     
 //		List<StuffReqDTO> srDTOList = new ArrayList<>();
 //		for (StuffReqEntity stuffReqEntity : srList) {
