@@ -1,6 +1,7 @@
 package com.my.meetingroom.service;
 
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -41,6 +42,8 @@ public class ReservationScheduler {
 				e.printStackTrace();
 			}
 		}, calculateInitialDelay(), 30, TimeUnit.MINUTES);
+				//0, 1, TimeUnit.MINUTES);
+				//calculateInitialDelay(), 30, TimeUnit.MINUTES);
 	}
 	
 	private long calculateInitialDelay() {
@@ -51,29 +54,42 @@ public class ReservationScheduler {
 		return minutesUntilNextMidnight;
 	}
 	
+	
 	private void checkReservations() throws Exception{
-		Date currentTime = new Date();
+		System.out.println("*********scheduler test********");
 		
 		//예약내역 불러오기
 		List<MeetingReservationEntity> reservations = reservation.findAll();
+		System.out.println("찾았음" + reservations.get(0).getId());
 		for (MeetingReservationEntity mre : reservations) {
 			try {
+				String timestring = mre.getMeetingDate() + " " + mre.getStartTime();
+		        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+		        LocalDateTime startTime = LocalDateTime.parse(timestring, formatter);
+
+		        LocalDateTime currentTime = LocalDateTime.now();
+
 				String st = mre.getStartTime();
-				SimpleDateFormat formatter = new SimpleDateFormat("HH시 mm분 ss초");
-				Date startTime = formatter.parse(st);
-				
+				System.out.println("st " + st);
+
 				//현재 시간으로부터 30분 이내 일 때 알림 보내기
-				if (startTime.getTime() - currentTime.getTime() <= 30) {
+				if (startTime.isBefore(currentTime.plusMinutes(30))) {
+					System.out.println("시작시간  " + startTime);
+					System.out.println("현재시간  " + currentTime);
+					System.out.println("---여기까지 완료---");
 					MemberEntity memberEntity = mre.getMember();
 					List<ParticipantsEntity> participantsEntity = mre.getParticipants();
 					String memberName = mre.getMember().getName();
+					log.warn("-----이름 {}---", memberName);
 					
-					notify.send(memberEntity, NotificationEntity.NotificationType.MEETING, "30분 이내에 진행 예정인 회의가 있습니다");
+					notify.send(memberEntity, NotificationEntity.NotificationType.MEETING, "30분 후 진행 예정인 회의가 있습니다");
 					notify.sendToParticipants(participantsEntity, NotificationEntity.NotificationType.MEETING, "30분 이내에 진행 예정인 회의가 있습니다");
-				}				
+					log.warn("------알림 완료-----");
+				}
 			} catch (Exception e) {
 				throw new Exception();
 			}
 		}
 	}
+	
 }
