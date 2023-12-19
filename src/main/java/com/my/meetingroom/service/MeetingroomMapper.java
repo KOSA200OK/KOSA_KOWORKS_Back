@@ -152,6 +152,7 @@ public class MeetingroomMapper {
 			
 			MemberDTO memd = new MemberDTO();
 			memd.setId(pe.getMember().getId());
+			memd.setName(pe.getMember().getName());		
 			pd.setMember(memd);
 			listpd.add(pd);
 		}

@@ -120,18 +120,18 @@ public class NotificationServiceImpl implements NotificationService {
 		}
 		
 		// Notification 객체를 만들고, 현재 로그인 한 유저의 id값을 통해 SseEmitter를 모두 가져옴, 그 후 캐시에 저장해주고, 실제 데이터도 전송 해야한다
-		 NotificationEntity notification = notificationRepository.save(createNotification(memberEntity, notificationType, content)); // (2-1)⠀
+		 NotificationEntity notification = notificationRepository.save(createNotification(memberEntity, notificationType, content));
 		
 		 String receiver = memberEntity.getId();
 		 String eventId = receiver + "_" + System.currentTimeMillis();
 		 
-		 log.warn("NotificationServiceImpl send recevier : {}", receiver);
-		 log.warn("NotificationServiceImpl send eventId : {}", eventId);
+//		 log.warn("NotificationServiceImpl send recevier : {}", receiver);
+//		 log.warn("NotificationServiceImpl send eventId : {}", eventId);
 		 
 		 // 로그인 한 유저의 SseEmitter 모두 가져오기
 	     Map<String, SseEmitter> emitters = emitterRepository.findAllEmitterStartWithByMemberId(receiver);
 	     
-	     log.warn("emitters : {}", emitters.getClass().getName());
+//	     log.warn("emitters : {}", emitters.getClass().getName());
 
 	     for (Map.Entry<String, SseEmitter> entry : emitters.entrySet()) {
 	    	    String key = entry.getKey();
@@ -141,7 +141,7 @@ public class NotificationServiceImpl implements NotificationService {
 	    	    emitterRepository.saveEventCache(key, notification);
 
 	    	    // 데이터 전송
-	    	    sendNotification(emitter, eventId, key, NotificationDTO.Response.createResponse(notification));
+	    	    sendNotification(emitter, eventId, key, NotificationDTO.Response.createResponse(notification));    
 	    	} // for
 		
 	} // send
@@ -162,6 +162,7 @@ public class NotificationServiceImpl implements NotificationService {
     	 
 	} // sendToParticipants
 
+    // 알림 생성
 	private NotificationEntity createNotification(MemberEntity receiver, NotificationEntity.NotificationType notificationType, String content) { // (7)
         
 		LocalDate currentDate = LocalDate.now();

@@ -44,19 +44,6 @@ public class StuffReqController {
     	service.createStuffReq(dto);
     }
     
-    
-    /**
-     * 파람으로 인계된 멤버Id를 인자로 해당 멤버의 비품요청데이터를 리스트 형식으로 반환한다.
-     * @param memberId
-     * @return List<StuffReqDTO>
-     * @throws FindException
-     */
-    @CrossOrigin(origins="http://localhost:5173")
-    @GetMapping("/requestlist")
-    public List<StuffReqDTO> findByMemberId(@RequestParam String memberId) throws FindException{
-		return service.findByMemberId(memberId);    	
-    }
-    
     /**
      * 사용자가 선택한 조건에 따라 내역을 불러오기 위한 서비스 메서드를 호출한다
      * @param memberId 필수
@@ -68,7 +55,7 @@ public class StuffReqController {
      * @throws FindException
      */
     @CrossOrigin(origins="http://localhost:5173")
-    @GetMapping("/requestlist/case")
+    @GetMapping("/requestlist")
     public List<StuffReqDTO> findByUserCase(@RequestParam String memberId,
     		                            @RequestParam Long status,
     		                            @RequestParam String stuffId,

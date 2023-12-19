@@ -108,7 +108,7 @@ public class AttendanceServiceImpl implements AttendanceService {
         
 	      if (existingAttendance.isPresent()) {
 	          log.warn("이미 출석했습니다");
-	          return;
+	          throw new AddException("이미 출석된 아이디입니다");
 	      } else {
 	    	  if (currentTime.isBefore(onTime)) {	// 9시까지 출근
 	    		  entity.setAttendanceDate(currentDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
@@ -141,28 +141,46 @@ public class AttendanceServiceImpl implements AttendanceService {
 	    MemberEntity memberId = entity.getMemberId();
 	    LocalDate currentDate = LocalDate.now();
 
-	    // repository에서 memberId를 사용하여 해당 엔터티를 찾음
-//	    AttendanceEntity existingEntity = repository.findByMemberId(memberId);
-	    Optional<AttendanceEntity> existingEntity = repository.findByMemberIdAndAttendanceDate(memberId, currentDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+	    // 이미 해당 날짜에 출근 기록이 있는지 확인
+	    Optional<AttendanceEntity> existingAttendance = repository.findByMemberIdAndAttendanceDate(memberId, currentDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+
+//	    log.warn("status : ", existingAttendance.get().getStatus());
 	    
 	    List<Integer> statusList = config.getStatus();
-	    Integer offStatus = statusList.get(1);
+	    List<String> timeList = config.getTime();
+
+	    Integer earlyStatus = statusList.get(6); // early 상태 -> 조퇴
+	    Integer offStatus = statusList.get(1); // off 상태 -> 퇴근
+	    String off = timeList.get(3);
 	    
-	    if (existingEntity.isPresent()) {
-	    	AttendanceEntity att = existingEntity.get();
-	    	
-	        LocalTime currentTime = LocalTime.now();
-
-	        att.setEndTime(currentTime.format(DateTimeFormatter.ofPattern("HH:mm:ss")));
-	        att.setStatus(offStatus);
-
-	        repository.save(att);
-	        
+	    if (!existingAttendance.isPresent()) {
+	    	log.warn("출근 기록이 없습니다");
+	    	throw new ModifyException("출근 기록이 없습니다. 먼저 출근을 기록해야 합니다.");
+	    }
+	    
+	    AttendanceEntity existingEntity = existingAttendance.get();
+	    
+//	    if (existingEntity.getStatus() != null && existingEntity.getStatus().equals(offStatus) && existingEntity.getStatus().equals(earlyStatus)) {
+	    if (existingEntity.getEndTime() != null) {
+	    	log.warn("이미 퇴근한 사원입니다.");
+	    	throw new ModifyException("이미 퇴근한 사원입니다.");
 	    } else {
 	    	
-	        throw new ModifyException("Attendance for memberId " + memberId + " not found.");
-	        
-	    } // if-else
+	    	LocalTime currentTime = LocalTime.now();
+	    	LocalTime offTime = LocalTime.parse(off); // 퇴근 시간 설정
+	    	
+	    	if (currentTime.isBefore(offTime)) { // 조퇴
+	    		existingEntity.setEndTime(currentTime.format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+	    		existingEntity.setStatus(earlyStatus);
+	    	} else { // 퇴근
+	    		existingEntity.setEndTime(currentTime.format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+	    		existingEntity.setStatus(offStatus);
+	    	}
+	    	
+	    	repository.save(existingEntity);
+	    	
+	    }
+
 	    
 	} // modifyAttendance
 
