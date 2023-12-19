@@ -36,7 +36,7 @@ public class StuffEntity {
 	@Column
 	private String name;
 
-	@Column(nullable = false, length = 2)
+	@Column(nullable = false, length = 3)
 	@ColumnDefault("0")
 	private Long stock;
 	

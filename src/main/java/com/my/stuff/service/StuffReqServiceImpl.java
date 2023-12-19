@@ -38,18 +38,6 @@ public class StuffReqServiceImpl implements StuffReqService{
 //		System.out.println("service: "+stuffReqEntity.getStuff().getId());
 		sr.save(stuffReqEntity);
 	}
-    
-	public List<StuffReqDTO> findByMemberId(String memberId) throws FindException {
-		MemberEntity me = MemberEntity.builder().id(memberId).build();
-		List<StuffReqEntity> srEntityList = sr.findByMember(me);
-		List<StuffReqDTO> srDTOList = new ArrayList<>();
-		for (StuffReqEntity stuffReqEntity : srEntityList) {
-			StuffReqDTO srDTO = StuffReqMapper.entityToDto(stuffReqEntity);
-			srDTOList.add(srDTO);
-		}
-
-		return srDTOList;
-	}
 
 	public List<StuffReqDTO> findByCase(String memberId, Long status, String stuffId, Date startDate, Date endDate)
 			throws FindException {

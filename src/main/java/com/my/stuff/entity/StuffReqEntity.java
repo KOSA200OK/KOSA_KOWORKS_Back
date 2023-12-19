@@ -51,7 +51,7 @@ public class StuffReqEntity {
 	@ColumnDefault(value = " SYSDATE")
 	private Date reqDate;
 	
-	@Column(nullable = false, length = 2)
+	@Column(nullable = false, length = 3)
 	@ColumnDefault("0")
 	private Long quantity;
 	
@@ -59,10 +59,10 @@ public class StuffReqEntity {
 	@ColumnDefault("0")
 	private Long status;
 	
-	@Column(length=200)
+	@Column(length=50)
 	private String purpose;
 	
-	@Column(length=200)
+	@Column(length=50)
 	private String reject;
 	
 	public void modifyReject(String reject) {
