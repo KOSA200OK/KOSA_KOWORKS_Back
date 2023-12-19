@@ -26,6 +26,14 @@ public interface NotificationService {
 	@Query("SELECT n FROM NotificationEntity n WHERE n.memberEntity.id = :receiverId")
 	public List<Response> findAllByMemberId(String MemberId);
 	
+	/**
+	 * 해당 멤버의 알림 데이터를 리스트 형태로 가져와 9개만 추출한 리스트를 반환한다. 
+	 * @param MemberId
+	 * @return
+	 */
+	@Query("SELECT n FROM NotificationEntity n WHERE n.memberEntity.id = :receiverId")
+	public List<Response> findRecntByMemberId(String MemberId);
+	
 	// 미팅 참여자 알림 조회
 	
 	// 알림 삭제
