@@ -149,8 +149,9 @@ public class AttendanceServiceImpl implements AttendanceService {
 	    List<Integer> statusList = config.getStatus();
 	    List<String> timeList = config.getTime();
 
-	    Integer earlyStatus = statusList.get(6); // early 상태 -> 조퇴
-	    Integer offStatus = statusList.get(1); // off 상태 -> 퇴근
+//	    Integer earlyStatus = statusList.get(6); // early 상태 -> 조퇴
+	    Integer earlyStatus = statusList.get(5); // early 상태 -> 조퇴
+//	    Integer offStatus = statusList.get(1); // off 상태 -> 퇴근
 	    String off = timeList.get(3);
 	    
 	    if (!existingAttendance.isPresent()) {
@@ -169,12 +170,17 @@ public class AttendanceServiceImpl implements AttendanceService {
 	    	LocalTime currentTime = LocalTime.now();
 	    	LocalTime offTime = LocalTime.parse(off); // 퇴근 시간 설정
 	    	
+//	    	if (currentTime.isBefore(offTime)) { // 조퇴
+//	    		existingEntity.setEndTime(currentTime.format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+//	    		existingEntity.setStatus(earlyStatus);
+//	    	} else { // 퇴근
+//	    		existingEntity.setEndTime(currentTime.format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+//	    		existingEntity.setStatus(offStatus);
+//	    	}
+	    	
 	    	if (currentTime.isBefore(offTime)) { // 조퇴
 	    		existingEntity.setEndTime(currentTime.format(DateTimeFormatter.ofPattern("HH:mm:ss")));
 	    		existingEntity.setStatus(earlyStatus);
-	    	} else { // 퇴근
-	    		existingEntity.setEndTime(currentTime.format(DateTimeFormatter.ofPattern("HH:mm:ss")));
-	    		existingEntity.setStatus(offStatus);
 	    	}
 	    	
 	    	repository.save(existingEntity);
@@ -194,8 +200,16 @@ public class AttendanceServiceImpl implements AttendanceService {
 	    MemberEntity memberEntity = new MemberEntity();
 	    memberEntity.setId(memberId);
 	    
+	    // 내림차순 정렬 조건 추가
+	    Pageable sortedPageable = PageRequest.of(
+	        pageable.getPageNumber(),
+	        pageable.getPageSize(),
+	        Sort.by("id").ascending()
+	    );
+	    
 	    // 수정 후 코드: 변경된 Repository의 메서드 호출
-	    Page<AttendanceEntity> entityList = repository.findByAttendanceDateStartingWithAndMemberId(attendanceDate, memberEntity, pageable);
+//	    Page<AttendanceEntity> entityList = repository.findByAttendanceDateStartingWithAndMemberId(attendanceDate, memberEntity, pageable);
+	    Page<AttendanceEntity> entityList = repository.findByAttendanceDateStartingWithAndMemberId(attendanceDate, memberEntity, sortedPageable);
 	    
 	    model = new AttendanceMapper();
 	    return entityList.map(model::VoToDTO);
