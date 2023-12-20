@@ -68,7 +68,7 @@ public class MeetingReservationEntity {
 			,
 			orphanRemoval = true
 			,
-			cascade = CascadeType.ALL
+			cascade = {CascadeType.ALL, CascadeType.REMOVE}
 //			,
 //			cascade = CascadeType.REMOVE //단방향일 때는 remove만
 //			cascade = {CascadeType.REMOVE, CascadeType.PERSIST}

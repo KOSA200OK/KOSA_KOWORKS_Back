@@ -15,6 +15,7 @@ import com.my.exception.UnavailableException;
 import com.my.meetingroom.dto.MeetingReservationDTO;
 import com.my.meetingroom.dto.MeetingRoomDTO;
 import com.my.meetingroom.dto.ParticipantsDTO;
+import com.my.meetingroom.entity.ParticipantsEntity;
 
 public interface MeetingroomService {
 	
