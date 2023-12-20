@@ -1,5 +1,7 @@
 package com.my.meetingroom.repository;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,7 +17,7 @@ public interface MeetingReservationRepository extends JpaRepository<MeetingReser
 	public Optional<MeetingReservationEntity> findById(Long id);
 	
 	// 내 예약 전체 조회
-	public Page<MeetingReservationEntity> findAllByMemberId(Pageable pageable, String memberId);
+	public Page<MeetingReservationEntity> findAllByMemberIdOrderByMeetingDateDesc(Pageable pageable, String memberId);
 	
 	
 	// Validator
@@ -24,4 +26,5 @@ public interface MeetingReservationRepository extends JpaRepository<MeetingReser
 	
 	// 2) 같은 아이디의 동시간 예약 검증 - 각 멤버id와 날짜에 해당하는 회의 내역 뽑기
 	List<MeetingReservationEntity> findAllByMemberIdAndMeetingDate(String memberId, String meetingDate);
+
 }
