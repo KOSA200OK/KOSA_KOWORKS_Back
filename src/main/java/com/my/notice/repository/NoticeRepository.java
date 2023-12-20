@@ -10,6 +10,6 @@ import com.my.notice.entity.NoticeEntity;
 
 public interface NoticeRepository extends JpaRepository<NoticeEntity, Long>{
 	
-	public Page<NoticeEntity> findAll(Pageable pageable);
+	public Page<NoticeEntity> findAllByOrderByRegdateDesc(Pageable pageable);
 	
 }

@@ -8,5 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import com.my.meetingroom.entity.ParticipantsEntity;
 
 public interface ParticipantsRepository extends JpaRepository<ParticipantsEntity, Long>{
+	
+	public List<ParticipantsEntity> findByMeetingId(Long meetingId);
 
 }

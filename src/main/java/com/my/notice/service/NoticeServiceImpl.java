@@ -19,11 +19,11 @@ import lombok.extern.slf4j.Slf4j;
 public class NoticeServiceImpl implements NoticeService{
 	
 	@Autowired
-	NoticeRepository nr;
+	NoticeRepository notice;
 
 	@Override
 	public Page<NoticeDTO> findAll(Pageable pageable) throws FindException{
-		Page<NoticeEntity> entity = nr.findAll(pageable);
+		Page<NoticeEntity> entity = notice.findAllByOrderByRegdateDesc(pageable);
 		NoticeMapper nm = new NoticeMapper();
 		System.out.println("service" + entity.getContent().get(0).getMember().getName());
 		return entity.map(nm::VoToDto_ModelMapper);
@@ -31,7 +31,7 @@ public class NoticeServiceImpl implements NoticeService{
 
 	@Override
 	public Optional<NoticeDTO> findById(Long id) throws FindException {
-		Optional<NoticeEntity> entity =  nr.findById(id);
+		Optional<NoticeEntity> entity = notice.findById(id);
 		NoticeMapper nm = new NoticeMapper();
 		return entity.map(nm::VoToDto_ModelMapper);
 	}
