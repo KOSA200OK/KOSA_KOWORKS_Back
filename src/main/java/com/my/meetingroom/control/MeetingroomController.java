@@ -1,7 +1,9 @@
 package com.my.meetingroom.control;
 
 import java.text.ParseException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -22,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.my.exception.AddException;
 import com.my.exception.DuplicateException;
 import com.my.exception.FindException;
@@ -66,10 +70,17 @@ public class MeetingroomController {
 	@PostMapping(value="", produces="application/json;charset=UTF-8") //회의실 예약하기(저장)
 	public ResponseEntity<?> createMeetingReservation(@RequestBody MeetingReservationDTO mrdto) throws AddException {
 		HttpHeaders headers = new HttpHeaders();
-		headers.add("Content-Type", "text/html; charset=UTF-8");
+		headers.setContentType(MediaType.APPLICATION_JSON);
+//		headers.add("Content-Type", "text/html; charset=UTF-8");
+		
+		Map<String, Object> map = new HashMap<>(); //응답내용
+
 		try {
 			service.createMeetingReservation(mrdto);
-			return new ResponseEntity<>("저장되었습니다", headers, HttpStatus.OK);			
+			map.put("message", "예약되었습니다!");
+			return new ResponseEntity<>(map, headers, HttpStatus.OK);
+
+//			return new ResponseEntity<>("저장되었습니다", headers, HttpStatus.OK);			
 		} catch (AddException e) {
 			e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -77,9 +88,11 @@ public class MeetingroomController {
 			e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		} catch (UnavailableException e) {
-			return new ResponseEntity<>("해당 시간에 예약이 차있습니다", headers, HttpStatus.FORBIDDEN);
+			map.put("message", "해당 시간에 예약이 차있습니다");
+			return new ResponseEntity<>(map, headers, HttpStatus.FORBIDDEN);
 		} catch (DuplicateException e) {
-			return new ResponseEntity<>("같은 시간에 이미 예약이 되어있습니다", headers, HttpStatus.FORBIDDEN);
+			map.put("message", "같은 시간에 이미 예약이 되어있습니다");
+			return new ResponseEntity<>(map, headers, HttpStatus.FORBIDDEN);
 		}
 	}
 	
