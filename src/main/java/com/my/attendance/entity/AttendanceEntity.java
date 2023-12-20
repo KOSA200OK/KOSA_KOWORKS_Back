@@ -46,7 +46,7 @@ public class AttendanceEntity {
 				nullable = false)
 	private MemberEntity memberId;
 	
-	@Column(name="attendaceDate")
+	@Column(name="attendanceDate")
 	private String  attendanceDate;
 	
 	@Column(name="startTime")
