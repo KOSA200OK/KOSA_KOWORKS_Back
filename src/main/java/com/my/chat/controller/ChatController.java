@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Controller
+@CrossOrigin(origins="http://192.168.3.79:5173")
 public class ChatController {
 	private final ChatService chatService;
 
@@ -18,7 +19,6 @@ public class ChatController {
 	 * websocket에서 "/pub/chat/message"로 들어오는 메시징을 처리한다.
 	 *
 	 */
-	@CrossOrigin(origins = "http://localhost:5173")
 	@MessageMapping("/chat/message")
 	// ws.send()에서 JSON.stringfy를 통해 자동으로 ChatMessage 형태로 반환된다.
 	public void message(ChatMessage chatMessage) {

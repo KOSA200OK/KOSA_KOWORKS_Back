@@ -15,6 +15,7 @@ import com.my.exception.FindException;
 
 @RestController
 @RequestMapping("/address")
+@CrossOrigin(origins = "http://192.168.3.79:5173")
 public class AddressController {
 	private final AddressService addressService;
 
@@ -23,7 +24,7 @@ public class AddressController {
 		this.addressService = addressService;
 	}
 
-	@CrossOrigin(origins = "http://localhost:5173")
+	
 	@GetMapping("/members") // /address/members에 대한 매핑 추가
 	public List<AddressMemberDTO> findAll() throws FindException {
 		return addressService.findAll();

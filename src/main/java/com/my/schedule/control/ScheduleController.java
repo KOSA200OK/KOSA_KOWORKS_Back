@@ -33,7 +33,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 @RequestMapping("/schedule")
-@CrossOrigin(origins="http://localhost:5173")
+@CrossOrigin(origins="http://192.168.3.79:5173")
 public class ScheduleController {
 	@Autowired
 	private ScheduleService ss;
