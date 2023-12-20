@@ -52,8 +52,9 @@ public class ChatRoomController {
 	@PostMapping("/room")
 	@ResponseBody
 	public ChatRoom createRoom(@RequestParam String name) {
-		System.out.println("createRoom " + chatRoomRepository.createChatRoom(name));
-		return chatRoomRepository.createChatRoom(name);
+		ChatRoom chatRoom = chatRoomRepository.createChatRoom(name);
+//		System.out.println("createRoom " + chatRoom);
+		return chatRoom;
 	}
 
 	// 특정 채팅방 조회 axios로 방 찾을 때의 uri. subscribe()의 uri랑 상관없음
@@ -61,7 +62,7 @@ public class ChatRoomController {
 	@GetMapping("/room/{roomId}")
 	@ResponseBody
 	public ChatRoom roomInfo(@PathVariable String roomId) {
-		System.out.println("roomInfo " + chatRoomRepository.findRoomById(roomId));
+//		System.out.println("roomInfo " + chatRoomRepository.findRoomById(roomId));
 		return chatRoomRepository.findRoomById(roomId);
 	}
 }
