@@ -90,10 +90,12 @@ public class AttendanceServiceImpl implements AttendanceService {
         // 이미 출석한 경우를 확인하기 위해 해당 날짜의 출석 데이터를 조회
         Optional<AttendanceEntity> existingAttendance = repository.findByMemberIdAndAttendanceDate(entity.getMemberId(), currentDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 
+        // 출석(0), 지각(1), 결근(2), 병가(3), 휴가(4), 조퇴(5)
+        
         Integer onStatus = statusList.get(0); // on 상태 -> 출근
-        Integer offStatus = statusList.get(1); // off 상태 -> 퇴근	
-        Integer lateStatus = statusList.get(2);	// late 상태 -> 지각
-        Integer absenceStatus = statusList.get(3); // absence 상태 -> 결근
+//        Integer offStatus = statusList.get(1); // off 상태 -> 퇴근	
+        Integer lateStatus = statusList.get(1);	// late 상태 -> 지각
+        Integer absenceStatus = statusList.get(2); // absence 상태 -> 결근
         
         // localTime으로 형변환 해주기 위해서 선언
         String on = timeList.get(0);
