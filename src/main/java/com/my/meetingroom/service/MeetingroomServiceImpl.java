@@ -103,8 +103,12 @@ public class MeetingroomServiceImpl implements MeetingroomService {
 		MemberEntity memberEntity = entity.getMember();
 		List<ParticipantsEntity> participantsEntity = entity.getParticipants();
 		
+		log.warn("1. memberENtity : {} " , memberEntity);
+		
 		String memberName = entity.getMember().getName();
 			
+		log.warn("2.  ttttttttttttt : {} => ", memberName);
+		
 		//최종
 		if (!validator.isAvailable(entity)) { //시간 가능 여부 false일 때
 			throw new UnavailableException();

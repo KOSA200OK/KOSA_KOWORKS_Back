@@ -86,6 +86,8 @@ public class MeetingroomMapper {
 		me.setName(dto.getMember().getName()); // 찬석
 		e.setMember(me);
 		
+		log.warn("1. mapper  memberName : {}", me.getName());
+		
 		List<ParticipantsEntity> listpe = new ArrayList<>();
 		for(ParticipantsDTO p : dto.getParticipants()) {
 			ParticipantsEntity pe = new ParticipantsEntity();
