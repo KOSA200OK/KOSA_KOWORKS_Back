@@ -21,7 +21,7 @@ import com.my.notice.service.NoticeServiceImpl;
 
 @RestController
 @RequestMapping("/notice")
-@CrossOrigin(origins="http://localhost:5173")
+@CrossOrigin(origins="http://192.168.3.79:5173")
 public class NoticeController {
 		
 	@Autowired

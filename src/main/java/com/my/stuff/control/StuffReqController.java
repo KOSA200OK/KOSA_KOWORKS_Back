@@ -25,7 +25,7 @@ import com.my.stuff.service.StuffServiceImpl;
 
 @RestController
 @RequestMapping("/stuff")
-
+@CrossOrigin(origins="http://192.168.3.79:5173")
 public class StuffReqController {
     @Autowired
     private StuffReqServiceImpl service;
@@ -38,7 +38,6 @@ public class StuffReqController {
      * @param StuffReqDTO
      * @throws AddException
      */
-    @CrossOrigin(origins="http://localhost:5173")
     @PostMapping("/request")
     public void createStuffReq(@RequestBody StuffReqDTO dto) throws AddException{
     	service.createStuffReq(dto);
@@ -54,7 +53,6 @@ public class StuffReqController {
      * @return
      * @throws FindException
      */
-    @CrossOrigin(origins="http://localhost:5173")
     @GetMapping("/requestlist")
     public List<StuffReqDTO> findByUserCase(@RequestParam String memberId,
     		                            @RequestParam Long status,
@@ -71,7 +69,6 @@ public class StuffReqController {
      * PathVariable로 주어진 id에 해당하는 비품요청을 삭제한다
      * @param id 
      */
-    @CrossOrigin(origins="http://localhost:5173")
     @DeleteMapping("/request")
     public void removeById(@RequestParam Long id) {	
 		service.removeById(id);
@@ -84,7 +81,6 @@ public class StuffReqController {
      * @return
      * @throws FindException
      */
-    @CrossOrigin(origins="http://localhost:5173")
     @GetMapping("/waitproccess")
     public Long findWaitProccessCnt(String memberId) throws FindException{
 		return service.findWaitProccessCnt(memberId);
@@ -93,7 +89,6 @@ public class StuffReqController {
     
     // 관리자 ===============================================================================
     
-    @CrossOrigin(origins="http://localhost:5173")
     @GetMapping("/requestmanage")
     public List<StuffReqDTO> findByMangeCase(@RequestParam Long departmentId,
                                              @RequestParam Long status,
@@ -104,21 +99,18 @@ public class StuffReqController {
     	return service.findByManageCase(departmentId, status, stuffId, startDate, endDate);
     }
     
-    @CrossOrigin(origins="http://localhost:5173")
     @GetMapping("/requestmanage/{id}")
     public StuffReqDTO findById(@PathVariable Long id) throws FindException{
 		return service.findById(id);
     	
     }
     
-    @CrossOrigin(origins="http://localhost:5173")
     @PutMapping("/approve")
     public void modifyReqApprove(@RequestBody StuffReqDTO dto) throws ModifyException{
     	service.modifyReqApprove(dto);
     	serviceS.modifyStock(dto);
     }
     
-    @CrossOrigin(origins="http://localhost:5173")
     @PutMapping("/reject")
     public void modifyReqReject(@RequestBody StuffReqDTO dto) throws ModifyException{
     	service.modifyReqReject(dto);
@@ -129,7 +121,6 @@ public class StuffReqController {
      * @return
      * @throws FindException
      */
-    @CrossOrigin(origins="http://localhost:5173")
     @GetMapping("/unprocessedreq")
     public Long findUnprocessedCnt() throws FindException{
 		return service.findUnprocessedReqCnt();

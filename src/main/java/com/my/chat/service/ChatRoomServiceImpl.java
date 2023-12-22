@@ -19,6 +19,7 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 		if (chatRooms.isEmpty()) {
 			throw new FindException("방이 없습니다");
 		}
+		System.out.println("ChatRoomServiceImpl-findAll " + chatRooms);
 		return chatRooms;
 	}
 }

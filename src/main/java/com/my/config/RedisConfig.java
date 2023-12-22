@@ -20,6 +20,7 @@ public class RedisConfig {
 
 	@Bean
 	public RedisConnectionFactory redisConnectionFactory() {
+		System.out.println("redisConnectionFactory");
 		return new LettuceConnectionFactory(host, port);
 	}
 
@@ -30,6 +31,7 @@ public class RedisConfig {
 	public RedisMessageListenerContainer redisMessageListener(RedisConnectionFactory connectionFactory) {
 		RedisMessageListenerContainer container = new RedisMessageListenerContainer();
 		container.setConnectionFactory(connectionFactory);
+		System.out.println("redisMessageListener " + container);
 		return container;
 	}
 
@@ -43,6 +45,7 @@ public class RedisConfig {
 		redisTemplate.setKeySerializer(new StringRedisSerializer());
 		// ChatMessage를 JSON화(String처럼)
 		redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(String.class));
+		System.out.println("redisTemplate " + redisTemplate);
 		return redisTemplate;
 	}
 }

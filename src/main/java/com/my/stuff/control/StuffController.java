@@ -14,7 +14,7 @@ import com.my.stuff.service.StuffServiceImpl;
 
 @RestController
 @RequestMapping("/stuff")
-@CrossOrigin(origins="http://localhost:5173")
+@CrossOrigin(origins="http://192.168.3.79:5173")
 public class StuffController {
     @Autowired
     private StuffServiceImpl service;

@@ -20,12 +20,13 @@ import com.my.login.service.LoginService;
 import com.my.member.entity.MemberEntity;
 
 @RestController
+@CrossOrigin(origins = "http://192.168.3.79:5173")
 public class LoginController {
 
 	@Autowired
 	private LoginService service;
 
-	@CrossOrigin(origins = "http://localhost:5173")
+	
 	@PostMapping("/login")
 	public ResponseEntity<Map<String, Object>> login(@RequestBody LoginRequestDTO loginRequestDTO, HttpSession session)
 			throws FindException {

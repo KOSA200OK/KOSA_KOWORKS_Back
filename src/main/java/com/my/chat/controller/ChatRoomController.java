@@ -23,45 +23,43 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Controller
 @RequestMapping("/chat")
+@CrossOrigin(origins = "http://192.168.3.79:5173")
 public class ChatRoomController {
-	
+
 	private final ChatRoomRepository chatRoomRepository;
 
 	@Autowired
 	private ChatRoomService chatRoomService;
 
 	// 채팅 리스트 화면
-	@CrossOrigin(origins = "http://localhost:5173")
 	@GetMapping("/roomlist")
 	public List<ChatRoom> rooms(Model model) throws FindException {
-		System.out.println("roomlist");
+		System.out.println("rooms " + chatRoomService.findAll());
 		return chatRoomService.findAll();
 	}
 
 	// 모든 채팅방 목록 반환
-	@CrossOrigin(origins = "http://localhost:5173")
 	@GetMapping("/rooms")
 	@ResponseBody
 	public List<ChatRoom> room() {
-		System.out.println("rooms");
+		System.out.println("room " + chatRoomRepository.findAllRoom());
 		return chatRoomRepository.findAllRoom();
 	}
 
 	// 채팅방 생성
-	@CrossOrigin(origins = "http://localhost:5173")
 	@PostMapping("/room")
 	@ResponseBody
 	public ChatRoom createRoom(@RequestParam String name) {
-		System.out.println("room");
-		return chatRoomRepository.createChatRoom(name);
+		ChatRoom chatRoom = chatRoomRepository.createChatRoom(name);
+//		System.out.println("createRoom " + chatRoom);
+		return chatRoom;
 	}
 
 	// 특정 채팅방 조회 axios로 방 찾을 때의 uri. subscribe()의 uri랑 상관없음
-	@CrossOrigin(origins = "http://localhost:5173")
 	@GetMapping("/room/{roomId}")
 	@ResponseBody
 	public ChatRoom roomInfo(@PathVariable String roomId) {
-		System.out.println("room/{roomId}");
+//		System.out.println("roomInfo " + chatRoomRepository.findRoomById(roomId));
 		return chatRoomRepository.findRoomById(roomId);
 	}
 }

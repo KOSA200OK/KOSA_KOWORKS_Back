@@ -40,7 +40,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("/meetingroom")
-@CrossOrigin(origins="http://localhost:5173")
+@CrossOrigin(origins="http://192.168.3.79:5173")
 @Slf4j
 public class MeetingroomController {	
 	
