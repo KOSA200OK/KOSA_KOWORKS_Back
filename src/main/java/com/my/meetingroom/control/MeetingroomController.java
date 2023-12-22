@@ -79,7 +79,6 @@ public class MeetingroomController {
 			service.createMeetingReservation(mrdto);
 			map.put("message", "예약되었습니다!");
 			return new ResponseEntity<>(map, headers, HttpStatus.OK);
-
 //			return new ResponseEntity<>("저장되었습니다", headers, HttpStatus.OK);			
 		} catch (AddException e) {
 			e.printStackTrace();

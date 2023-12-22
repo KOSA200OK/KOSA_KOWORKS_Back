@@ -106,7 +106,7 @@ public class ReservationScheduler {
 		if (participantsEntity.isEmpty()) {
 			System.out.println("참여자가 없습니다.");
 		} else {
-			notify.sendToParticipants(participantsEntity, NotificationEntity.NotificationType.MEETING, "30분 이내에 진행 예정인 회의가 있습니다");			
+			notify.sendToParticipants(participantsEntity, NotificationEntity.NotificationType.MEETING, "30분 후 진행 예정인 회의가 있습니다");			
 		}
 		
 	    log.warn("------알림 완료-----");
