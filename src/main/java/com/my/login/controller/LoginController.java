@@ -20,7 +20,7 @@ import com.my.login.service.LoginService;
 import com.my.member.entity.MemberEntity;
 
 @RestController
-@CrossOrigin(origins="http://192.168.3.79:5173")
+@CrossOrigin(origins = "http://192.168.3.79:5173")
 public class LoginController {
 
 	@Autowired

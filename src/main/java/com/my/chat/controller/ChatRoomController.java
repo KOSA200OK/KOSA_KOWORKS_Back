@@ -23,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Controller
 @RequestMapping("/chat")
-@CrossOrigin(origins="http://192.168.3.79:5173")
+@CrossOrigin(origins = "http://192.168.3.79:5173")
 public class ChatRoomController {
 
 	private final ChatRoomRepository chatRoomRepository;

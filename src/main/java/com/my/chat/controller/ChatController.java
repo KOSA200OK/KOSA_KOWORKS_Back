@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Controller
-@CrossOrigin(origins="http://192.168.3.79:5173")
+@CrossOrigin(origins = "http://192.168.3.79:5173")
 public class ChatController {
 	private final ChatService chatService;
 
